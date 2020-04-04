@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="heading_text">48sp</dimen>
+    <dimen name="primary_heading_text">26sp</dimen>
+    <dimen name="login_page_text">22sp</dimen>
+    <dimen name="large_form_text">22sp</dimen>
+    <dimen name="form_text">20sp</dimen>
+    <dimen name="button_text">18sp</dimen>
+
+</resources>

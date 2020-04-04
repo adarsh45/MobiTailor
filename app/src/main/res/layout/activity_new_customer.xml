@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NewCustomerActivity"
+    android:background="@drawable/bg"
+    android:id="@+id/new_customer_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="18dp"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="4"
+                android:text="Name:"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/large_form_text" />
+
+            <EditText
+                android:id="@+id/edit_customer_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edittext"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/large_form_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="18dp"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="4"
+                android:text="Mobile:"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/large_form_text" />
+
+            <EditText
+                android:id="@+id/edit_customer_mobile"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edittext"
+                android:textColor="@color/colorBlack"
+                android:inputType="phone"
+                android:textSize="@dimen/large_form_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="18dp"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="4"
+                android:text="Address:"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/large_form_text" />
+
+            <EditText
+                android:id="@+id/edit_customer_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edittext"
+                android:textColor="@color/colorBlack"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/large_form_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_register_customer"
+                android:onClick="onClickNewCustomer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="8dp"
+                android:text="Register"
+                android:textAllCaps="false"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/form_text" />
+
+            <Button
+                android:id="@+id/btn_cancel_customer"
+                android:onClick="onClickNewCustomer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/form_text" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

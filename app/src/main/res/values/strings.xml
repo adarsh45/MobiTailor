@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Mobi Tailor</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="login_text">Login</string>
+    <string name="signin_text">Mobile SignIn</string>
+    <string name="country_code">+91</string>
+    <string name="phone_hint">Enter phone number</string>
+    <string name="verify">Verify</string>
+
+    <string name="profile">Profile</string>
+    <string name="shop_name">Name of Shop:</string>
+    <string name="owner_name">Owner name:</string>
+    <string name="address">Address:</string>
+
+    <string name="type">Type</string>
+    <string-array name="type">
+        <item>Apple</item>
+        <item>Open</item>
+        <item>Manilla</item>
+        <item>3 Button Shirt</item>
+        <item>Safari</item>
+    </string-array>
+
+    <string name="pant_pocket">Pocket</string>
+    <string-array name="pant_pocket_list">
+        <item>Side</item>
+        <item>Cross</item>
+    </string-array>
+</resources>

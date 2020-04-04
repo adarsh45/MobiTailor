@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "77623498030",
+    "firebase_url": "https://mtailor-70ee6.firebaseio.com",
+    "project_id": "mtailor-70ee6",
+    "storage_bucket": "mtailor-70ee6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77623498030:android:43f565f47033481e7416bf",
+        "android_client_info": {
+          "package_name": "com.example.mtailor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77623498030-mpq8j2dfadjbrjlo2dn6h68o7f093rv1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mtailor",
+            "certificate_hash": "a6a3778ace46e12a00217add5b90fedd3afc95b6"
+          }
+        },
+        {
+          "client_id": "77623498030-vsom44pee14mmfrhilep2g65uhgff0tb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mtailor",
+            "certificate_hash": "ca91d11729f32ff12e20e1cca34274ad45b955b7"
+          }
+        },
+        {
+          "client_id": "77623498030-t5p1oa667m4kfiqf1k5oqdv423ip2dfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQa5pJfQUoJr2QR6fynM2sx6sGm9B2j5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77623498030-t5p1oa667m4kfiqf1k5oqdv423ip2dfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

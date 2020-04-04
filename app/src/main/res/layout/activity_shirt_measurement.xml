@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ShirtMeasurementActivity"
+    android:orientation="vertical"
+    android:background="@drawable/bg">
+
+    <TextView
+        android:id="@+id/customer_name_shirt_measurement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Customer Name"
+        android:gravity="center"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/large_form_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/customer_name_shirt_measurement"
+                app:layout_constraintStart_toEndOf="@+id/customer_name_shirt_measurement"
+                app:layout_constraintTop_toBottomOf="@+id/customer_name_shirt_measurement">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Height:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_height"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="phone"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Chest:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_chest"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Front:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_front"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Shoulder:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_shoulder"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Sleeves:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_shirt_sleeves"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <RadioButton
+                                android:id="@+id/radio_sleeve_half"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Half"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radio_sleeve_full"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Full"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radio_sleeve_both"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Both"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_sleeves"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Collar:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_collar"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Pocket:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_pocket"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Type:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <Spinner
+                            android:id="@+id/shirt_type_spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:prompt="@string/type"
+                            android:entries="@array/type"
+                            android:textSize="@dimen/form_text"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Notes:"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/shirt_notes"
+                            android:inputType="textCapSentences"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="2"
+                            android:background="@drawable/custom_edittext"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+                <Button
+                    android:id="@+id/btn_save_shirt_measurement"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:onClick="onClickShirtMeasurement"
+                    android:text="Save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:onClick="onClickShirtMeasurement"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>
