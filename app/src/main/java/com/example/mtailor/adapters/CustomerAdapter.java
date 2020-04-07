@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> {
 
-    ArrayList<Customer> list;
-    int SHOW_CUSTOMERS = 1;
-    int TAKE_MEASUREMENT = 2;
-    int whatTODOhere;
+    private ArrayList<Customer> list;
+    private static final int SHOW_CUSTOMERS = 1;
+    private static final int TAKE_MEASUREMENT = 2;
+    private int whatTODOhere;
 
     public CustomerAdapter(ArrayList<Customer> list, int whatTODO){
         this.list = list;

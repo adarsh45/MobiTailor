@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.mtailor.R;
 import com.example.mtailor.adapters.CustomerAdapter;
+import com.example.mtailor.adapters.OrgAdapter;
 import com.example.mtailor.pojo.Customer;
+import com.example.mtailor.pojo.Org;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,24 +29,30 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.mtailor.adapters.OrgAdapter.ADD_NEW_EMPLOYEE;
+import static com.example.mtailor.adapters.OrgAdapter.SHOW_ORG;
+
 public class ShowCustomersActivity extends AppCompatActivity {
 
     int SHOW_CUSTOMERS = 1;
     int TAKE_MEASUREMENT = 2;
 
-    DatabaseReference rootRef, customerRef;
-    FirebaseUser currentUser;
-    FirebaseAuth mAuth;
+    private FirebaseDatabase myDB;
+    private DatabaseReference rootRef, orgRef, customerRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
     String UID;
     String origin;
 
     ArrayList<Customer> customerArrayList;
+    ArrayList<Org> orgArrayList;
     RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     @Override
     protected void onStart() {
         super.onStart();
-        getSupportActionBar().setTitle("View Customers");
     }
 
     @Override
@@ -51,17 +60,28 @@ public class ShowCustomersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_customers);
 
+        initialize();
+
         origin = getIntent().getStringExtra("origin");
 
-        if (origin.equals("showCustomers")){
-            createFAB();
-        } else if (origin.equals("measurement")){
-            getSupportActionBar().setTitle("Select Customer");
-            findViewById(R.id.fab).setVisibility(View.GONE);
+        switch (origin){
+            case "showCustomers":
+                getSupportActionBar().setTitle("View Customers");
+                createFAB();
+                getCustomers();
+                break;
+            case "measurement":
+                getSupportActionBar().setTitle("Select Customer");
+                findViewById(R.id.fab).setVisibility(View.GONE);
+                getCustomers();
+                break;
+            case "organization":
+                createFAB();
+                getSupportActionBar().setTitle("Organizations");
+                getOrganizations();
+                break;
         }
 
-        initialize();
-        getData();
     }
 
     private void createFAB() {
@@ -69,9 +89,16 @@ public class ShowCustomersActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShowCustomersActivity.this, NewCustomerActivity.class);
-                intent.putExtra("origin", "newCustomer");
-                startActivity(intent);
+                if (origin.equals("showCustomers")){
+                    Intent intent = new Intent(ShowCustomersActivity.this, NewCustomerActivity.class);
+                    intent.putExtra("origin", "newCustomer");
+                    startActivity(intent);
+                } else if (origin.equals("organization")) {
+                    Intent intent = new Intent(ShowCustomersActivity.this, NewOrganizationActivity.class);
+                    intent.putExtra("origin", "newOrganization");
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -89,19 +116,57 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
     private void initialize() {
 
+        //init database and references
+        myDB = FirebaseDatabase.getInstance();
+        rootRef = myDB.getReference().child("Users");
+
+        //init firebase auth
         mAuth = FirebaseAuth.getInstance();
+
         currentUser = mAuth.getCurrentUser();
         UID = currentUser.getUid();
-
-        rootRef = FirebaseDatabase.getInstance().getReference().child("Users").child(UID);
-        customerRef = rootRef.child("Customers");
+        orgRef = rootRef.child(UID).child("Organizations");
+        customerRef = rootRef.child(UID).child("Customers");
 
         recyclerView = findViewById(R.id.recycler_view);
+//        progressBar = findViewById(R.id.customers_progress_bar);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void getData() {
+//    get organizations data and display in RV
+    private void getOrganizations() {
+        if (orgRef != null){
+            orgRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        orgArrayList = new ArrayList<>();
+                        for (DataSnapshot mySnap : dataSnapshot.getChildren()){
+                            Org myOrg = mySnap.getValue(Org.class);
+                            orgArrayList.add(myOrg);
+                        }
+
+                        if (origin.equals("organization")){
+                            recyclerView.setAdapter(new OrgAdapter(orgArrayList, SHOW_ORG));
+                        } else if (origin.equals("newEmployee")){
+                            recyclerView.setAdapter(new OrgAdapter(orgArrayList, ADD_NEW_EMPLOYEE));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    showSnackbar(databaseError.getMessage());
+                }
+            });
+        }
+    }
+
+
+//    get customers data and display in recyclerview
+    private void getCustomers() {
         if (customerRef != null){
+//            progressBar.setVisibility(View.VISIBLE);
             customerRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -126,9 +191,12 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 }
             });
         }
+//        progressBar.setVisibility(View.GONE);
     }
 
-    private void search(String newText){
+//    search bar and action bar code
+
+    private void searchCustomer(String newText){
         ArrayList<Customer> filterList = new ArrayList<>();
         for (Customer filterCustomer : customerArrayList){
             if (filterCustomer.getCustomerName().toLowerCase().contains(newText.toLowerCase()) || filterCustomer.getCustomerMobile().toLowerCase().contains(newText.toLowerCase())){
@@ -140,6 +208,21 @@ public class ShowCustomersActivity extends AppCompatActivity {
             recyclerView.setAdapter(new CustomerAdapter(filterList, SHOW_CUSTOMERS));
         } else if (origin.equals("measurement")){
             recyclerView.setAdapter(new CustomerAdapter(filterList, TAKE_MEASUREMENT));
+        }
+    }
+
+    private void searchOrg(String newText){
+        ArrayList<Org> filterList = new ArrayList<>();
+        for (Org filterOrg : orgArrayList){
+            if (filterOrg.getOrgName().toLowerCase().contains(newText.toLowerCase()) || filterOrg.getOrgOwner().toLowerCase().contains(newText.toLowerCase())){
+                filterList.add(filterOrg);
+            }
+        }
+
+        if (origin.equals("organization")){
+            recyclerView.setAdapter(new OrgAdapter(filterList, SHOW_ORG));
+        } else if (origin.equals("newEmployee")){
+            recyclerView.setAdapter(new OrgAdapter(filterList, ADD_NEW_EMPLOYEE));
         }
     }
 
@@ -158,7 +241,11 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                search(newText);
+                if (origin.equals("showCustomers") || origin.equals("measurement")){
+                    searchCustomer(newText);
+                } else if (origin.equals("organization") || origin.equals("newEmployee")){
+                    searchOrg(newText);
+                }
                 return true;
             }
         });

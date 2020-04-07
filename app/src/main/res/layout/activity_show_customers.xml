@@ -8,6 +8,7 @@
     android:background="@color/colorAccent"
     android:id="@+id/show_customer_layout">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

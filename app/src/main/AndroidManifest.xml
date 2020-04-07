@@ -9,19 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.mtailor.activities.PantMeasurementActivity"></activity>
-        <activity android:name="com.example.mtailor.activities.ShirtMeasurementActivity" />
-        <activity android:name="com.example.mtailor.activities.SelectProductActivity" />
-        <activity android:name="com.example.mtailor.activities.ShowCustomersActivity" />
-        <activity android:name="com.example.mtailor.activities.NewCustomerActivity" />
+        <activity android:name=".activities.NewOrganizationActivity" />
+        <activity android:name=".activities.PantMeasurementActivity" />
+        <activity android:name=".activities.ShirtMeasurementActivity" />
+        <activity android:name=".activities.SelectProductActivity" />
+        <activity android:name=".activities.ShowCustomersActivity" />
+        <activity android:name=".activities.NewCustomerActivity" />
         <activity
-            android:name="com.example.mtailor.activities.HomeActivity"
+            android:name=".activities.HomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.example.mtailor.activities.ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.example.mtailor.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

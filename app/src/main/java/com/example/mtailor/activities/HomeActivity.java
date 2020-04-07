@@ -153,6 +153,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //update and view order
                 showSnackbar("Sorry!! Section is under construction");
                 break;
+            case R.id.new_org_btn:
+                //add new organization
+                Intent orgIntent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                orgIntent.putExtra("origin","organization");
+                startActivity(orgIntent);
+                break;
+            case R.id.new_employee_btn:
+                //add new employee within the organization
+                showSnackbar("New Employee is added here");
+                break;
         }
     }
 
