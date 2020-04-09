@@ -3,7 +3,7 @@ package com.example.mtailor.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Org {
+public class Org implements Parcelable {
 
     private String orgID, orgName, orgOwner, orgMobile, orgAddress;
 
@@ -58,17 +58,37 @@ public class Org {
     }
 
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Customer> CREATOR = new Parcelable.Creator<Customer>() {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.orgID);
+        dest.writeString(this.orgName);
+        dest.writeString(this.orgOwner);
+        dest.writeString(this.orgMobile);
+        dest.writeString(this.orgAddress);
+    }
+
+    protected Org(Parcel in) {
+        this.orgID = in.readString();
+        this.orgName = in.readString();
+        this.orgOwner = in.readString();
+        this.orgMobile = in.readString();
+        this.orgAddress = in.readString();
+    }
+
+    public static final Parcelable.Creator<Org> CREATOR = new Parcelable.Creator<Org>() {
         @Override
-        public Customer createFromParcel(Parcel in) {
-            return new Customer(in);
+        public Org createFromParcel(Parcel source) {
+            return new Org(source);
         }
 
         @Override
-        public Customer[] newArray(int size) {
-            return new Customer[size];
+        public Org[] newArray(int size) {
+            return new Org[size];
         }
     };
-
 }

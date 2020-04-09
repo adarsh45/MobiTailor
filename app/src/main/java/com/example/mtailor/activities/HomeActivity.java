@@ -161,7 +161,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.new_employee_btn:
                 //add new employee within the organization
-                showSnackbar("New Employee is added here");
+                Intent empIntent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                empIntent.putExtra("origin","employee");
+                startActivity(empIntent);
                 break;
         }
     }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mtailor.R;
 import com.example.mtailor.activities.NewCustomerActivity;
+import com.example.mtailor.activities.NewEmployeeActivity;
 import com.example.mtailor.activities.NewOrganizationActivity;
 import com.example.mtailor.activities.SelectProductActivity;
 import com.example.mtailor.activities.ShowCustomersActivity;
@@ -51,15 +52,19 @@ public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
             @Override
             public void onClick(View v) {
                 if (whatTODOhere == SHOW_ORG){
+
                     Intent intent = new Intent(holder.linearLayout.getContext(), NewOrganizationActivity.class);
                     intent.putExtra("origin", "updateOrg");
-                    intent.putExtra("oldOrg", (Parcelable) list.get(position));
+                    intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
                     holder.linearLayout.getContext().startActivity(intent);
+
                 } else if (whatTODOhere == ADD_NEW_EMPLOYEE){
-//                    Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-//                    intent.putExtra("origin", "measurement");
-//                    intent.putExtra("oldCustomer",list.get(position));
-//                    holder.linearLayout.getContext().startActivity(intent);
+
+                    Intent intent = new Intent(holder.linearLayout.getContext(), NewEmployeeActivity.class);
+                    intent.putExtra("origin", "employee");
+                    intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
+                    holder.linearLayout.getContext().startActivity(intent);
+
                     Log.d("TAG","ADD NEW EMPLOYEE HERE");
                 }
             }

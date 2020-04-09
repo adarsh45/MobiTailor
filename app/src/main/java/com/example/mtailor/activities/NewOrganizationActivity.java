@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mtailor.R;
@@ -24,9 +25,13 @@ public class NewOrganizationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private String UID;
+    private String UID, origin;
+    private String orgID, orgName, orgOwner, mobile,address;
+
+    private Org oldOrg;
 
     private EditText editOrgName, editOrgOwner, editMobile, editAddress;
+    private Button regBtn, cancelBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,58 +39,7 @@ public class NewOrganizationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_organization);
 
         initialize();
-    }
-
-    private void registerNewOrg(){
-        String orgID, orgName, orgOwner, mobile,address;
-        orgName = editOrgName.getText().toString().trim();
-        orgOwner = editOrgOwner.getText().toString().trim();
-        mobile = editMobile.getText().toString().trim();
-        address = editAddress.getText().toString().trim();
-
-        if (orgName.isEmpty()){
-            editOrgName.setError("Please enter organization name");
-            return;
-        }
-        if (orgOwner.isEmpty()){
-            editOrgOwner.setError("Please enter owner name");
-            return;
-        }
-        if (mobile.isEmpty()){
-            editMobile.setError("Please enter mobile number");
-            return;
-        }
-        if (address.isEmpty()){
-            editOrgName.setError("Please enter address");
-            return;
-        }
-
-        orgID = orgRef.push().getKey();
-
-        Org org = new Org(orgID,orgName,orgOwner,mobile,address);
-
-        orgRef.child(orgID).setValue(org).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    showSnackbar("Successful");
-                } else showSnackbar("Failure");
-            }
-        });
-
-    }
-
-    public void onClickNewOrg(View view){
-        switch (view.getId()){
-            case R.id.btn_register_org:
-//                showSnackbar("Clicked on Register");
-                registerNewOrg();
-                break;
-            case R.id.btn_cancel_org:
-//                showSnackbar("Clicked on Cancel");
-                finish();
-                break;
-        }
+        getOrigin();
     }
 
     private void initialize() {
@@ -105,7 +59,116 @@ public class NewOrganizationActivity extends AppCompatActivity {
         editOrgName = findViewById(R.id.edit_org_name);
         editOrgOwner = findViewById(R.id.edit_org_owner);
         editMobile = findViewById(R.id.edit_mobile);
-        editAddress = findViewById(R.id.edit_org_name);
+        editAddress = findViewById(R.id.edit_org_address);
+        regBtn = findViewById(R.id.btn_register_org); // reg btn
+        cancelBtn = findViewById(R.id.btn_cancel_org); // cancel btn
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void getOrigin() {
+        origin = getIntent().getStringExtra("origin");
+
+        switch (origin){
+            case "newOrg":
+                registerNewOrg();
+                break;
+            case "updateOrg":
+                updateOrg();
+                break;
+        }
+
+    }
+
+    private void registerNewOrg(){
+
+//        onclick listener for regBtn
+        regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                get strings from all edit texts
+                orgName = editOrgName.getText().toString().trim();
+                orgOwner = editOrgOwner.getText().toString().trim();
+                mobile = editMobile.getText().toString().trim();
+                address = editAddress.getText().toString().trim();
+
+//                check if any of edit texts are empty
+                if (orgName.isEmpty()){
+                    editOrgName.setError("Please enter organization name");
+                    return;
+                }
+                if (orgOwner.isEmpty()){
+                    editOrgOwner.setError("Please enter owner name");
+                    return;
+                }
+                if (mobile.isEmpty()){
+                    editMobile.setError("Please enter mobile number");
+                    return;
+                }
+                if (address.isEmpty()){
+                    editOrgName.setError("Please enter address");
+                    return;
+                }
+
+                orgID = orgRef.push().getKey();
+
+                Org org = new Org(orgID,orgName,orgOwner,mobile,address);
+
+                orgRef.child(orgID).setValue(org).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            showSnackbar("Successful");
+                        } else showSnackbar("Failure");
+                    }
+                });
+            }
+        });
+
+
+    }
+
+    private void updateOrg() {
+        Bundle bundle = getIntent().getExtras();
+        oldOrg = bundle.getParcelable("oldOrg");
+//        change text of register btn to update
+        regBtn.setText("Update");
+//        set data from oldOrg object to edit texts
+        editOrgName.setText(oldOrg.getOrgName());
+        editOrgOwner.setText(oldOrg.getOrgOwner());
+        editMobile.setText(oldOrg.getOrgMobile());
+        editAddress.setText(oldOrg.getOrgAddress());
+
+//        set onclick listener for reg btn
+        regBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orgID = oldOrg.getOrgID();
+                orgName = editOrgName.getText().toString().trim();
+                orgOwner = editOrgOwner.getText().toString().trim();
+                mobile = editMobile.getText().toString().trim();
+                address = editAddress.getText().toString().trim();
+
+                oldOrg.setOrgName(orgName);
+                oldOrg.setOrgOwner(orgOwner);
+                oldOrg.setOrgMobile(mobile);
+                oldOrg.setOrgAddress(address);
+
+                orgRef.child(orgID).setValue(oldOrg).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            showSnackbar("Updated successfully!");
+                        } else showSnackbar("Something went wrong! Please try again...");
+                    }
+                });
+            }
+        });
     }
 
     public void showSnackbar(CharSequence text){
@@ -118,4 +181,5 @@ public class NewOrganizationActivity extends AppCompatActivity {
         });
         snackbar.show();
     }
+
 }

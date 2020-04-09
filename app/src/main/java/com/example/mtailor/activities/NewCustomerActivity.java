@@ -65,15 +65,16 @@ public class NewCustomerActivity extends AppCompatActivity {
 
     private void getOrigin(){
         origin = getIntent().getStringExtra("origin");
-        bundle = getIntent().getExtras();
-        oldCustomer = bundle.getParcelable("oldCustomer");
 
         if(origin.equals("updateCustomer")){
+            bundle = getIntent().getExtras();
+            oldCustomer = bundle.getParcelable("oldCustomer");
             Button registerBtn = findViewById(R.id.btn_register_customer);
             registerBtn.setText("Update");
             editCustomerName.setText(oldCustomer.getCustomerName());
             editCustomerMobile.setText(oldCustomer.getCustomerMobile());
             editCustomerAddress.setText(oldCustomer.getCustomerAddress());
+
         }
     }
 

@@ -80,6 +80,10 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle("Organizations");
                 getOrganizations();
                 break;
+            case "employee":
+                getSupportActionBar().setTitle("Select Organization");
+                getOrganizations();
+                break;
         }
 
     }
@@ -95,7 +99,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (origin.equals("organization")) {
                     Intent intent = new Intent(ShowCustomersActivity.this, NewOrganizationActivity.class);
-                    intent.putExtra("origin", "newOrganization");
+                    intent.putExtra("origin", "newOrg");
                     startActivity(intent);
                 }
 
@@ -148,7 +152,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
                         if (origin.equals("organization")){
                             recyclerView.setAdapter(new OrgAdapter(orgArrayList, SHOW_ORG));
-                        } else if (origin.equals("newEmployee")){
+                        } else if (origin.equals("employee")){
                             recyclerView.setAdapter(new OrgAdapter(orgArrayList, ADD_NEW_EMPLOYEE));
                         }
                     }

@@ -1,6 +1,7 @@
 package com.example.mtailor.adapters;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 if (whatTODOhere == SHOW_CUSTOMERS){
                     Intent intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
                     intent.putExtra("origin", "updateCustomer");
-                    intent.putExtra("oldCustomer",list.get(position));
+                    intent.putExtra("oldCustomer", list.get(position));
                     holder.linearLayout.getContext().startActivity(intent);
                 } else if (whatTODOhere == TAKE_MEASUREMENT){
                     Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
