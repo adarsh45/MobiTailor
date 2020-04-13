@@ -15,10 +15,11 @@ import android.widget.Toast;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
+import com.example.mtailor.pojo.Emp;
 import com.example.mtailor.pojo.Pant;
-import com.example.mtailor.pojo.Shirt;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,13 +35,18 @@ public class PantMeasurementActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    Customer mCustomer;
+    Customer oldCustomer;
+    Emp oldEmp;
     Pant pant, fetchedPant;
     EditText editHeight, editWaist, editSeat,editBottom, editThigh, editUttaar, editPantNotes;
     RadioGroup radioGroupPantPlates;
     RadioButton selectedPantPlates;
     Spinner pocketSpinner;
-    String strPantPocket, UID;
+
+    String strPantPocket, UID, origin, id, titleText;
+    boolean isEmp, isCustomer;
+
+//    Pocket: Side, Cross
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +55,28 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Pant Measurements");
 
-        mCustomer = getIntent().getExtras().getParcelable("oldCustomer");
+        origin = getIntent().getStringExtra("origin");
+
+        isEmp = origin.equals("empMeasurement");
+        isCustomer = origin.equals("customerMeasurement");
+
+        if (isEmp){oldEmp = getIntent().getExtras().getParcelable("oldEmp");}
+        if (isCustomer) {oldCustomer = getIntent().getExtras().getParcelable("oldCustomer");}
 
         init();
         getPreviousPant();
     }
 
     private void init() {
+
+        if (isCustomer){
+            id = oldCustomer.getCustomerID();
+            titleText = oldCustomer.getCustomerName() + "\n" + oldCustomer.getCustomerMobile();
+        }
+        if (isEmp){
+            id = oldEmp.getEmpID();
+            titleText = oldEmp.getEmpName();
+        }
 
         //init firebase auth
         mAuth = FirebaseAuth.getInstance();
@@ -65,11 +86,11 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
         //init database and references
         myDB = FirebaseDatabase.getInstance();
-        rootRef = myDB.getReference().child("Users").child(UID).child("Measurements").child(mCustomer.getCustomerID()).child("Pant");
+        rootRef = myDB.getReference().child("Users").child(UID).child("Measurements").child(id).child("Pant");
 
-        //        TextView for name of customer
+//        TextView for name of customer
         TextView cName = findViewById(R.id.customer_name_pant_measurement);
-        cName.setText(mCustomer.getCustomerName() + "\n"+ mCustomer.getCustomerMobile());
+        cName.setText(titleText);
 
 
 //        edit texts
@@ -137,9 +158,6 @@ public class PantMeasurementActivity extends AppCompatActivity {
         });
     }
 
-
-//    Pocket: Side, Cross
-
     public void onClickPantMeasurement(View view){
         if (view.getId() == R.id.btn_save_pant_measurement){
             createPant();
@@ -160,15 +178,26 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
         String strPantPlates = selectedPantPlates.getText().toString().trim();
 
-        pant = new Pant(mCustomer.getCustomerID(), strHeight, strWaist, strSeat, strBottom, strThigh, strUttaar, strPantPocket, strPantPlates, strNotes);
+        pant = new Pant(id, strHeight, strWaist, strSeat, strBottom, strThigh, strUttaar, strPantPocket, strPantPlates, strNotes);
 
         rootRef.setValue(pant).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(PantMeasurementActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                } else Toast.makeText(PantMeasurementActivity.this, "Failure!", Toast.LENGTH_SHORT).show();
+                   showSnackbar("Success!");
+                } else showSnackbar("Failure!");
             }
         });
+    }
+
+    public void showSnackbar(CharSequence text){
+        final Snackbar snackbar = Snackbar.make(findViewById(R.id.pant_measurement_layout),text,Snackbar.LENGTH_SHORT);
+        snackbar.setAction("Dismiss", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
     }
 }

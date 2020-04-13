@@ -145,14 +145,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 intent1.putExtra("origin", "measurement");
                 startActivity(intent1);
                 break;
-            case R.id.new_order_btn:
-                //new order
-                showSnackbar("Sorry! Section is under construction");
-                break;
-            case R.id.update_order_btn:
-                //update and view order
-                showSnackbar("Sorry!! Section is under construction");
-                break;
             case R.id.new_org_btn:
                 //add new organization
                 Intent orgIntent = new Intent(HomeActivity.this, ShowCustomersActivity.class);

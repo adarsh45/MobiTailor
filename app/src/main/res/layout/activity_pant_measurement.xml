@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.PantMeasurementActivity"
     android:background="@drawable/bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/pant_measurement_layout">
 
 
     <TextView

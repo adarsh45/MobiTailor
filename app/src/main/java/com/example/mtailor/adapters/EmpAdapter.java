@@ -39,10 +39,10 @@ public class EmpAdapter extends RecyclerView.Adapter<EmpAdapter.EmpViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-//                intent.putExtra("origin","empMeasurement");
-//                holder.linearLayout.getContext().startActivity(intent);
-                Toast.makeText(holder.linearLayout.getContext(),list.get(position).getEmpName() + " clicked" , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
+                intent.putExtra("origin","empMeasurement");
+                intent.putExtra("emp",list.get(position));
+                holder.linearLayout.getContext().startActivity(intent);
             }
         });
     }

@@ -8,11 +8,17 @@ import android.view.View;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
+import com.example.mtailor.pojo.Emp;
 
 public class SelectProductActivity extends AppCompatActivity {
 
     Customer oldCustomer;
+    Emp oldEmp;
+    String origin;
+    boolean isEmp, isCustomer;
 
+//    origin = customerMeasurement (from ShowCustomers Activity & CustomerAdapter)
+//    origin = empMeasurement (from ShowCustomers Activity & EmpAdapter )
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +26,13 @@ public class SelectProductActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Select Item");
 
-        //get whole customer object
-        oldCustomer = getIntent().getExtras().getParcelable("oldCustomer");
+        origin = getIntent().getStringExtra("origin");
+
+        isEmp = origin.equals("empMeasurement");
+        isCustomer = origin.equals("customerMeasurement");
+
+        if (isCustomer) { oldCustomer = getIntent().getExtras().getParcelable("oldCustomer"); }
+        if (isEmp) { oldEmp = getIntent().getExtras().getParcelable("emp"); }
 
     }
 
@@ -30,13 +41,17 @@ public class SelectProductActivity extends AppCompatActivity {
             case R.id.shirt_measurement_btn:
                 // take to shirt measurements
                 Intent intent = new Intent(SelectProductActivity.this, ShirtMeasurementActivity.class);
-                intent.putExtra("oldCustomer",oldCustomer);
+                intent.putExtra("origin",origin);
+                if (isEmp) {intent.putExtra("oldEmp",oldEmp);}
+                if (isCustomer) {intent.putExtra("oldCustomer",oldCustomer);}
                 startActivity(intent);
                 break;
             case R.id.pant_measurement_btn:
                 //take to pant measurements
                 Intent intent1 = new Intent(SelectProductActivity.this, PantMeasurementActivity.class);
-                intent1.putExtra("oldCustomer",oldCustomer);
+                intent1.putExtra("origin",origin);
+                if (isEmp) {intent1.putExtra("oldEmp",oldEmp);}
+                if (isCustomer) {intent1.putExtra("oldCustomer",oldCustomer);}
                 startActivity(intent1);
                 break;
         }

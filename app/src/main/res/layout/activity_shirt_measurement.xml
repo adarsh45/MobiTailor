@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.ShirtMeasurementActivity"
     android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:id="@+id/shirt_measurement_layout">
 
     <TextView
         android:id="@+id/customer_name_shirt_measurement"

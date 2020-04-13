@@ -53,7 +53,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                     holder.linearLayout.getContext().startActivity(intent);
                 } else if (whatTODOhere == TAKE_MEASUREMENT){
                     Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-                    intent.putExtra("origin", "measurement");
+                    intent.putExtra("origin", "customerMeasurement");
                     intent.putExtra("oldCustomer",list.get(position));
                     holder.linearLayout.getContext().startActivity(intent);
                 }
