@@ -1,9 +1,11 @@
 package com.example.mtailor.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.mtailor.R;
@@ -25,6 +27,9 @@ public class SelectProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_product);
 
         getSupportActionBar().setTitle("Select Item");
+//        adding back button on toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         origin = getIntent().getStringExtra("origin");
 
@@ -55,5 +60,14 @@ public class SelectProductActivity extends AppCompatActivity {
                 startActivity(intent1);
                 break;
         }
+    }
+
+    //    for getting back to previous activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

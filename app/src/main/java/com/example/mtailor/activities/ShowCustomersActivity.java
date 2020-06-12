@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.mtailor.R;
 import com.example.mtailor.adapters.CustomerAdapter;
@@ -60,6 +62,9 @@ public class ShowCustomersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_customers);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         initialize();
 
         origin = getIntent().getStringExtra("origin");
@@ -88,8 +93,10 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("RestrictedApi")
     private void createFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,8 +144,18 @@ public class ShowCustomersActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-//    get organizations data and display in RV
+//    for getting back to previous activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //    get organizations data and display in RV
     private void getOrganizations() {
+
         if (orgRef != null){
             orgRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -155,6 +172,10 @@ public class ShowCustomersActivity extends AppCompatActivity {
                         } else if (origin.equals("employee")){
                             recyclerView.setAdapter(new OrgAdapter(orgArrayList, ADD_NEW_EMPLOYEE));
                         }
+                    } else {
+                        TextView emptyTextView = findViewById(R.id.empty_text);
+                        emptyTextView.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
                 }
 
@@ -186,6 +207,11 @@ public class ShowCustomersActivity extends AppCompatActivity {
                         } else if (origin.equals("measurement")){
                             recyclerView.setAdapter(new CustomerAdapter(customerArrayList, TAKE_MEASUREMENT));
                         }
+                    }
+                    else {
+                        TextView emptyTextView = findViewById(R.id.empty_text);
+                        emptyTextView.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
                     }
                 }
 

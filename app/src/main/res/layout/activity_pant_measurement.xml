@@ -102,12 +102,12 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Seat:"
+                            android:text="Waist:"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
                         <EditText
-                            android:id="@+id/edit_pant_seat"
+                            android:id="@+id/edit_pant_waist"
                             android:inputType="phone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -134,12 +134,12 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Waist:"
+                            android:text="Seat:"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
                         <EditText
-                            android:id="@+id/edit_pant_waist"
+                            android:id="@+id/edit_pant_seat"
                             android:inputType="phone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -349,7 +349,8 @@
 
                         <EditText
                             android:id="@+id/edit_pant_notes"
-                            android:inputType="textCapSentences"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:minLines="4"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

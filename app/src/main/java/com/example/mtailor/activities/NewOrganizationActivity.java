@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Org;
+import com.example.mtailor.utils.ResultDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,6 +45,9 @@ public class NewOrganizationActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+//        adding back button on toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //init firebase auth
         mAuth = FirebaseAuth.getInstance();
@@ -122,9 +127,8 @@ public class NewOrganizationActivity extends AppCompatActivity {
                 orgRef.child(orgID).setValue(org).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            showSnackbar("Successful");
-                        } else showSnackbar("Failure");
+                        ResultDialog dialog = new ResultDialog(NewOrganizationActivity.this, task.isSuccessful());
+                        dialog.show(getSupportFragmentManager(),"Result");
                     }
                 });
             }
@@ -162,24 +166,21 @@ public class NewOrganizationActivity extends AppCompatActivity {
                 orgRef.child(orgID).setValue(oldOrg).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            showSnackbar("Updated successfully!");
-                        } else showSnackbar("Something went wrong! Please try again...");
+                        ResultDialog dialog = new ResultDialog(NewOrganizationActivity.this, task.isSuccessful());
+                        dialog.show(getSupportFragmentManager(),"Result");
                     }
                 });
             }
         });
     }
 
-    public void showSnackbar(CharSequence text){
-        final Snackbar snackbar = Snackbar.make(findViewById(R.id.new_org_layout),text,Snackbar.LENGTH_SHORT);
-        snackbar.setAction("Dismiss", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
+    //    for getting back to previous activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -3,6 +3,7 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="ok">OK</string>
 
     <string name="login_text">Login</string>
     <string name="signin_text">Mobile SignIn</string>

@@ -2,15 +2,20 @@ package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
+import com.example.mtailor.utils.ResultDialog;
+import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,8 +37,7 @@ public class NewCustomerActivity extends AppCompatActivity {
     private Customer oldCustomer;
 
     private EditText editCustomerName, editCustomerMobile, editCustomerAddress;
-
-    private Dialog popupDialog;
+    private ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,11 @@ public class NewCustomerActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        layout = findViewById(R.id.new_customer_layout);
+//        adding back button on toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //init database and references
         myDB = FirebaseDatabase.getInstance();
         rootRef = myDB.getReference().child("Users");
@@ -78,50 +87,6 @@ public class NewCustomerActivity extends AppCompatActivity {
         }
     }
 
-    public void showSnackbar(CharSequence text){
-        final Snackbar snackbar = Snackbar.make(findViewById(R.id.new_customer_layout),text,Snackbar.LENGTH_SHORT);
-        snackbar.setAction("Dismiss", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
-    }
-
-    private void createPopupDialog(boolean result){
-        //setting up popup dialog
-        popupDialog = new Dialog(this);
-
-        if (result){
-            //creating success popup dialog
-            popupDialog.setContentView(R.layout.success_dialog);
-            Button okBtn = popupDialog.findViewById(R.id.success_ok_btn);
-            okBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupDialog.dismiss();
-                    finish();
-                }
-            });
-
-            popupDialog.show();
-
-        } else {
-            //creating failure popup dialog
-            popupDialog.setContentView(R.layout.failure_dialog);
-            Button okBtn = popupDialog.findViewById(R.id.failure_ok_btn);
-            okBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupDialog.dismiss();
-                    finish();
-                }
-            });
-
-            popupDialog.show();
-        }
-    }
 
     public void onClickNewCustomer(View view){
         switch (view.getId()){
@@ -131,7 +96,7 @@ public class NewCustomerActivity extends AppCompatActivity {
                     updateCustomer(oldCustomer);
                 } else if (origin.equals("newCustomer")){
                     registerNewCustomer();
-                } else showSnackbar("Origin not defined");
+                } else Util.showSnackbar(layout,"Origin not defined");
                 break;
             case R.id.btn_cancel_customer:
                 finish();
@@ -161,14 +126,12 @@ public class NewCustomerActivity extends AppCompatActivity {
 
         Customer customer = new Customer(customerID, customerName, customerMobile, customerAddress);
 
+        assert customerID != null;
         customerRef.child(customerID).setValue(customer).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-//                    showSnackbar("Added Successfully!");
-                    createPopupDialog(true);
-
-                } else createPopupDialog(false);
+                ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, task.isSuccessful());
+                dialog.show(getSupportFragmentManager(),"Result");
             }
         });
     }
@@ -186,11 +149,19 @@ public class NewCustomerActivity extends AppCompatActivity {
         customerRef.child(customerID).setValue(currentCustomer).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    showSnackbar("Updated successfully!");
-                }else showSnackbar("Error while updating!");
+                ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, task.isSuccessful());
+                dialog.show(getSupportFragmentManager(),"Result");
             }
         });
+    }
+
+    //    for getting back to previous activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

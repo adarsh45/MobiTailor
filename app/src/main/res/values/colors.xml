@@ -9,5 +9,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
 
+    <color name="colorDarkRed">#F15249</color>
+    <color name="colorFaintRed">#DC5252</color>
+
     <color name="colorHint">#BDBDBD</color>
 </resources>

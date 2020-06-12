@@ -74,6 +74,10 @@ public class NewEmployeeActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+//        adding back button on toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 //        firebase setup
         myDB = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -198,5 +202,14 @@ public class NewEmployeeActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    //    for getting back to previous activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

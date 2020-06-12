@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Emp;
 import com.example.mtailor.pojo.Pant;
+import com.example.mtailor.utils.ResultDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -63,11 +65,14 @@ public class PantMeasurementActivity extends AppCompatActivity {
         if (isEmp){oldEmp = getIntent().getExtras().getParcelable("oldEmp");}
         if (isCustomer) {oldCustomer = getIntent().getExtras().getParcelable("oldCustomer");}
 
-        init();
+        initialize();
         getPreviousPant();
     }
 
-    private void init() {
+    private void initialize() {
+//        adding back button on toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (isCustomer){
             id = oldCustomer.getCustomerID();
@@ -183,21 +188,18 @@ public class PantMeasurementActivity extends AppCompatActivity {
         rootRef.setValue(pant).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                   showSnackbar("Success!");
-                } else showSnackbar("Failure!");
+                ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, task.isSuccessful());
+                dialog.show(getSupportFragmentManager(),"Result");
             }
         });
     }
 
-    public void showSnackbar(CharSequence text){
-        final Snackbar snackbar = Snackbar.make(findViewById(R.id.pant_measurement_layout),text,Snackbar.LENGTH_SHORT);
-        snackbar.setAction("Dismiss", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
+    //    for getting back to previous activity
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
