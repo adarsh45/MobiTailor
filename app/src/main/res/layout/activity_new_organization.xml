@@ -8,180 +8,289 @@
     android:background="@drawable/bg"
     android:id="@+id/new_org_layout">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="18dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="4"
-                android:text="Name of Organization:"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/large_form_text" />
-
-            <EditText
-                android:id="@+id/edit_org_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
-                android:gravity="center"
-                android:textColor="@color/colorBlack"
-                android:inputType="textCapWords"
-                android:textSize="@dimen/large_form_text" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="18dp"
-            android:weightSum="10">
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="4"
-                android:text="Name of Owner:"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/large_form_text" />
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
-            <EditText
-                android:id="@+id/edit_org_owner"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Name of Organization:"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/large_form_text" />
+
+                <EditText
+                    android:id="@+id/edit_org_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:gravity="center"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/large_form_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
-                android:textColor="@color/colorBlack"
-                android:inputType="textCapWords"
-                android:textSize="@dimen/large_form_text" />
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Name of Owner:"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/large_form_text" />
+
+                <EditText
+                    android:id="@+id/edit_org_owner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:gravity="center"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/large_form_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Mobile:"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/large_form_text" />
+
+                <EditText
+                    android:id="@+id/edit_mobile"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:gravity="center"
+                    android:inputType="phone"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/large_form_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Address:"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/large_form_text" />
+
+                <EditText
+                    android:id="@+id/edit_org_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:gravity="center"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/large_form_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="@string/cloth_color"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+                <Spinner
+                    android:id="@+id/cloth_colors_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:entries="@array/cloth_color_list"
+                    android:gravity="center"
+                    android:paddingVertical="6dp"
+                    android:prompt="@string/pant_pocket"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorHint"
+                    android:textSize="@dimen/form_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Embroidery:"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/large_form_text" />
+
+                <EditText
+                    android:id="@+id/edit_embroidery"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="2"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/large_form_text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="Notes:"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+                <EditText
+                    android:id="@+id/edit_org_notes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="6"
+                    android:background="@drawable/custom_edit_text"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="4"
+                    android:paddingVertical="6dp"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorHint"
+                    android:textSize="@dimen/form_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btn_register_org"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:text="Register"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text"
+                    tools:ignore="OnClick" />
+
+                <Button
+                    android:id="@+id/btn_cancel_org"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text"
+                    tools:ignore="OnClick" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="18dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="4"
-                android:text="Mobile:"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/large_form_text" />
-
-            <EditText
-                android:id="@+id/edit_mobile"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
-                android:textColor="@color/colorBlack"
-                android:inputType="phone"
-                android:textSize="@dimen/large_form_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="18dp"
-            android:weightSum="10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="4"
-                android:text="Address:"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/large_form_text" />
-
-            <EditText
-                android:id="@+id/edit_org_address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
-                android:gravity="center"
-                android:textColor="@color/colorBlack"
-                android:inputType="textCapWords"
-                android:textSize="@dimen/large_form_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/btn_register_org"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="8dp"
-                android:text="Register"
-                android:textAllCaps="false"
-                android:background="@drawable/custom_button"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/form_text"
-                tools:ignore="OnClick" />
-
-            <Button
-                android:id="@+id/btn_cancel_org"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_weight="1"
-                android:text="Cancel"
-                android:textAllCaps="false"
-                android:background="@drawable/custom_button"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/form_text"
-                tools:ignore="OnClick" />
-
-        </LinearLayout>
+    </ScrollView>
 
 
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

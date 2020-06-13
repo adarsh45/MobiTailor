@@ -30,4 +30,14 @@
         <item>Side</item>
         <item>Cross</item>
     </string-array>
+
+    <string name="cloth_color">Color of Cloth:</string>
+    <string-array name="cloth_color_list">
+        <item>Raymond Navy</item>
+        <item>Navy Blue</item>
+        <item>Cherry</item>
+        <item>Military Green</item>
+        <item>Khaaki</item>
+        <item>White</item>
+    </string-array>
 </resources>

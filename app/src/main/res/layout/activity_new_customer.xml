@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/custom_edit_text"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:inputType="textCapWords"
@@ -77,7 +77,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/custom_edit_text"
                 android:textColor="@color/colorBlack"
                 android:inputType="phone"
                 android:textSize="@dimen/large_form_text" />
@@ -108,7 +108,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="6"
-                android:background="@drawable/custom_edittext"
+                android:background="@drawable/custom_edit_text"
                 android:textColor="@color/colorBlack"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/large_form_text" />

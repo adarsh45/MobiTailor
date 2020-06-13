@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Org;
@@ -28,11 +30,12 @@ public class NewOrganizationActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
 
     private String UID, origin;
-    private String orgID, orgName, orgOwner, mobile,address;
+    private String orgID, orgName, orgOwner, mobile,address, strClothColor, embroidery, notes;
 
     private Org oldOrg;
 
-    private EditText editOrgName, editOrgOwner, editMobile, editAddress;
+    private EditText editOrgName, editOrgOwner, editMobile, editAddress, editEmbroidery, editNotes;
+    private Spinner clothColorSpinner;
     private Button regBtn, cancelBtn;
 
     @Override
@@ -65,8 +68,23 @@ public class NewOrganizationActivity extends AppCompatActivity {
         editOrgOwner = findViewById(R.id.edit_org_owner);
         editMobile = findViewById(R.id.edit_mobile);
         editAddress = findViewById(R.id.edit_org_address);
+        editEmbroidery = findViewById(R.id.edit_embroidery);
+        editNotes = findViewById(R.id.edit_org_notes);
         regBtn = findViewById(R.id.btn_register_org); // reg btn
         cancelBtn = findViewById(R.id.btn_cancel_org); // cancel btn
+
+        clothColorSpinner = findViewById(R.id.cloth_colors_spinner); // spinner for cloth-colors
+        clothColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                strClothColor = String.valueOf(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +119,8 @@ public class NewOrganizationActivity extends AppCompatActivity {
                 orgOwner = editOrgOwner.getText().toString().trim();
                 mobile = editMobile.getText().toString().trim();
                 address = editAddress.getText().toString().trim();
+                embroidery = editEmbroidery.getText().toString().trim();
+                notes = editNotes.getText().toString().trim();
 
 //                check if any of edit texts are empty
                 if (orgName.isEmpty()){
@@ -122,7 +142,7 @@ public class NewOrganizationActivity extends AppCompatActivity {
 
                 orgID = orgRef.push().getKey();
 
-                Org org = new Org(orgID,orgName,orgOwner,mobile,address);
+                Org org = new Org(orgID,orgName,orgOwner,mobile,address, strClothColor, embroidery, notes);
 
                 orgRef.child(orgID).setValue(org).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -142,11 +162,20 @@ public class NewOrganizationActivity extends AppCompatActivity {
         oldOrg = bundle.getParcelable("oldOrg");
 //        change text of register btn to update
         regBtn.setText("Update");
-//        set data from oldOrg object to edit texts
-        editOrgName.setText(oldOrg.getOrgName());
-        editOrgOwner.setText(oldOrg.getOrgOwner());
-        editMobile.setText(oldOrg.getOrgMobile());
-        editAddress.setText(oldOrg.getOrgAddress());
+
+        try {
+            //        set data from oldOrg object to edit texts
+            editOrgName.setText(oldOrg.getOrgName());
+            editOrgOwner.setText(oldOrg.getOrgOwner());
+            editMobile.setText(oldOrg.getOrgMobile());
+            editAddress.setText(oldOrg.getOrgAddress());
+            editEmbroidery.setText(oldOrg.getOrgEmbroidery());
+            editNotes.setText(oldOrg.getOrgNotes());
+//        set data to clothColor Spinner
+            clothColorSpinner.setSelection(Integer.parseInt(oldOrg.getOrgClothColor()));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
 //        set onclick listener for reg btn
         regBtn.setOnClickListener(new View.OnClickListener() {
@@ -157,11 +186,16 @@ public class NewOrganizationActivity extends AppCompatActivity {
                 orgOwner = editOrgOwner.getText().toString().trim();
                 mobile = editMobile.getText().toString().trim();
                 address = editAddress.getText().toString().trim();
+                embroidery = editEmbroidery.getText().toString().trim();
+                notes = editNotes.getText().toString().trim();
 
                 oldOrg.setOrgName(orgName);
                 oldOrg.setOrgOwner(orgOwner);
                 oldOrg.setOrgMobile(mobile);
                 oldOrg.setOrgAddress(address);
+                oldOrg.setOrgClothColor(strClothColor);
+                oldOrg.setOrgEmbroidery(embroidery);
+                oldOrg.setOrgNotes(notes);
 
                 orgRef.child(orgID).setValue(oldOrg).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -174,7 +208,7 @@ public class NewOrganizationActivity extends AppCompatActivity {
         });
     }
 
-    //    for getting back to previous activity
+    //    arrow <-- for getting back to previous activity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){

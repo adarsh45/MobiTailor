@@ -5,57 +5,86 @@ import android.os.Parcelable;
 
 public class Org implements Parcelable {
 
-    private String orgID, orgName, orgOwner, orgMobile, orgAddress;
+    private String orgID, orgName, orgOwner, orgMobile, orgAddress, orgClothColor, orgEmbroidery, orgNotes;
 
     public Org() {}
 
-    public Org(String orgID,String orgName, String orgOwner,String orgMobile,String orgAddress) {
+    public Org(String orgID, String orgName, String orgOwner, String orgMobile, String orgAddress, String orgClothColor, String orgEmbroidery, String orgNotes) {
         this.orgID = orgID;
         this.orgName = orgName;
         this.orgOwner = orgOwner;
         this.orgMobile = orgMobile;
         this.orgAddress = orgAddress;
+        this.orgClothColor = orgClothColor;
+        this.orgEmbroidery = orgEmbroidery;
+        this.orgNotes = orgNotes;
     }
 
     public String getOrgID() {
-        return this.orgID;
+        return orgID;
     }
 
-    public void setOrgID(String value) {
-        this.orgID = value;
+    public void setOrgID(String orgID) {
+        this.orgID = orgID;
     }
 
     public String getOrgName() {
-        return this.orgName;
+        return orgName;
     }
 
-    public void setOrgName(String value) {
-        this.orgName = value;
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
     public String getOrgOwner() {
-        return this.orgOwner;
+        return orgOwner;
     }
 
-    public void setOrgOwner(String value) {
-        this.orgOwner = value;
+    public void setOrgOwner(String orgOwner) {
+        this.orgOwner = orgOwner;
     }
 
     public String getOrgMobile() {
-        return this.orgMobile;
+        return orgMobile;
     }
 
-    public void setOrgMobile(String value) {
-        this.orgMobile = value;
+    public void setOrgMobile(String orgMobile) {
+        this.orgMobile = orgMobile;
     }
 
     public String getOrgAddress() {
-        return this.orgAddress;
+        return orgAddress;
     }
 
-    public void setOrgAddress(String value) {
-        this.orgAddress = value;
+    public void setOrgAddress(String orgAddress) {
+        this.orgAddress = orgAddress;
     }
+
+    public String getOrgClothColor() {
+        return orgClothColor;
+    }
+
+    public void setOrgClothColor(String orgClothColor) {
+        this.orgClothColor = orgClothColor;
+    }
+
+    public String getOrgEmbroidery() {
+        return orgEmbroidery;
+    }
+
+    public void setOrgEmbroidery(String orgEmbroidery) {
+        this.orgEmbroidery = orgEmbroidery;
+    }
+
+    public String getOrgNotes() {
+        return orgNotes;
+    }
+
+    public void setOrgNotes(String orgNotes) {
+        this.orgNotes = orgNotes;
+    }
+
+//    parcelable code
 
 
     @Override
@@ -70,6 +99,9 @@ public class Org implements Parcelable {
         dest.writeString(this.orgOwner);
         dest.writeString(this.orgMobile);
         dest.writeString(this.orgAddress);
+        dest.writeString(this.orgClothColor);
+        dest.writeString(this.orgEmbroidery);
+        dest.writeString(this.orgNotes);
     }
 
     protected Org(Parcel in) {
@@ -78,9 +110,12 @@ public class Org implements Parcelable {
         this.orgOwner = in.readString();
         this.orgMobile = in.readString();
         this.orgAddress = in.readString();
+        this.orgClothColor = in.readString();
+        this.orgEmbroidery = in.readString();
+        this.orgNotes = in.readString();
     }
 
-    public static final Parcelable.Creator<Org> CREATOR = new Parcelable.Creator<Org>() {
+    public static final Creator<Org> CREATOR = new Creator<Org>() {
         @Override
         public Org createFromParcel(Parcel source) {
             return new Org(source);
