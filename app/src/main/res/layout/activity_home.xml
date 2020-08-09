@@ -106,6 +106,7 @@
 
             <!-- Organizations Section -->
             <TextView
+                android:id="@+id/text_org_section"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Organizations"
@@ -113,14 +114,17 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorBlack"
                 android:textSize="26sp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:id="@+id/layout_org_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2"
-                android:layout_marginVertical="10dp">
+                android:layout_marginVertical="10dp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/new_org_btn"

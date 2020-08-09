@@ -181,7 +181,6 @@
                     android:entries="@array/cloth_color_list"
                     android:gravity="center"
                     android:paddingVertical="6dp"
-                    android:prompt="@string/pant_pocket"
                     android:textColor="@color/colorBlack"
                     android:textColorHint="@color/colorHint"
                     android:textSize="@dimen/form_text" />
@@ -286,6 +285,22 @@
                     tools:ignore="OnClick" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/call_organization_btn"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_customer"
+                android:textAllCaps="false"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/form_text"
+                android:backgroundTint="@color/colorGreen"
+                android:drawableLeft="@drawable/ic_baseline_call_24"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/layout_margin_vertical"
+                android:padding="@dimen/form_text"/>
 
         </LinearLayout>
 

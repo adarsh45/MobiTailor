@@ -7,5 +7,6 @@
     <dimen name="large_form_text">22sp</dimen>
     <dimen name="form_text">20sp</dimen>
     <dimen name="button_text">18sp</dimen>
+    <dimen name="layout_margin_vertical">10dp</dimen>
 
 </resources>

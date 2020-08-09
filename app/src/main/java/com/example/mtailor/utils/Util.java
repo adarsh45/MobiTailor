@@ -1,16 +1,83 @@
 package com.example.mtailor.utils;
 
-import android.app.Application;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.example.mtailor.R;
+import com.example.mtailor.activities.NewCustomerActivity;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Util {
     private Util(){}
 
-    public static void showSnackbar(View rootView, CharSequence text){
+    public static String settingsSPFileName = "SettingsSP";
+    public static String booleanShowOrgSection = "showOrgSection";
+
+    public static int PHONE_CALL_PERMISSION = 1;
+
+    public static final byte SHOW_CUSTOMERS = 11;
+    public static final byte TAKE_MEASUREMENTS = 12;
+    public static final byte SHOW_ORGANIZATIONS = 13;
+    public static final byte SHOW_EMPLOYEES = 14;
+
+    public static final byte NEW_CUSTOMER = 21;
+    public static final byte NEW_ORGANIZATION = 22;
+    public static final byte NEW_EMPLOYEE = 23;
+    public static final byte UPDATE_CUSTOMER = 24;
+    public static final byte UPDATE_ORGANIZATION = 25;
+    public static final byte UPDATE_EMPLOYEE = 26;
+
+    public static final byte CUSTOMER_MEASUREMENT = 31;
+    public static final byte EMP_MEASUREMENT = 32;
+
+    public static void callTheCustomer(final Context context, int editTextMobileID, int callBtnID) {
+        EditText editTextMobile = ((Activity) context).findViewById(editTextMobileID);
+        final String mobile = editTextMobile.getText().toString().trim();
+        if (!TextUtils.isEmpty(mobile)) {
+            Button callBtn = ((Activity) context).findViewById(callBtnID);
+            callBtn.setVisibility(View.VISIBLE);
+            callBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + mobile));
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TO-DO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, Util.PHONE_CALL_PERMISSION);
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    context.startActivity(callIntent);
+                }
+            });
+        } else {
+            Toast.makeText(context, "Sorry, Mobile number not found!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void showSnackBar(View rootView, CharSequence text){
         final Snackbar snackbar = Snackbar.make(rootView,text,Snackbar.LENGTH_SHORT);
         snackbar.setAction("Dismiss", new View.OnClickListener() {
             @Override
@@ -19,6 +86,40 @@ public class Util {
             }
         });
         snackbar.show();
+    }
+
+    public static void checkRadio(CharSequence capturedText, CharSequence baseText, RadioButton radioButton){
+        if (capturedText.equals(baseText)){
+            radioButton.toggle();
+        }
+    }
+
+    public static void checkRadio(RadioGroup radioGroup, CharSequence baseText){
+        int count = radioGroup.getChildCount();
+        for (int i=0; i<count; i++){
+            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+            CharSequence radioText = radioButton.getText();
+            if (baseText.equals(radioText)){
+                radioButton.toggle();
+                break;
+            }
+        }
+    }
+
+    public static String getCurrentDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY");
+        return dateFormat.format(new Date());
+    }
+
+    public static String getTextFromRadioGroup(Activity activity, RadioGroup radioGroup){
+        String text;
+        if(radioGroup.getCheckedRadioButtonId() == -1){
+            text = "";
+        } else {
+            text = ((RadioButton) activity.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
+        }
+
+        return text;
     }
 
 }

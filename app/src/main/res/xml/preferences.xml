@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.preference.SwitchPreference
+        android:title="Organizations Section On/Off"
+        android:switchTextOff="Enable to view Organizations section"
+        android:switchTextOn="Disable to view Organizations section"
+        android:summary="Choose whether you want to use organizations section"
+        android:key="organizations-section"
+        android:defaultValue="false" />
+
+</androidx.preference.PreferenceScreen>

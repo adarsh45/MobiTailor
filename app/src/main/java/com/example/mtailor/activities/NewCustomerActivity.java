@@ -1,11 +1,11 @@
 package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Dialog;
-import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,11 +18,12 @@ import com.example.mtailor.utils.ResultDialog;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class NewCustomerActivity extends AppCompatActivity {
 
@@ -32,13 +33,14 @@ public class NewCustomerActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
 
     private String UID;
-    private String origin;
+    private byte origin;
     private Bundle bundle;
     private Customer oldCustomer;
 
     private EditText editCustomerName, editCustomerMobile, editCustomerAddress;
     private ConstraintLayout layout;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +50,11 @@ public class NewCustomerActivity extends AppCompatActivity {
         getOrigin();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
         layout = findViewById(R.id.new_customer_layout);
 //        adding back button on toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //init database and references
@@ -62,6 +65,7 @@ public class NewCustomerActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         currentUser = mAuth.getCurrentUser();
+        assert currentUser != null;
         UID = currentUser.getUid();
         customerRef = rootRef.child(UID).child("Customers");
 
@@ -72,31 +76,32 @@ public class NewCustomerActivity extends AppCompatActivity {
 
     }
 
-    private void getOrigin(){
-        origin = getIntent().getStringExtra("origin");
+    private void getOrigin() {
+        origin = getIntent().getByteExtra("origin",Util.NEW_CUSTOMER);
 
-        if(origin.equals("updateCustomer")){
+        if (origin == Util.UPDATE_CUSTOMER) {
             bundle = getIntent().getExtras();
+            assert bundle != null;
             oldCustomer = bundle.getParcelable("oldCustomer");
             Button registerBtn = findViewById(R.id.btn_register_customer);
             registerBtn.setText("Update");
             editCustomerName.setText(oldCustomer.getCustomerName());
             editCustomerMobile.setText(oldCustomer.getCustomerMobile());
             editCustomerAddress.setText(oldCustomer.getCustomerAddress());
-
+//            callTheCustomer();
+            Util.callTheCustomer(NewCustomerActivity.this, R.id.edit_customer_mobile, R.id.call_btn);
         }
     }
-
 
     public void onClickNewCustomer(View view){
         switch (view.getId()){
             case R.id.btn_register_customer:
                 //register new customer method
-                if (origin.equals("updateCustomer")){
+                if (origin == Util.UPDATE_CUSTOMER){
                     updateCustomer(oldCustomer);
-                } else if (origin.equals("newCustomer")){
+                } else if (origin == Util.NEW_CUSTOMER){
                     registerNewCustomer();
-                } else Util.showSnackbar(layout,"Origin not defined");
+                } else Util.showSnackBar(layout,"Origin not defined");
                 break;
             case R.id.btn_cancel_customer:
                 finish();
@@ -137,6 +142,7 @@ public class NewCustomerActivity extends AppCompatActivity {
     }
 
     private void updateCustomer(Customer currentCustomer){
+
         String customerName = editCustomerName.getText().toString().trim();
         String customerMobile = editCustomerMobile.getText().toString().trim();
         String customerAddress = editCustomerAddress.getText().toString().trim();

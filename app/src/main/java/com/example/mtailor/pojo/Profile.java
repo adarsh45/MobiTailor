@@ -1,15 +1,22 @@
 package com.example.mtailor.pojo;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Profile {
 
-    public String userUID;
-    public String shopName;
-    public String ownerName;
-    public String shopAddress;
-    public String ownerMobile;
+    private String userUID, shopName, ownerName, shopAddress, ownerMobile;
+    private long amountPaid;
 
-    public Profile(){
+    public Profile(){}
 
+    public Profile(String userUID, String shopName, String ownerName, String shopAddress, String ownerMobile, long amountPaid) {
+        this.userUID = userUID;
+        this.shopName = shopName;
+        this.ownerName = ownerName;
+        this.shopAddress = shopAddress;
+        this.ownerMobile = ownerMobile;
+        this.amountPaid = amountPaid;
     }
 
     public Profile(String userUID, String shopName, String ownerName, String shopAddress, String ownerMobile) {
@@ -18,6 +25,14 @@ public class Profile {
         this.ownerName = ownerName;
         this.shopAddress = shopAddress;
         this.ownerMobile = ownerMobile;
+    }
+
+    public long getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(int amountPaid) {
+        this.amountPaid = amountPaid;
     }
 
     public String getUserUID() {

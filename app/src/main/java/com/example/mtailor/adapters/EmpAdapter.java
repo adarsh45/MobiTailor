@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mtailor.R;
 import com.example.mtailor.activities.SelectProductActivity;
 import com.example.mtailor.pojo.Emp;
+import com.example.mtailor.utils.Util;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class EmpAdapter extends RecyclerView.Adapter<EmpAdapter.EmpViewHolder> {
     @Override
     public EmpViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_emp_row,parent,false);
-        return new EmpAdapter.EmpViewHolder(view);
+        return new EmpViewHolder(view);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class EmpAdapter extends RecyclerView.Adapter<EmpAdapter.EmpViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-                intent.putExtra("origin","empMeasurement");
+                intent.putExtra("origin", Util.EMP_MEASUREMENT);
                 intent.putExtra("emp",list.get(position));
                 holder.linearLayout.getContext().startActivity(intent);
             }
@@ -54,14 +55,14 @@ public class EmpAdapter extends RecyclerView.Adapter<EmpAdapter.EmpViewHolder> {
 
 
     //    class for viewHolder
-    public class EmpViewHolder extends RecyclerView.ViewHolder{
+    public static class EmpViewHolder extends RecyclerView.ViewHolder{
         LinearLayout linearLayout;
         TextView rvEmpNameText;
 
-    public EmpViewHolder(@NonNull View itemView) {
-        super(itemView);
-        linearLayout = itemView.findViewById(R.id.rv_linear_layout_emp);
-        rvEmpNameText = itemView.findViewById(R.id.rv_emp_name);
+        public EmpViewHolder(@NonNull View itemView) {
+            super(itemView);
+            linearLayout = itemView.findViewById(R.id.rv_linear_layout_emp);
+            rvEmpNameText = itemView.findViewById(R.id.rv_emp_name);
+        }
     }
-}
 }

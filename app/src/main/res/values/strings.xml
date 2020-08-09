@@ -4,6 +4,12 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="ok">OK</string>
+    <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="customer_name">Customer Name</string>
+    <string name="last_update">Last Updated on:&#160;</string>
+    <string name="unknown">Unknown</string>
 
     <string name="login_text">Login</string>
     <string name="signin_text">Mobile SignIn</string>
@@ -15,6 +21,25 @@
     <string name="shop_name">Name of Shop:</string>
     <string name="owner_name">Owner name:</string>
     <string name="address">Address:</string>
+    <string name="call_customer">&#160;Call Customer</string>
+
+    <!--Shirt Measurements-->
+    <string name="shirt_height">Height</string>
+    <string name="shirt_chest">Chest</string>
+    <string name="shirt_stomach">Stomach</string>
+    <string name="shirt_seat">Seat</string>
+    <string name="shirt_shoulder">Shoulder</string>
+    <string name="shirt_sleeves">Sleeves</string>
+    <string name="shirt_sleeves_full">Full</string>
+    <string name="shirt_sleeves_half">Half</string>
+    <string name="shirt_sleeves_cuff">Cuff</string>
+    <string name="shirt_bicep">Bicep</string>
+    <string name="shirt_collar">Collar</string>
+    <string name="shirt_front">Front</string>
+    <string name="shirt_box_patti">Box Patti</string>
+    <string name="shirt_in_patti">In Patti</string>
+    <string name="shirt_cover_silai">Cover Silai</string>
+    <string name="shirt_plain_silai">Plain Silai</string>
 
     <string name="type">Type</string>
     <string-array name="type">
@@ -23,13 +48,36 @@
         <item>Manilla</item>
         <item>3 Button Shirt</item>
         <item>Safari</item>
+        <item>Nehru / Kurta</item>
     </string-array>
 
+    <!--Pant Measurements-->
+    <string name="pant_height">Height</string>
+    <string name="pant_waist">Waist</string>
+    <string name="pant_seat">Seat</string>
+    <string name="pant_bottom">Bottom</string>
+    <string name="pant_knee">Knee</string>
+    <string name="pant_thigh">Thigh</string>
+    <string name="pant_seat_round">Seat Round</string>
+    <string name="pant_seat_utaar">Seat Utaar</string>
+    <string name="pant_type">Type</string>
+    <string name="pant_baggy">Baggy</string>
+    <string name="pant_bootcut">Bootcut</string>
     <string name="pant_pocket">Pocket</string>
-    <string-array name="pant_pocket_list">
-        <item>Side</item>
-        <item>Cross</item>
-    </string-array>
+    <string name="pant_side_pocket">Side Pocket</string>
+    <string name="pant_cross_pocket">Cross Pocket</string>
+    <string name="pant_plates">Plates</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="pant_side_stitch">Side Stitch</string>
+    <string name="pant_side_plane">Side Plane</string>
+    <string name="pant_bottom_stitch">Bottom Stitch</string>
+    <string name="pant_hand_stitch">Hand Stitch</string>
+    <string name="pant_back_pocket">Back Pocket</string>
+    <string name="pant_patti_pocket">Patti Pocket</string>
+    <string name="pant_bone_pocket">Bone Pocket</string>
+    <string name="notes">Notes</string>
+
 
     <string name="cloth_color">Color of Cloth:</string>
     <string-array name="cloth_color_list">
@@ -40,4 +88,19 @@
         <item>Khaaki</item>
         <item>White</item>
     </string-array>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>

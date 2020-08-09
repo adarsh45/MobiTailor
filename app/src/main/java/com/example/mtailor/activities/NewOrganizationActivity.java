@@ -1,8 +1,10 @@
 package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +16,15 @@ import android.widget.Spinner;
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Org;
 import com.example.mtailor.utils.ResultDialog;
+import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 public class NewOrganizationActivity extends AppCompatActivity {
 
@@ -29,7 +33,8 @@ public class NewOrganizationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private String UID, origin;
+    private String UID;
+    private byte origin;
     private String orgID, orgName, orgOwner, mobile,address, strClothColor, embroidery, notes;
 
     private Org oldOrg;
@@ -38,6 +43,7 @@ public class NewOrganizationActivity extends AppCompatActivity {
     private Spinner clothColorSpinner;
     private Button regBtn, cancelBtn;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +53,16 @@ public class NewOrganizationActivity extends AppCompatActivity {
         getOrigin();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
 //        adding back button on toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //init firebase auth
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        assert currentUser != null;
         UID = currentUser.getUid();
 
         //init database and references
@@ -95,13 +103,13 @@ public class NewOrganizationActivity extends AppCompatActivity {
     }
 
     private void getOrigin() {
-        origin = getIntent().getStringExtra("origin");
+        origin = getIntent().getByteExtra("origin", Util.NEW_ORGANIZATION);
 
         switch (origin){
-            case "newOrg":
+            case Util.NEW_ORGANIZATION:
                 registerNewOrg();
                 break;
-            case "updateOrg":
+            case Util.UPDATE_ORGANIZATION:
                 updateOrg();
                 break;
         }
@@ -159,12 +167,13 @@ public class NewOrganizationActivity extends AppCompatActivity {
 
     private void updateOrg() {
         Bundle bundle = getIntent().getExtras();
+        assert bundle != null;
         oldOrg = bundle.getParcelable("oldOrg");
 //        change text of register btn to update
         regBtn.setText("Update");
 
         try {
-            //        set data from oldOrg object to edit texts
+//        set data from oldOrg object to edit texts
             editOrgName.setText(oldOrg.getOrgName());
             editOrgOwner.setText(oldOrg.getOrgOwner());
             editMobile.setText(oldOrg.getOrgMobile());
@@ -176,6 +185,8 @@ public class NewOrganizationActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
+        Util.callTheCustomer(NewOrganizationActivity.this, R.id.edit_mobile, R.id.call_organization_btn);
 
 //        set onclick listener for reg btn
         regBtn.setOnClickListener(new View.OnClickListener() {

@@ -1,36 +1,30 @@
 package com.example.mtailor.adapters;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mtailor.R;
-import com.example.mtailor.activities.NewCustomerActivity;
 import com.example.mtailor.activities.NewEmployeeActivity;
 import com.example.mtailor.activities.NewOrganizationActivity;
-import com.example.mtailor.activities.SelectProductActivity;
-import com.example.mtailor.activities.ShowCustomersActivity;
 import com.example.mtailor.pojo.Org;
+import com.example.mtailor.utils.Util;
 
 import java.util.ArrayList;
 
 public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
 
     private ArrayList<Org> list;
-    public static final int SHOW_ORG = 3;
-    public static final int ADD_NEW_EMPLOYEE = 4;
-    private int whatTODOhere;
+    private byte whatTODOhere;
 
-    public OrgAdapter(ArrayList<Org> list, int whatTODO){
+    public OrgAdapter(ArrayList<Org> list, byte whatTODO){
         this.list = list;
         this.whatTODOhere = whatTODO;
     }
@@ -51,21 +45,19 @@ public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (whatTODOhere == SHOW_ORG){
+                if (whatTODOhere == Util.UPDATE_ORGANIZATION){
 
                     Intent intent = new Intent(holder.linearLayout.getContext(), NewOrganizationActivity.class);
-                    intent.putExtra("origin", "updateOrg");
+                    intent.putExtra("origin", Util.UPDATE_ORGANIZATION);
                     intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
                     holder.linearLayout.getContext().startActivity(intent);
 
-                } else if (whatTODOhere == ADD_NEW_EMPLOYEE){
+                } else if (whatTODOhere == Util.NEW_EMPLOYEE){
 
                     Intent intent = new Intent(holder.linearLayout.getContext(), NewEmployeeActivity.class);
-                    intent.putExtra("origin", "employee");
+                    intent.putExtra("origin", Util.NEW_EMPLOYEE);
                     intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
                     holder.linearLayout.getContext().startActivity(intent);
-
-                    Log.d("TAG","ADD NEW EMPLOYEE HERE");
                 }
             }
         });
@@ -78,7 +70,7 @@ public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
 
 
     //class for view holder
-    public class OrgViewHolder extends RecyclerView.ViewHolder{
+    public static class OrgViewHolder extends RecyclerView.ViewHolder{
 
         LinearLayout linearLayout;
         TextView rvOrgName, rvOrgOwner;

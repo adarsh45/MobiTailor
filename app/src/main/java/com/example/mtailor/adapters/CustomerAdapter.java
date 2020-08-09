@@ -15,17 +15,16 @@ import com.example.mtailor.activities.NewCustomerActivity;
 import com.example.mtailor.R;
 import com.example.mtailor.activities.SelectProductActivity;
 import com.example.mtailor.pojo.Customer;
+import com.example.mtailor.utils.Util;
 
 import java.util.ArrayList;
 
 public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.CustomerViewHolder> {
 
     private ArrayList<Customer> list;
-    private static final int SHOW_CUSTOMERS = 1;
-    private static final int TAKE_MEASUREMENT = 2;
-    private int whatTODOhere;
+    private byte whatTODOhere;
 
-    public CustomerAdapter(ArrayList<Customer> list, int whatTODO){
+    public CustomerAdapter(ArrayList<Customer> list, byte whatTODO){
         this.list = list;
         whatTODOhere = whatTODO;
     }
@@ -46,14 +45,14 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (whatTODOhere == SHOW_CUSTOMERS){
+                if (whatTODOhere == Util.SHOW_CUSTOMERS){
                     Intent intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
-                    intent.putExtra("origin", "updateCustomer");
+                    intent.putExtra("origin", Util.UPDATE_CUSTOMER);
                     intent.putExtra("oldCustomer", list.get(position));
                     holder.linearLayout.getContext().startActivity(intent);
-                } else if (whatTODOhere == TAKE_MEASUREMENT){
+                } else if (whatTODOhere == Util.TAKE_MEASUREMENTS){
                     Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-                    intent.putExtra("origin", "customerMeasurement");
+                    intent.putExtra("origin", Util.CUSTOMER_MEASUREMENT);
                     intent.putExtra("oldCustomer",list.get(position));
                     holder.linearLayout.getContext().startActivity(intent);
                 }

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Customer Name"
+        android:text="@string/customer_name"
         android:gravity="center"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/large_form_text"
@@ -24,6 +24,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/layout_margin_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/last_update"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/textLastUpdateDatePant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -70,7 +94,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Height:"
+                            android:text="@string/pant_height"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
@@ -102,7 +126,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Waist:"
+                            android:text="@string/pant_waist"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
@@ -134,7 +158,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Seat:"
+                            android:text="@string/pant_seat"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
@@ -156,9 +180,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="6dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:layout_marginVertical="@dimen/layout_margin_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
@@ -166,7 +189,7 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Bottom:"
+                            android:text="@string/pant_bottom"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
@@ -176,21 +199,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_edit_text"
                             android:gravity="center"
                             android:paddingVertical="6dp"
                             android:textColor="@color/colorBlack"
                             android:textColorHint="@color/colorHint"
                             android:textSize="@dimen/form_text" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="6dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
 
                         <TextView
                             android:layout_width="0dp"
@@ -198,24 +213,23 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Thigh:"
+                            android:text="@string/pant_knee"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
                         <EditText
-                            android:id="@+id/edit_pant_thigh"
+                            android:id="@+id/edit_pant_knee"
                             android:inputType="phone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_edit_text"
                             android:gravity="center"
                             android:paddingVertical="6dp"
                             android:textColor="@color/colorBlack"
                             android:textColorHint="@color/colorHint"
                             android:textSize="@dimen/form_text" />
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -223,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="6dp"
                         android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:weightSum="4">
 
                         <TextView
                             android:layout_width="0dp"
@@ -231,32 +245,47 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Uttaar: "
+                            android:text="@string/pant_thigh"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
                         <EditText
-                            android:id="@+id/edit_pant_uttaar"
+                            android:id="@+id/edit_pant_thigh_1"
                             android:inputType="phone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_edit_text"
                             android:gravity="center"
                             android:paddingVertical="6dp"
+                            android:layout_marginRight="@dimen/layout_margin_vertical"
                             android:textColor="@color/colorBlack"
                             android:textColorHint="@color/colorHint"
                             android:textSize="@dimen/form_text" />
-                    </LinearLayout>
 
+                        <EditText
+                            android:id="@+id/edit_pant_thigh_2"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_edit_text"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:layout_marginLeft="@dimen/layout_margin_vertical"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="6dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
+                        android:layout_marginVertical="@dimen/layout_margin_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="0dp"
@@ -264,21 +293,45 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Pocket:"
+                            android:text="@string/pant_seat_round"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
-                        <Spinner
-                            android:id="@+id/pant_pocket_spinner"
+                        <EditText
+                            android:id="@+id/edit_pant_seat_round"
+                            android:inputType="phone"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_edit_text"
-                            android:entries="@array/pant_pocket_list"
                             android:gravity="center"
                             android:paddingVertical="6dp"
-                            android:prompt="@string/pant_pocket"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/pant_seat_utaar"
+                            android:paddingHorizontal="@dimen/layout_margin_vertical"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <EditText
+                            android:id="@+id/edit_pant_seat_utaar"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_edit_text"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
                             android:textColor="@color/colorBlack"
                             android:textColorHint="@color/colorHint"
                             android:textSize="@dimen/form_text" />
@@ -297,12 +350,12 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Plates:"
+                            android:text="@string/pant_type"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
                         <RadioGroup
-                            android:id="@+id/radiogroup_pant_plates"
+                            android:id="@+id/radiogroup_pant_type"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
@@ -310,20 +363,20 @@
                             android:weightSum="2">
 
                             <RadioButton
-                                android:id="@+id/radio_plate_yes"
+                                android:id="@+id/radiobtn_pant_baggy"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Yes"
+                                android:text="@string/pant_baggy"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/button_text" />
 
                             <RadioButton
-                                android:id="@+id/radio_plate_no"
+                                android:id="@+id/radiobtn_pant_bootcut"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="No"
+                                android:text="@string/pant_bootcut"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="@dimen/button_text" />
 
@@ -343,7 +396,235 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Notes:"
+                            android:text="@string/pant_pocket"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_pant_pocket"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_pant_side_pocket"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_side_pocket"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_pant_cross_pocket"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_cross_pocket"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/pant_plates"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_pant_plates"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radio_plate_yes"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/yes"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radio_plate_no"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/no"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_pant_side"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_side_stitch"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_side_stitch"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_side_plane"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_side_plane"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_pant_stitch"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_bottom_stitch"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_bottom_stitch"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_hand_stitch"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_hand_stitch"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="@string/pant_back_pocket"
+                            android:gravity="center"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/form_text" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_pant_back_pocket"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_patti_pocket"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_patti_pocket"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_bone_pocket"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pant_bone_pocket"
+                                android:textColor="@color/colorWhite"
+                                android:textSize="@dimen/button_text" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="@string/notes"
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
@@ -386,7 +667,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:onClick="onClickPantMeasurement"
-                    android:text="Register"
+                    android:text="@string/register"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
@@ -399,7 +680,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:onClick="onClickPantMeasurement"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />

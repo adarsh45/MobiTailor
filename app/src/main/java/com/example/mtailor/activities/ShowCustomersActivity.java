@@ -1,24 +1,29 @@
 package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mtailor.R;
 import com.example.mtailor.adapters.CustomerAdapter;
 import com.example.mtailor.adapters.OrgAdapter;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Org;
+import com.example.mtailor.pojo.Profile;
+import com.example.mtailor.utils.ResultDialog;
+import com.example.mtailor.utils.Util;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,14 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import static com.example.mtailor.adapters.OrgAdapter.ADD_NEW_EMPLOYEE;
-import static com.example.mtailor.adapters.OrgAdapter.SHOW_ORG;
+import java.util.Objects;
 
 public class ShowCustomersActivity extends AppCompatActivity {
-
-    int SHOW_CUSTOMERS = 1;
-    int TAKE_MEASUREMENT = 2;
 
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef, orgRef, customerRef;
@@ -45,52 +45,73 @@ public class ShowCustomersActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
 
     String UID;
-    String origin;
+    private long amountPaid = 0;
+    byte origin;
+    private long customerCount;
 
     ArrayList<Customer> customerArrayList;
     ArrayList<Org> orgArrayList;
     RecyclerView recyclerView;
-    ProgressBar progressBar;
 
     @Override
     protected void onStart() {
         super.onStart();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_customers);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialize();
+        checkIfPaymentDone();
 
-        origin = getIntent().getStringExtra("origin");
+        origin = getIntent().getByteExtra("origin", Util.SHOW_CUSTOMERS);
 
         switch (origin){
-            case "showCustomers":
+            case Util.SHOW_CUSTOMERS:
                 getSupportActionBar().setTitle("View Customers");
                 createFAB();
                 getCustomers();
                 break;
-            case "measurement":
+            case Util.TAKE_MEASUREMENTS:
                 getSupportActionBar().setTitle("Select Customer");
                 findViewById(R.id.fab).setVisibility(View.GONE);
                 getCustomers();
                 break;
-            case "organization":
+            case Util.SHOW_ORGANIZATIONS:
                 createFAB();
                 getSupportActionBar().setTitle("Organizations");
                 getOrganizations();
                 break;
-            case "employee":
+            case Util.SHOW_EMPLOYEES:
                 getSupportActionBar().setTitle("Select Organization");
                 getOrganizations();
                 break;
         }
 
+    }
+
+    private void checkIfPaymentDone() {
+        DatabaseReference profileRef = rootRef.child(UID).child("Profile");
+        profileRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild("amountPaid")){
+                    Profile ownerProfile = snapshot.getValue(Profile.class);
+                    assert ownerProfile != null;
+                    amountPaid = ownerProfile.getAmountPaid();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(ShowCustomersActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @SuppressLint("RestrictedApi")
@@ -100,15 +121,23 @@ public class ShowCustomersActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (origin.equals("showCustomers")){
-                    Intent intent = new Intent(ShowCustomersActivity.this, NewCustomerActivity.class);
-                    intent.putExtra("origin", "newCustomer");
-                    startActivity(intent);
-                } else if (origin.equals("organization")) {
-                    Intent intent = new Intent(ShowCustomersActivity.this, NewOrganizationActivity.class);
-                    intent.putExtra("origin", "newOrg");
-                    startActivity(intent);
+                Intent fabIntent = new Intent();
+
+//                check if payment done
+                if (customerCount >= 25 && amountPaid <= 0){
+                    ResultDialog dialog = new ResultDialog(ShowCustomersActivity.this, false, "Number of Entries exceeded than 25, Please pay to use the app!");
+                    dialog.show(getSupportFragmentManager(),"Result");
+                    return;
                 }
+
+                if (origin == Util.SHOW_CUSTOMERS){
+                    fabIntent = new Intent(ShowCustomersActivity.this, NewCustomerActivity.class);
+                    fabIntent.putExtra("origin", Util.NEW_CUSTOMER);
+                } else if (origin == Util.SHOW_ORGANIZATIONS) {
+                    fabIntent = new Intent(ShowCustomersActivity.this, NewOrganizationActivity.class);
+                    fabIntent.putExtra("origin", Util.NEW_ORGANIZATION);
+                }
+                startActivity(fabIntent);
 
             }
         });
@@ -135,6 +164,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         currentUser = mAuth.getCurrentUser();
+        assert currentUser != null;
         UID = currentUser.getUid();
         orgRef = rootRef.child(UID).child("Organizations");
         customerRef = rootRef.child(UID).child("Customers");
@@ -167,10 +197,10 @@ public class ShowCustomersActivity extends AppCompatActivity {
                             orgArrayList.add(myOrg);
                         }
 
-                        if (origin.equals("organization")){
-                            recyclerView.setAdapter(new OrgAdapter(orgArrayList, SHOW_ORG));
-                        } else if (origin.equals("employee")){
-                            recyclerView.setAdapter(new OrgAdapter(orgArrayList, ADD_NEW_EMPLOYEE));
+                        if (origin == Util.SHOW_ORGANIZATIONS){
+                            recyclerView.setAdapter(new OrgAdapter(orgArrayList, Util.UPDATE_ORGANIZATION));
+                        } else if (origin == Util.SHOW_EMPLOYEES){
+                            recyclerView.setAdapter(new OrgAdapter(orgArrayList, Util.NEW_EMPLOYEE));
                         }
                     } else {
                         TextView emptyTextView = findViewById(R.id.empty_text);
@@ -196,16 +226,17 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()){
+                        customerCount = dataSnapshot.getChildrenCount();
                         customerArrayList = new ArrayList<>();
                         for (DataSnapshot mySnap : dataSnapshot.getChildren()){
                             Customer myCustomer = mySnap.getValue(Customer.class);
                             customerArrayList.add(myCustomer);
                         }
 
-                        if (origin.equals("showCustomers")){
-                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, SHOW_CUSTOMERS));
-                        } else if (origin.equals("measurement")){
-                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, TAKE_MEASUREMENT));
+                        if (origin == Util.SHOW_CUSTOMERS){
+                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
+                        } else if (origin == Util.TAKE_MEASUREMENTS){
+                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.TAKE_MEASUREMENTS));
                         }
                     }
                     else {
@@ -234,11 +265,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
             }
         }
 
-        if (origin.equals("showCustomers")){
-            recyclerView.setAdapter(new CustomerAdapter(filterList, SHOW_CUSTOMERS));
-        } else if (origin.equals("measurement")){
-            recyclerView.setAdapter(new CustomerAdapter(filterList, TAKE_MEASUREMENT));
-        }
+        recyclerView.setAdapter(new CustomerAdapter(filterList, origin));
     }
 
     private void searchOrg(String newText){
@@ -249,11 +276,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
             }
         }
 
-        if (origin.equals("organization")){
-            recyclerView.setAdapter(new OrgAdapter(filterList, SHOW_ORG));
-        } else if (origin.equals("newEmployee")){
-            recyclerView.setAdapter(new OrgAdapter(filterList, ADD_NEW_EMPLOYEE));
-        }
+        recyclerView.setAdapter(new OrgAdapter(filterList, origin));
     }
 
     @Override
@@ -271,9 +294,9 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (origin.equals("showCustomers") || origin.equals("measurement")){
+                if (origin == Util.SHOW_CUSTOMERS || origin == Util.TAKE_MEASUREMENTS){
                     searchCustomer(newText);
-                } else if (origin.equals("organization") || origin.equals("newEmployee")){
+                } else if (origin == Util.SHOW_ORGANIZATIONS || origin == Util.SHOW_EMPLOYEES){
                     searchOrg(newText);
                 }
                 return true;

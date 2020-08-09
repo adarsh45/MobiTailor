@@ -101,8 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
         String ownerName = profileActivity.editOwnerName.getText().toString().trim();
         String shopAddress = profileActivity.editShopAddress.getText().toString().trim();
 
-        Profile profile = new Profile(profileActivity.UID, shopName, ownerName, shopAddress, profileActivity.currentUser.getPhoneNumber());
-
+        Profile profile = new Profile(profileActivity.UID, shopName, ownerName, shopAddress, profileActivity.currentUser.getPhoneNumber(), 0);
 
         profileActivity.rootRef.child(profileActivity.UID).child("Profile").setValue(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

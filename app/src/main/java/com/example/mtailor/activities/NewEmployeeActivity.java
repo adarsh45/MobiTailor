@@ -22,6 +22,7 @@ import com.example.mtailor.R;
 import com.example.mtailor.adapters.EmpAdapter;
 import com.example.mtailor.pojo.Emp;
 import com.example.mtailor.pojo.Org;
+import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,7 +44,8 @@ public class NewEmployeeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
-    private String origin, UID;
+    private String UID;
+    private byte origin;
     private Org myOrg;
 
     private TextView orgNameText;
@@ -58,10 +60,10 @@ public class NewEmployeeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_employee);
 
-        origin = getIntent().getStringExtra("origin");
+        origin = getIntent().getByteExtra("origin", Util.NEW_EMPLOYEE);
         getSupportActionBar().setTitle("Add Employee");
 
-        if (origin.equals("employee")){
+        if (origin == Util.NEW_EMPLOYEE){
             myOrg = getIntent().getParcelableExtra("oldOrg");
             initialize();
             orgNameText.setText(myOrg.getOrgName());

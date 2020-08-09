@@ -1,9 +1,11 @@
 package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,33 +13,37 @@ import android.view.View;
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Emp;
+import com.example.mtailor.utils.Util;
+
+import java.util.Objects;
 
 public class SelectProductActivity extends AppCompatActivity {
 
     Customer oldCustomer;
     Emp oldEmp;
-    String origin;
+    byte origin;
     boolean isEmp, isCustomer;
 
 //    origin = customerMeasurement (from ShowCustomers Activity & CustomerAdapter)
 //    origin = empMeasurement (from ShowCustomers Activity & EmpAdapter )
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_product);
 
-        getSupportActionBar().setTitle("Select Item");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Select Item");
 //        adding back button on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        origin = getIntent().getStringExtra("origin");
+        origin = getIntent().getByteExtra("origin", Util.CUSTOMER_MEASUREMENT);
 
-        isEmp = origin.equals("empMeasurement");
-        isCustomer = origin.equals("customerMeasurement");
+        isCustomer = origin == Util.CUSTOMER_MEASUREMENT;
+        isEmp = origin == Util.EMP_MEASUREMENT;
 
-        if (isCustomer) { oldCustomer = getIntent().getExtras().getParcelable("oldCustomer"); }
-        if (isEmp) { oldEmp = getIntent().getExtras().getParcelable("emp"); }
+        if (isCustomer) { oldCustomer = Objects.requireNonNull(getIntent().getExtras()).getParcelable("oldCustomer"); }
+        if (isEmp) { oldEmp = Objects.requireNonNull(getIntent().getExtras()).getParcelable("emp"); }
 
     }
 
@@ -67,7 +73,7 @@ public class SelectProductActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
             this.finish();
-        }
-        return super.onOptionsItemSelected(item);
+        } else return false;
+        return true;
     }
 }

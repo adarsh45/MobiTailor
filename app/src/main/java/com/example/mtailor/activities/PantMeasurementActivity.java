@@ -1,16 +1,15 @@
 package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +18,9 @@ import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Emp;
 import com.example.mtailor.pojo.Pant;
 import com.example.mtailor.utils.ResultDialog;
+import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class PantMeasurementActivity extends AppCompatActivity {
 
@@ -40,38 +41,41 @@ public class PantMeasurementActivity extends AppCompatActivity {
     Customer oldCustomer;
     Emp oldEmp;
     Pant pant, fetchedPant;
-    EditText editHeight, editWaist, editSeat,editBottom, editThigh, editUttaar, editPantNotes;
-    RadioGroup radioGroupPantPlates;
-    RadioButton selectedPantPlates;
-    Spinner pocketSpinner;
+    TextView textLastUpdateDate;
+    EditText editHeight, editWaist, editSeat, editBottom, editKnee, editThigh1, editThigh2, editSeatRound, editSeatUtaar, editNotes;
+    RadioGroup radioGroupPantType, radioGroupPantPocket, radioGroupPantPlates,
+                radioGroupPantSide, radioGroupPantStitch, radioGroupPantBackPocket;
 
-    String strPantPocket, UID, origin, id, titleText;
+    String UID, id, titleText;
+    private byte origin;
     boolean isEmp, isCustomer;
 
 //    Pocket: Side, Cross
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pant_measurement);
 
-        getSupportActionBar().setTitle("Pant Measurements");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Pant Measurements");
 
-        origin = getIntent().getStringExtra("origin");
+        origin = getIntent().getByteExtra("origin", Util.CUSTOMER_MEASUREMENT);
 
-        isEmp = origin.equals("empMeasurement");
-        isCustomer = origin.equals("customerMeasurement");
+        isEmp = origin == Util.EMP_MEASUREMENT;
+        isCustomer = origin == Util.CUSTOMER_MEASUREMENT;
 
-        if (isEmp){oldEmp = getIntent().getExtras().getParcelable("oldEmp");}
-        if (isCustomer) {oldCustomer = getIntent().getExtras().getParcelable("oldCustomer");}
+        if (isEmp){oldEmp = Objects.requireNonNull(getIntent().getExtras()).getParcelable("oldEmp");}
+        if (isCustomer) {oldCustomer = Objects.requireNonNull(getIntent().getExtras()).getParcelable("oldCustomer");}
 
         initialize();
         getPreviousPant();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
 //        adding back button on toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (isCustomer){
@@ -87,6 +91,7 @@ public class PantMeasurementActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         currentUser = mAuth.getCurrentUser();
+        assert currentUser != null;
         UID = currentUser.getUid();
 
         //init database and references
@@ -97,34 +102,28 @@ public class PantMeasurementActivity extends AppCompatActivity {
         TextView cName = findViewById(R.id.customer_name_pant_measurement);
         cName.setText(titleText);
 
+        textLastUpdateDate = findViewById(R.id.textLastUpdateDatePant);
 
 //        edit texts
         editHeight = findViewById(R.id.edit_pant_height);
         editWaist = findViewById(R.id.edit_pant_waist);
         editSeat = findViewById(R.id.edit_pant_seat);
         editBottom = findViewById(R.id.edit_pant_bottom);
-        editThigh = findViewById(R.id.edit_pant_thigh);
-        editUttaar = findViewById(R.id.edit_pant_uttaar);
-        editPantNotes = findViewById(R.id.edit_pant_notes);
+        editKnee = findViewById(R.id.edit_pant_knee);
+        editThigh1 = findViewById(R.id.edit_pant_thigh_1);
+        editThigh2 = findViewById(R.id.edit_pant_thigh_2);
+        editSeatRound = findViewById(R.id.edit_pant_seat_round);
+        editSeatUtaar = findViewById(R.id.edit_pant_seat_utaar);
+        editNotes = findViewById(R.id.edit_pant_notes);
 
-//        spinner
-        pocketSpinner = findViewById(R.id.pant_pocket_spinner);
-
-//        radio
+//        radio groups
+        radioGroupPantType = findViewById(R.id.radiogroup_pant_type);
+        radioGroupPantPocket = findViewById(R.id.radiogroup_pant_pocket);
         radioGroupPantPlates = findViewById(R.id.radiogroup_pant_plates);
+        radioGroupPantSide = findViewById(R.id.radiogroup_pant_side);
+        radioGroupPantStitch = findViewById(R.id.radiogroup_pant_stitch);
+        radioGroupPantBackPocket = findViewById(R.id.radiogroup_pant_back_pocket);
 
-//        get position of item selected in spinner
-        pocketSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strPantPocket = String.valueOf(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
     }
 
@@ -135,23 +134,30 @@ public class PantMeasurementActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     fetchedPant = dataSnapshot.getValue(Pant.class);
+
 //                    Set texts to text views and other fields
+                    assert fetchedPant != null;
                     editHeight.setText(fetchedPant.getHeight());
-                    editSeat.setText(fetchedPant.getSeat());
                     editWaist.setText(fetchedPant.getWaist());
+                    editSeat.setText(fetchedPant.getSeat());
                     editBottom.setText(fetchedPant.getBottom());
-                    editThigh.setText(fetchedPant.getThigh());
-                    editUttaar.setText(fetchedPant.getUttaar());
-                    editPantNotes.setText(fetchedPant.getNotes());
+                    editKnee.setText(fetchedPant.getKnee());
+                    editThigh1.setText(fetchedPant.getThigh1());
+                    editThigh2.setText(fetchedPant.getThigh2());
+                    editSeatRound.setText(fetchedPant.getSeatRound());
+                    editSeatUtaar.setText(fetchedPant.getSeatUtaar());
+                    editNotes.setText(fetchedPant.getNotes());
+
+                    textLastUpdateDate.setText(fetchedPant.getLastUpdateDate());
+
 //                    set radio
-                    if (fetchedPant.getPlates().equals("Yes")){
-                        radioGroupPantPlates.check(R.id.radio_plate_yes);
-                    }
-                    if (fetchedPant.getPlates().equals("No")){
-                        radioGroupPantPlates.check(R.id.radio_plate_no);
-                    }
-//                    drop downs
-                    pocketSpinner.setSelection(Integer.parseInt(fetchedPant.getPocket()));
+                    Util.checkRadio(radioGroupPantType, fetchedPant.getPantType());
+                    Util.checkRadio(radioGroupPantPocket, fetchedPant.getPantPocket());
+                    Util.checkRadio(radioGroupPantPlates, fetchedPant.getPantPlates());
+                    Util.checkRadio(radioGroupPantSide, fetchedPant.getPantSide());
+                    Util.checkRadio(radioGroupPantStitch, fetchedPant.getPantStitch());
+                    Util.checkRadio(radioGroupPantBackPocket, fetchedPant.getPantBackPocket());
+
                 }
 
             }
@@ -170,20 +176,31 @@ public class PantMeasurementActivity extends AppCompatActivity {
     }
 
     private void createPant() {
+//        get text from edit texts
         String strHeight = editHeight.getText().toString().trim();
         String strWaist = editWaist.getText().toString().trim();
         String strSeat = editSeat.getText().toString().trim();
         String strBottom = editBottom.getText().toString().trim();
-        String strThigh = editThigh.getText().toString().trim();
-        String strUttaar = editUttaar.getText().toString().trim();
-        String strNotes = editPantNotes.getText().toString().trim();
+        String strKnee = editKnee.getText().toString().trim();
+        String strThigh1 = editThigh1.getText().toString().trim();
+        String strThigh2 = editThigh2.getText().toString().trim();
+        String strSeatRound = editSeatRound.getText().toString().trim();
+        String strUtaar = editSeatUtaar.getText().toString().trim();
+        String strNotes = editNotes.getText().toString().trim();
 
-        int selectedID = radioGroupPantPlates.getCheckedRadioButtonId();
-        selectedPantPlates = findViewById(selectedID);
+//        get current date
+        String lastUpdateDate = Util.getCurrentDate();
 
-        String strPantPlates = selectedPantPlates.getText().toString().trim();
+//        get text from radio groups
+        String strPantType = Util.getTextFromRadioGroup(this, radioGroupPantType);
+        String strPantPocket = Util.getTextFromRadioGroup(this, radioGroupPantPocket);
+        String strPantPlates = Util.getTextFromRadioGroup(this, radioGroupPantPlates);
+        String strPantSide = Util.getTextFromRadioGroup(this, radioGroupPantSide);
+        String strPantStitch = Util.getTextFromRadioGroup(this, radioGroupPantStitch);
+        String strPantBackPocket = Util.getTextFromRadioGroup(this, radioGroupPantBackPocket);
 
-        pant = new Pant(id, strHeight, strWaist, strSeat, strBottom, strThigh, strUttaar, strPantPocket, strPantPlates, strNotes);
+        pant = new Pant(id,lastUpdateDate,strHeight, strWaist, strSeat, strBottom, strKnee, strThigh1, strThigh2, strSeatRound, strUtaar, strNotes,
+                strPantType, strPantPocket, strPantPlates, strPantSide, strPantStitch, strPantBackPocket);
 
         rootRef.setValue(pant).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -202,4 +219,5 @@ public class PantMeasurementActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
