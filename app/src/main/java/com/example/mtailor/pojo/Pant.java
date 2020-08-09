@@ -1,5 +1,8 @@
 package com.example.mtailor.pojo;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Pant {
 
    private String id, lastUpdateDate, height, waist, seat, bottom, knee,

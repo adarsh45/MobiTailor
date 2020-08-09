@@ -354,33 +354,20 @@
                             android:textColor="@color/colorWhite"
                             android:textSize="@dimen/form_text" />
 
-                        <RadioGroup
-                            android:id="@+id/radiogroup_pant_type"
+                        <Spinner
+                            android:id="@+id/pant_type_spinner"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="2"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
+                            android:background="@drawable/custom_edit_text"
+                            android:entries="@array/pant_type_list"
+                            android:gravity="center"
+                            android:paddingVertical="6dp"
+                            android:textColor="@color/colorBlack"
+                            android:textColorHint="@color/colorHint"
+                            android:textSize="@dimen/form_text" />
 
-                            <RadioButton
-                                android:id="@+id/radiobtn_pant_baggy"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/pant_baggy"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/button_text" />
-
-                            <RadioButton
-                                android:id="@+id/radiobtn_pant_bootcut"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/pant_bootcut"
-                                android:textColor="@color/colorWhite"
-                                android:textSize="@dimen/button_text" />
-
-                        </RadioGroup>
                     </LinearLayout>
 
                     <LinearLayout

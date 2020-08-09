@@ -61,6 +61,17 @@
     <string name="pant_seat_round">Seat Round</string>
     <string name="pant_seat_utaar">Seat Utaar</string>
     <string name="pant_type">Type</string>
+
+    <string-array name="pant_type_list">
+        <item>Bootcut</item>
+        <item>Baggi Pant</item>
+        <item>Belt / Button Paijama</item>
+        <item>Belt / Chain Paijama</item>
+        <item>Nadi / Button Paijama</item>
+        <item>Nadi Paijama</item>
+        <item>Salwar</item>
+    </string-array>
+
     <string name="pant_baggy">Baggy</string>
     <string name="pant_bootcut">Bootcut</string>
     <string name="pant_pocket">Pocket</string>
@@ -77,6 +88,7 @@
     <string name="pant_patti_pocket">Patti Pocket</string>
     <string name="pant_bone_pocket">Bone Pocket</string>
     <string name="notes">Notes</string>
+
 
 
     <string name="cloth_color">Color of Cloth:</string>
