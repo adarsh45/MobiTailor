@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobi Tailor</string>
+    <string name="name_of_customer">नाव :</string>
+    <string name="customer_mobile">मोबाईल :</string>
+    <string name="customer_address">पत्ता :</string>
+    <string name="shirt_height">उंची</string>
+</resources>

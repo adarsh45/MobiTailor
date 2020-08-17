@@ -85,7 +85,7 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
 //        adding back button on toolbar
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (isCustomer) {
@@ -101,7 +101,6 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         currentUser = mAuth.getCurrentUser();
-        assert currentUser != null;
         UID = currentUser.getUid();
 
         //init database and references
@@ -173,33 +172,36 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
                     fetchedShirt = dataSnapshot.getValue(Shirt.class);
 
 //                    Set texts to textviews and other fields
-                    assert fetchedShirt != null;
-                    shirtHeight.setText(fetchedShirt.getShirtHeightValue());
-                    shirtChest.setText(fetchedShirt.getShirtChestValue());
-                    shirtStomach.setText(fetchedShirt.getShirtStomachValue());
-                    shirtSeat.setText(fetchedShirt.getShirtSeatValue());
-                    shirtShoulder.setText(fetchedShirt.getShirtShoulderValue());
-                    shirtSleeveFull.setText(fetchedShirt.getShirtSleeveFullValue());
-                    shirtSleeveFullCuff.setText(fetchedShirt.getShirtSleeveFullCuffValue());
-                    shirtSleeveFullBicep.setText(fetchedShirt.getShirtSleeveFullBicepValue());
-                    shirtSleeveHalf.setText(fetchedShirt.getShirtSleeveHalfValue());
-                    shirtSleeveHalfBicep.setText(fetchedShirt.getShirtSleeveHalfBicepValue());
-                    shirtCollar.setText(fetchedShirt.getShirtCollarValue());
-                    shirtFrontChest.setText(fetchedShirt.getShirtFrontChestValue());
-                    shirtFrontStomach.setText(fetchedShirt.getShirtFrontStomachValue());
-                    shirtFrontSeat.setText(fetchedShirt.getShirtFrontSeatValue());
-                    shirtNotes.setText(fetchedShirt.getNotes());
+                    try {
+                        shirtHeight.setText(fetchedShirt.getShirtHeightValue());
+                        shirtChest.setText(fetchedShirt.getShirtChestValue());
+                        shirtStomach.setText(fetchedShirt.getShirtStomachValue());
+                        shirtSeat.setText(fetchedShirt.getShirtSeatValue());
+                        shirtShoulder.setText(fetchedShirt.getShirtShoulderValue());
+                        shirtSleeveFull.setText(fetchedShirt.getShirtSleeveFullValue());
+                        shirtSleeveFullCuff.setText(fetchedShirt.getShirtSleeveFullCuffValue());
+                        shirtSleeveFullBicep.setText(fetchedShirt.getShirtSleeveFullBicepValue());
+                        shirtSleeveHalf.setText(fetchedShirt.getShirtSleeveHalfValue());
+                        shirtSleeveHalfBicep.setText(fetchedShirt.getShirtSleeveHalfBicepValue());
+                        shirtCollar.setText(fetchedShirt.getShirtCollarValue());
+                        shirtFrontChest.setText(fetchedShirt.getShirtFrontChestValue());
+                        shirtFrontStomach.setText(fetchedShirt.getShirtFrontStomachValue());
+                        shirtFrontSeat.setText(fetchedShirt.getShirtFrontSeatValue());
+                        shirtNotes.setText(fetchedShirt.getNotes());
 
-                    textLastUpdateDate.setText(fetchedShirt.getLastUpdateDate());
+                        textLastUpdateDate.setText(fetchedShirt.getLastUpdateDate());
 
 //                    set radio
-                    Util.checkRadio(fetchedShirt.getShirtPatti(), getResources().getString(R.string.shirt_box_patti), radioBtnBoxPatti);
-                    Util.checkRadio(fetchedShirt.getShirtPatti(), getResources().getString(R.string.shirt_in_patti), radioBtnInPatti);
-                    Util.checkRadio(fetchedShirt.getShirtSilai(), getResources().getString(R.string.shirt_plain_silai), radioBtnPlainSilai);
-                    Util.checkRadio(fetchedShirt.getShirtSilai(), getResources().getString(R.string.shirt_cover_silai), radioBtnCoverSilai);
+                        Util.checkRadio(fetchedShirt.getShirtPatti(), getResources().getString(R.string.shirt_box_patti), radioBtnBoxPatti);
+                        Util.checkRadio(fetchedShirt.getShirtPatti(), getResources().getString(R.string.shirt_in_patti), radioBtnInPatti);
+                        Util.checkRadio(fetchedShirt.getShirtSilai(), getResources().getString(R.string.shirt_plain_silai), radioBtnPlainSilai);
+                        Util.checkRadio(fetchedShirt.getShirtSilai(), getResources().getString(R.string.shirt_cover_silai), radioBtnCoverSilai);
 
 //                    drop downs
-                    typeSpinner.setSelection(Integer.parseInt(fetchedShirt.getShirtType()));
+                        typeSpinner.setSelection(Integer.parseInt(fetchedShirt.getShirtType()));
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -219,7 +221,6 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         } else finish();
     }
 
-    @SuppressLint("ResourceType")
     private void createShirt() {
         String shirtHeightValue, shirtChestValue, shirtStomachValue, shirtSeatValue, shirtShoulderValue,
               shirtSleeveFullValue, shirtSleeveFullCuffValue, shirtSleeveFullBicepValue, shirtSleeveHalfValue,

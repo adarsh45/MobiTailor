@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import com.example.mtailor.R;
@@ -23,12 +26,14 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Util {
     private Util(){}
 
     public static String settingsSPFileName = "SettingsSP";
     public static String booleanShowOrgSection = "showOrgSection";
+    public static String appLanguage = "appLanguage";
 
     public static int PHONE_CALL_PERMISSION = 1;
 
@@ -46,6 +51,20 @@ public class Util {
 
     public static final byte CUSTOMER_MEASUREMENT = 31;
     public static final byte EMP_MEASUREMENT = 32;
+
+
+    public static void setLocaleLanguage(Context context,String lang){
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.locale = locale;
+        } else {
+            configuration.setLocale(locale);
+        }
+        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+//        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
+    }
 
     public static void callTheCustomer(final Context context, int editTextMobileID, int callBtnID) {
         EditText editTextMobile = ((Activity) context).findViewById(editTextMobileID);

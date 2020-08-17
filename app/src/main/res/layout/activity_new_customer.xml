@@ -35,7 +35,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="4"
-                android:text="Name:"
+                android:text="@string/name_of_customer"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/large_form_text" />
 
@@ -66,7 +66,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="4"
-                android:text="Mobile:"
+                android:text="@string/customer_mobile"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/large_form_text" />
 
@@ -97,7 +97,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="4"
-                android:text="Address:"
+                android:text="@string/address"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/large_form_text" />
 
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="8dp"
-                android:text="Register"
+                android:text="@string/register"
                 android:textAllCaps="false"
                 android:background="@drawable/custom_button"
                 android:textColor="@color/colorWhite"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:background="@drawable/custom_button"
                 android:textColor="@color/colorWhite"
@@ -150,21 +150,50 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/call_btn"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/call_customer"
-            android:textAllCaps="false"
-            android:background="@drawable/custom_button"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/form_text"
-            android:backgroundTint="@color/colorGreen"
-            android:drawableLeft="@drawable/ic_baseline_call_24"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/layout_margin_vertical"
-            android:padding="@dimen/form_text"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/call_btn"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/call_customer"
+                android:textAllCaps="false"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/form_text"
+                android:backgroundTint="@color/colorGreen"
+                android:drawableLeft="@drawable/ic_baseline_call_24"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/layout_margin_vertical"
+                android:padding="@dimen/form_text"/>
+
+            <Button
+                android:id="@+id/delete_btn"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_customer"
+                android:textAllCaps="false"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/form_text"
+                android:backgroundTint="@color/colorDarkRed"
+                android:drawableLeft="@drawable/ic_delete"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/layout_margin_vertical"
+                android:padding="@dimen/form_text"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -39,6 +39,7 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 
     @Override
     public void onBindViewHolder(@NonNull final CustomerViewHolder holder, final int position) {
+        holder.rvCounterText.setText(String.valueOf(position+1));
         holder.rvCustomerName.setText(list.get(position).getCustomerName());
         holder.rvCustomerMobile.setText(list.get(position).getCustomerMobile());
 
@@ -67,14 +68,15 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
 
 
     //class for view holder
-    public class CustomerViewHolder extends RecyclerView.ViewHolder{
+    public static class CustomerViewHolder extends RecyclerView.ViewHolder{
 
         LinearLayout linearLayout;
-        TextView rvCustomerName, rvCustomerMobile;
+        TextView rvCounterText, rvCustomerName, rvCustomerMobile;
 
         public CustomerViewHolder(@NonNull View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.linearLayout);
+            rvCounterText = itemView.findViewById(R.id.counter_text);
             rvCustomerName = itemView.findViewById(R.id.rv_customer_name);
             rvCustomerMobile = itemView.findViewById(R.id.rv_customer_mobile);
 

@@ -2,9 +2,14 @@ package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,6 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Locale;
 import java.util.Objects;
 
 public class NewCustomerActivity extends AppCompatActivity {
@@ -75,22 +81,75 @@ public class NewCustomerActivity extends AppCompatActivity {
         editCustomerAddress = findViewById(R.id.edit_customer_address);
 
     }
+    public void setLocaleLanguage(String lang){
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            configuration.locale = locale;
+//        } else {
+//            configuration.setLocale(locale);
+//        }
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+//        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
+    }
 
     private void getOrigin() {
         origin = getIntent().getByteExtra("origin",Util.NEW_CUSTOMER);
+
+//        set language according to settings
+//        SharedPreferences sharedPreferences = getSharedPreferences(Util.settingsSPFileName, MODE_PRIVATE);
+//        if (sharedPreferences != null){
+//            String langCode = sharedPreferences.getString(Util.appLanguage, "en");
+//        }
+//        Util.setLocaleLanguage(this, "mr_IN");
+        setLocaleLanguage("mr_rIn");
 
         if (origin == Util.UPDATE_CUSTOMER) {
             bundle = getIntent().getExtras();
             assert bundle != null;
             oldCustomer = bundle.getParcelable("oldCustomer");
             Button registerBtn = findViewById(R.id.btn_register_customer);
-            registerBtn.setText("Update");
+            registerBtn.setText(R.string.update);
             editCustomerName.setText(oldCustomer.getCustomerName());
             editCustomerMobile.setText(oldCustomer.getCustomerMobile());
             editCustomerAddress.setText(oldCustomer.getCustomerAddress());
 //            callTheCustomer();
             Util.callTheCustomer(NewCustomerActivity.this, R.id.edit_customer_mobile, R.id.call_btn);
+
+            deleteCustomer(oldCustomer.getCustomerID());
         }
+    }
+
+    private void deleteCustomer(final String customerId) {
+        Button deleteBtn = findViewById(R.id.delete_btn);
+        deleteBtn.setVisibility(View.VISIBLE);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(NewCustomerActivity.this)
+                .setTitle("Delete Customer")
+                .setMessage("Are you sure you want to delete this customer ?")
+                .setIcon(R.drawable.ic_delete)
+
+                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        customerRef.child(customerId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) finish();
+                                else Util.showSnackBar(layout, "Something went wrong");
+                            }
+                        });
+                    }
+                })
+
+                .setNegativeButton("Cancel", null)
+                .show();
+            }
+        });
+
     }
 
     public void onClickNewCustomer(View view){

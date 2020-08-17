@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.preference.SwitchPreference
         android:title="Organizations Section On/Off"
@@ -8,5 +9,16 @@
         android:summary="Choose whether you want to use organizations section"
         android:key="organizations-section"
         android:defaultValue="false" />
+
+    <androidx.preference.PreferenceCategory
+        android:title="Language of App">
+        <androidx.preference.ListPreference
+            android:key="select_language"
+            android:title="Select Language"
+            android:entryValues="@array/language_values"
+            android:entries="@array/language_entries"
+            app:defaultValue="2"/>
+    </androidx.preference.PreferenceCategory>
+
 
 </androidx.preference.PreferenceScreen>
