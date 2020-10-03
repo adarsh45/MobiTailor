@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mtailor.activities.NewCustomerActivity;
 import com.example.mtailor.R;
+import com.example.mtailor.activities.NewOrderActivity;
 import com.example.mtailor.activities.SelectProductActivity;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.utils.Util;
@@ -46,17 +48,40 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (whatTODOhere == Util.SHOW_CUSTOMERS){
-                    Intent intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
-                    intent.putExtra("origin", Util.UPDATE_CUSTOMER);
-                    intent.putExtra("oldCustomer", list.get(position));
-                    holder.linearLayout.getContext().startActivity(intent);
-                } else if (whatTODOhere == Util.TAKE_MEASUREMENTS){
-                    Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-                    intent.putExtra("origin", Util.CUSTOMER_MEASUREMENT);
-                    intent.putExtra("oldCustomer",list.get(position));
-                    holder.linearLayout.getContext().startActivity(intent);
+                Intent intent;
+                switch (whatTODOhere){
+                    case Util.SHOW_CUSTOMERS:
+                        intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
+                        intent.putExtra("origin", Util.UPDATE_CUSTOMER);
+                        intent.putExtra("oldCustomer", list.get(position));
+                        holder.linearLayout.getContext().startActivity(intent);
+                        break;
+                    case Util.TAKE_MEASUREMENTS:
+                        intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
+                        intent.putExtra("origin", Util.CUSTOMER_MEASUREMENT);
+                        intent.putExtra("oldCustomer",list.get(position));
+                        holder.linearLayout.getContext().startActivity(intent);
+                        break;
+                    case Util.NEW_ORDER:
+                        intent = new Intent(holder.linearLayout.getContext(), NewOrderActivity.class);
+                        intent.putExtra("oldCustomer",list.get(position));
+                        holder.linearLayout.getContext().startActivity(intent);
+//                        Toast.makeText(holder.linearLayout.getContext(), "Wait i will take order", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(holder.linearLayout.getContext(), "Something went wrong! Restart the App!", Toast.LENGTH_SHORT).show();
                 }
+//                if (whatTODOhere == Util.SHOW_CUSTOMERS){
+//                    Intent intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
+//                    intent.putExtra("origin", Util.UPDATE_CUSTOMER);
+//                    intent.putExtra("oldCustomer", list.get(position));
+//                    holder.linearLayout.getContext().startActivity(intent);
+//                } else if (whatTODOhere == Util.TAKE_MEASUREMENTS){
+//                    Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
+//                    intent.putExtra("origin", Util.CUSTOMER_MEASUREMENT);
+//                    intent.putExtra("oldCustomer",list.get(position));
+//                    holder.linearLayout.getContext().startActivity(intent);
+//                }
             }
         });
     }

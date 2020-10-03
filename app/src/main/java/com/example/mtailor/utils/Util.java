@@ -41,6 +41,8 @@ public class Util {
     public static final byte TAKE_MEASUREMENTS = 12;
     public static final byte SHOW_ORGANIZATIONS = 13;
     public static final byte SHOW_EMPLOYEES = 14;
+    public static final byte NEW_ORDER = 15;
+    public static final byte SHOW_ORDERS = 16;
 
     public static final byte NEW_CUSTOMER = 21;
     public static final byte NEW_ORGANIZATION = 22;

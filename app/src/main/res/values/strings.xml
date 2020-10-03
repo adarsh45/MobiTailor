@@ -25,7 +25,7 @@
     <string name="call_customer" translatable="false">&#160;Call Customer</string>
     <string name="delete_customer" translatable="false">&#160;Delete Customer</string>
 
-<!--    new customer activity-->
+    <!--    new customer activity-->
     <string name="name_of_customer">Name:</string>
     <string name="customer_mobile">Mobile:</string>
     <string name="customer_address">Address:</string>
@@ -97,7 +97,6 @@
     <string name="notes" translatable="false">Notes</string>
 
 
-
     <string name="cloth_color" translatable="false">Color of Cloth:</string>
     <string-array name="cloth_color_list">
         <item>Raymond Navy</item>
@@ -122,8 +121,6 @@
     </string>
     <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>
     <string name="title_activity_settings" translatable="false">SettingsActivity</string>
-
-
 
 
     <string-array name="language_values">

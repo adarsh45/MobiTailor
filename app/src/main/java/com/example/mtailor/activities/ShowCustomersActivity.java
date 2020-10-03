@@ -79,7 +79,12 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 getCustomers();
                 break;
             case Util.TAKE_MEASUREMENTS:
-                getSupportActionBar().setTitle("Select Customer");
+                getSupportActionBar().setTitle("Measurement: Select Customer");
+                findViewById(R.id.fab).setVisibility(View.GONE);
+                getCustomers();
+                break;
+            case Util.NEW_ORDER:
+                getSupportActionBar().setTitle("Order: Select Customer");
                 findViewById(R.id.fab).setVisibility(View.GONE);
                 getCustomers();
                 break;
@@ -232,12 +237,26 @@ public class ShowCustomersActivity extends AppCompatActivity {
                             Customer myCustomer = mySnap.getValue(Customer.class);
                             customerArrayList.add(myCustomer);
                         }
-
-                        if (origin == Util.SHOW_CUSTOMERS){
-                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
-                        } else if (origin == Util.TAKE_MEASUREMENTS){
-                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.TAKE_MEASUREMENTS));
+                        
+                        switch (origin){
+                            case Util.SHOW_CUSTOMERS:
+                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
+                                break;
+                            case Util.TAKE_MEASUREMENTS:
+                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.TAKE_MEASUREMENTS));
+                                break;
+                            case Util.NEW_ORDER:
+                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.NEW_ORDER));
+                                break;
+                            default:
+                                Toast.makeText(ShowCustomersActivity.this, "Something went wrong! Restart the App!", Toast.LENGTH_SHORT).show();
                         }
+
+//                        if (origin == Util.SHOW_CUSTOMERS){
+//                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
+//                        } else if (origin == Util.TAKE_MEASUREMENTS){
+//                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.TAKE_MEASUREMENTS));
+//                        }
                     }
                     else {
                         TextView emptyTextView = findViewById(R.id.empty_text);

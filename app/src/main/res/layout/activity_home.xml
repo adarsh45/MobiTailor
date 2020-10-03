@@ -76,27 +76,69 @@
                 <Button
                     android:id="@+id/show_customer_btn"
                     android:onClick="onClickHome"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_new_customer"
+                    android:drawablePadding="@dimen/layout_margin_vertical"
                     android:text="Customers"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
 
                 <Button
-                    android:id="@+id/show_measurements_button"
+                    android:id="@+id/show_measurements_btn"
                     android:onClick="onClickHome"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_show_customers"
-                    android:text="Measurements"
+                    android:drawablePadding="@dimen/layout_margin_vertical"
+                    android:text="Measurement"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginVertical="10dp">
+
+                <Button
+                    android:id="@+id/new_order_btn"
+                    android:onClick="onClickHome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:drawableTop="@drawable/ic_new_order"
+                    android:drawablePadding="@dimen/layout_margin_vertical"
+                    android:text="New Order"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+                <Button
+                    android:id="@+id/show_orders_btn"
+                    android:onClick="onClickHome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:drawableTop="@drawable/ic_update_order"
+                    android:drawablePadding="@dimen/layout_margin_vertical"
+                    android:text="View Orders"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
@@ -134,6 +176,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_new_customer"
+                    android:drawablePadding="@dimen/layout_margin_vertical"
                     android:onClick="onClickHome"
                     android:text="Organisation"
                     android:textAllCaps="false"
@@ -149,6 +192,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_show_customers"
+                    android:drawablePadding="@dimen/layout_margin_vertical"
                     android:text="Employees"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"

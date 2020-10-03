@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Profile;
@@ -156,31 +157,44 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onClickHome(View view){
+        Intent intent;
         switch (view.getId()){
             case R.id.show_customer_btn:
                 //new customer register
-                Intent intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
                 intent.putExtra("origin",Util.SHOW_CUSTOMERS);
                 startActivity(intent);
                 break;
-            case R.id.show_measurements_button:
+            case R.id.show_measurements_btn:
                 //show for measurement
-                Intent intent1 = new Intent(HomeActivity.this, ShowCustomersActivity.class);
-                intent1.putExtra("origin", Util.TAKE_MEASUREMENTS);
-                startActivity(intent1);
+                intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                intent.putExtra("origin", Util.TAKE_MEASUREMENTS);
+                startActivity(intent);
+                break;
+            case R.id.new_order_btn:
+                //take new order
+                intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                intent.putExtra("origin", Util.NEW_ORDER);
+                startActivity(intent);
+                break;
+            case R.id.show_orders_btn:
+                //view previous order
+                Toast.makeText(this, "View previous orders", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.new_org_btn:
                 //add new organization
-                Intent orgIntent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
-                orgIntent.putExtra("origin",Util.SHOW_ORGANIZATIONS);
-                startActivity(orgIntent);
+                intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                intent.putExtra("origin",Util.SHOW_ORGANIZATIONS);
+                startActivity(intent);
                 break;
             case R.id.new_employee_btn:
                 //add new employee within the organization
-                Intent empIntent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
-                empIntent.putExtra("origin",Util.SHOW_EMPLOYEES);
-                startActivity(empIntent);
+                intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                intent.putExtra("origin",Util.SHOW_EMPLOYEES);
+                startActivity(intent);
                 break;
+            default:
+                Toast.makeText(this, "Sorry, this section is under construction!", Toast.LENGTH_SHORT).show();
         }
     }
 
