@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -62,6 +63,8 @@ public class OrderPdfActivity extends AppCompatActivity {
     private Profile shopProfile;
     private Customer mCustomer = null;
     private Order mOrder = null;
+
+    private static final String TAG = "OrderPdfActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +195,7 @@ public class OrderPdfActivity extends AppCompatActivity {
             writeInPDF(document, shopProfile, mCustomer, mOrder);
 
 //            open pdf file for previewing
-//            previewPDF(filePath);
+            previewPDF(filePath);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -204,19 +207,27 @@ public class OrderPdfActivity extends AppCompatActivity {
     }
 
     private void previewPDF(String filePath) {
-        //            open pdf via intent
-            File file = new File(filePath);
-            Intent intent = new Intent(Intent.ACTION_VIEW);;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Uri uri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
-                intent.setData(uri);
-                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } else {
-                intent.setDataAndType(Uri.parse(filePath), "application/pdf");
-                intent = Intent.createChooser(intent, "Open File");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
+//        check first if file exists
+        File file = new File(filePath);
+        if (!file.exists()){
+            Util.showSnackBar(rootLayout, "Error opening the file!");
+            return;
+        }
+//        open pdf via intent
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri fileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
+            intent.setDataAndType(fileUri,"application/pdf");
+//        intent.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(intent);
+            Log.d(TAG, "previewPDF: activity STARTED");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Util.showSnackBar(rootLayout, "Error opening the file!");
+            Log.d(TAG, "previewPDF: ERROR: "+e.getMessage());
+        }
     }
 
     private void writeInPDF(Document document,Profile shop, Customer customer, Order order) throws DocumentException {
