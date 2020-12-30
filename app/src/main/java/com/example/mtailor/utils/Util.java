@@ -16,12 +16,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
-import com.example.mtailor.R;
-import com.example.mtailor.activities.NewCustomerActivity;
 import com.google.android.material.snackbar.Snackbar;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Font;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,6 +54,10 @@ public class Util {
     public static final byte EMP_MEASUREMENT = 32;
 
 
+    public static Font getFont(float fontSize, int fontStyle, BaseColor baseColor){
+        return new Font(Font.FontFamily.HELVETICA, fontSize, fontStyle, baseColor);
+    }
+
     public static void setLocaleLanguage(Context context,String lang){
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -80,7 +83,7 @@ public class Util {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:" + mobile));
                     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        // TO-DO: Consider calling
+                        //    Consider calling
                         //    ActivityCompat#requestPermissions
                         ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, Util.PHONE_CALL_PERMISSION);
                         // here to request the missing permissions, and then overriding
@@ -128,7 +131,7 @@ public class Util {
     }
 
     public static String getCurrentDate(){
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM YYYY");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", new Locale("en"));
         return dateFormat.format(new Date());
     }
 

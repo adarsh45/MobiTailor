@@ -179,7 +179,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.show_orders_btn:
                 //view previous order
-                Toast.makeText(this, "View previous orders", Toast.LENGTH_SHORT).show();
+                intent = new Intent(HomeActivity.this, ShowCustomersActivity.class);
+                intent.putExtra("origin", Util.SHOW_ORDERS);
+                startActivity(intent);
                 break;
             case R.id.new_org_btn:
                 //add new organization

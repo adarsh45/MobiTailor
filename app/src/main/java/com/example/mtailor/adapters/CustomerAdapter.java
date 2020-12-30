@@ -64,6 +64,14 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                         break;
                     case Util.NEW_ORDER:
                         intent = new Intent(holder.linearLayout.getContext(), NewOrderActivity.class);
+                        intent.putExtra("origin", Util.NEW_ORDER);
+                        intent.putExtra("oldCustomer",list.get(position));
+                        holder.linearLayout.getContext().startActivity(intent);
+//                        Toast.makeText(holder.linearLayout.getContext(), "Wait i will take order", Toast.LENGTH_SHORT).show();
+                        break;
+                    case Util.SHOW_ORDERS:
+                        intent = new Intent(holder.linearLayout.getContext(), NewOrderActivity.class);
+                        intent.putExtra("origin", Util.SHOW_ORDERS);
                         intent.putExtra("oldCustomer",list.get(position));
                         holder.linearLayout.getContext().startActivity(intent);
 //                        Toast.makeText(holder.linearLayout.getContext(), "Wait i will take order", Toast.LENGTH_SHORT).show();

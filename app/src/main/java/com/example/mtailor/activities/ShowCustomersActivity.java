@@ -84,7 +84,12 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 getCustomers();
                 break;
             case Util.NEW_ORDER:
-                getSupportActionBar().setTitle("Order: Select Customer");
+                getSupportActionBar().setTitle("New Order: Select Customer");
+                findViewById(R.id.fab).setVisibility(View.GONE);
+                getCustomers();
+                break;
+            case Util.SHOW_ORDERS:
+                getSupportActionBar().setTitle("Show Order: Select Customer");
                 findViewById(R.id.fab).setVisibility(View.GONE);
                 getCustomers();
                 break;
@@ -238,19 +243,24 @@ public class ShowCustomersActivity extends AppCompatActivity {
                             customerArrayList.add(myCustomer);
                         }
                         
-                        switch (origin){
-                            case Util.SHOW_CUSTOMERS:
-                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
-                                break;
-                            case Util.TAKE_MEASUREMENTS:
-                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.TAKE_MEASUREMENTS));
-                                break;
-                            case Util.NEW_ORDER:
-                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.NEW_ORDER));
-                                break;
-                            default:
-                                Toast.makeText(ShowCustomersActivity.this, "Something went wrong! Restart the App!", Toast.LENGTH_SHORT).show();
-                        }
+//                        switch (origin){
+//                            case Util.SHOW_CUSTOMERS:
+//                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
+//                                break;
+//                            case Util.TAKE_MEASUREMENTS:
+//                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.TAKE_MEASUREMENTS));
+//                                break;
+//                            case Util.NEW_ORDER:
+//                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.NEW_ORDER));
+//                                break;
+//                            case Util.SHOW_ORDERS:
+//                                recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_ORDERS));
+//                                break;
+//                            default:
+//                                Toast.makeText(ShowCustomersActivity.this, "Something went wrong! Restart the App!", Toast.LENGTH_SHORT).show();
+//                        }
+
+                        recyclerView.setAdapter(new CustomerAdapter(customerArrayList, origin));
 
 //                        if (origin == Util.SHOW_CUSTOMERS){
 //                            recyclerView.setAdapter(new CustomerAdapter(customerArrayList, Util.SHOW_CUSTOMERS));
@@ -313,7 +323,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (origin == Util.SHOW_CUSTOMERS || origin == Util.TAKE_MEASUREMENTS){
+                if (origin == Util.SHOW_CUSTOMERS || origin == Util.TAKE_MEASUREMENTS || origin == Util.NEW_ORDER || origin == Util.SHOW_ORDERS){
                     searchCustomer(newText);
                 } else if (origin == Util.SHOW_ORGANIZATIONS || origin == Util.SHOW_EMPLOYEES){
                     searchOrg(newText);

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.NewOrderActivity"
     android:background="@drawable/bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/root_view_new_order">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -140,7 +141,7 @@
                     android:gravity="center"
                     android:inputType="number"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/total_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -199,7 +200,7 @@
                     android:gravity="center"
                     android:inputType="number"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/total_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -257,7 +258,7 @@
                     android:gravity="center"
                     android:inputType="number"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/total_3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -315,7 +316,7 @@
                     android:gravity="center"
                     android:inputType="number"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/total_4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -352,12 +353,16 @@
                         android:text="Delivery Date"
                         android:layout_gravity="center"/>
 
-                    <TextView
+                    <EditText
+                        android:id="@+id/new_order_date_picker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_edit_text"
                         android:textColor="@color/colorBlack"
                         android:textSize="24sp"
+                        android:clickable="true"
+                        android:inputType="date"
+                        android:focusable="false"
                         android:layout_marginVertical="4dp"
                         android:layout_marginHorizontal="8dp"
                         android:gravity="center"/>
@@ -456,6 +461,40 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btn_save_new_order"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    android:background="@drawable/custom_button"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
+
+                <Button
+                    android:id="@+id/btn_cancel_new_order"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    android:background="@drawable/custom_button"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/form_text" />
 
             </LinearLayout>
 
