@@ -12,9 +12,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
@@ -124,6 +126,16 @@ public class OrderPdfActivity extends AppCompatActivity {
 
     }
 
+    private String getPdfFilePath(){
+        //        pdf file name
+        String fileName = mOrder.getOrder_ref_no() + "_" +mOrder.getOrder_id();
+//        pdf file path
+        return this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
+                + File.separator
+                + fileName
+                + ".pdf";
+    }
+
     private void initViews() {
 //        root layout (for snack bar)
         rootLayout = findViewById(R.id.root_view_order_pdf);
@@ -141,13 +153,48 @@ public class OrderPdfActivity extends AppCompatActivity {
             case R.id.btn_view_bill_pdf:
 //              generate pdf and view it in pdf reader
                 generateInvoice();
+                previewPDF(getPdfFilePath());
                 break;
             case R.id.btn_send_bill_whatsapp:
 //                get that generated pdf and send it on whatsapp
-                Util.showSnackBar(rootLayout, "Sorry, Feature is under development!");
+                sendBillToWhatsApp();
                 break;
             default:
 //                do nothing
+        }
+    }
+
+    private void sendBillToWhatsApp() {
+
+        String formattedNumber = "91" + mCustomer.getCustomerMobile();
+        String filePath = getPdfFilePath();
+
+        File pdfFile = new File(filePath);
+//        check if file exists first
+        if (!pdfFile.exists()){
+            Util.showSnackBar(rootLayout, "File not found! Please generate pdf first!");
+            return;
+        }
+
+        if (! Util.isAppInstalled(this, "com.whatsapp")){
+            Util.showSnackBar(rootLayout, "Error: WhatsApp not installed on your device!");
+            return;
+        }
+
+        try{
+            Log.d(TAG, "sendToWhatsApp: preparing to open whatsapp");
+            Intent sendIntent = new Intent("android.intent.action.MAIN");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", pdfFile));
+            sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(formattedNumber) + "@s.whatsapp.net");
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setPackage("com.whatsapp");
+            sendIntent.setType("application/pdf");
+            startActivity(sendIntent);
+            Log.d(TAG, "sendToWhatsApp: Activity started!");
+
+        } catch(Exception e) {
+            Toast.makeText(this,"Error/n"+ e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "sendToWhatsApp: "+ e.getMessage());
         }
     }
 
@@ -163,6 +210,7 @@ public class OrderPdfActivity extends AppCompatActivity {
             } else {
 //                permission is already granted , proceed
                 savePDF();
+
             }
         } else {
 //            if device is below marshmallow then no need to check for permission, directly write the file
@@ -173,13 +221,7 @@ public class OrderPdfActivity extends AppCompatActivity {
     private void savePDF() {
 //        create document class' object
         Document document = new Document();
-//        pdf file name
-        String fileName = mOrder.getOrder_ref_no() + "_" +mOrder.getOrder_id();
-//        pdf file path
-        String filePath = this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
-                + File.separator
-                + fileName
-                + ".pdf";
+        String filePath = getPdfFilePath();
 
 //        delete file if previously exists
         if (new File(filePath).exists()) {
@@ -194,15 +236,11 @@ public class OrderPdfActivity extends AppCompatActivity {
 //            write contents of invoice inside pdf file
             writeInPDF(document, shopProfile, mCustomer, mOrder);
 
-//            open pdf file for previewing
-            previewPDF(filePath);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-
 
     }
 
