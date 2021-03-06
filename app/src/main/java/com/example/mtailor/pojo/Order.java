@@ -14,6 +14,20 @@ public class Order implements Parcelable {
 
     public Order(){}
 
+    public Order(String order_creation_date, String delivery_date,
+                 String total_amount, String advance_amount, String pending_amount,
+                 OrderItem item_1, OrderItem item_2, OrderItem item_3, OrderItem item_4) {
+        this.order_creation_date = order_creation_date;
+        this.delivery_date = delivery_date;
+        this.total_amount = total_amount;
+        this.advance_amount = advance_amount;
+        this.pending_amount = pending_amount;
+        this.item_1 = item_1;
+        this.item_2 = item_2;
+        this.item_3 = item_3;
+        this.item_4 = item_4;
+    }
+
     public Order(String order_id, String order_ref_no, String order_creation_date, String delivery_date, String total_amount, String advance_amount, String pending_amount, OrderItem item_1, OrderItem item_2, OrderItem item_3, OrderItem item_4) {
         this.order_id = order_id;
         this.order_ref_no = order_ref_no;

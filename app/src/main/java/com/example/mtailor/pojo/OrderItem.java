@@ -5,9 +5,9 @@ import android.os.Parcelable;
 
 public class OrderItem implements Parcelable {
 
-
-
     private String item_name, item_quantity, item_rate, total;
+
+    public OrderItem(){}
 
     public OrderItem(String item_name, String item_quantity, String item_rate, String total) {
         this.item_name = item_name;

@@ -35,7 +35,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -60,12 +59,16 @@ public class NewOrderActivity extends AppCompatActivity {
     int intFinalTotal = 0, intAdvance = 0, intPending = 0;
 
     private Customer customer = null;
+    private Order order;
+    private byte origin;
 
     final Calendar myCalendar = Calendar.getInstance();
 
+//    firebase
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef, orderRef;
-    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
     @Override
@@ -76,14 +79,14 @@ public class NewOrderActivity extends AppCompatActivity {
         initViews();
 
         myDB = FirebaseDatabase.getInstance();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null){
             Util.showSnackBar(rootViewNewOrder, "Something went wrong! Please restart the app!");
             return;
         }
         rootRef = myDB.getReference("Users").child(currentUser.getUid());
 
-        getCustomer();
+        getOrigin();
+//        setOrderDataInTexts();
 
         valueChangeListener(quant1, rate1, total1);
         valueChangeListener(quant2, rate2, total2);
@@ -97,9 +100,43 @@ public class NewOrderActivity extends AppCompatActivity {
 
     }
 
-    private void getCustomer() {
+    private void setOrderDataInTexts() {
+        if (origin == Util.UPDATE_ORDER && order != null){
+            item1.setText(order.getItem_1().getItem_name());
+            item2.setText(order.getItem_2().getItem_name());
+            item3.setText(order.getItem_3().getItem_name());
+            item4.setText(order.getItem_4().getItem_name());
+
+//            TextView finalTotal, pendingAmount;
+//            EditText advanceAmount;
+            quant1.setText(order.getItem_1().getItem_quantity());
+            quant2.setText(order.getItem_2().getItem_quantity());
+            quant3.setText(order.getItem_3().getItem_quantity());
+            quant4.setText(order.getItem_4().getItem_quantity());
+
+            rate1.setText(order.getItem_1().getItem_rate());
+            rate2.setText(order.getItem_2().getItem_rate());
+            rate3.setText(order.getItem_3().getItem_rate());
+            rate4.setText(order.getItem_4().getItem_rate());
+
+            total1.setText(order.getItem_1().getTotal());
+            total2.setText(order.getItem_2().getTotal());
+            total3.setText(order.getItem_3().getTotal());
+            total4.setText(order.getItem_4().getTotal());
+
+            datePicker.setText(order.getDelivery_date());
+            finalTotal.setText("₹ " + order.getTotal_amount());
+            pendingAmount.setText("₹ " + order.getPending_amount());
+            advanceAmount.setText(order.getAdvance_amount());
+
+        }
+    }
+
+    private void getOrigin() {
 //        String origin = getIntent().getStringExtra("origin");
         customer = getIntent().getParcelableExtra("oldCustomer");
+        order = getIntent().getParcelableExtra("oldOrder");
+        origin = getIntent().getByteExtra("origin", Util.UNKNOWN_ORIGIN);
 
         if (customer != null){
             customerNameNewOrder.setText(customer.getCustomerName());
@@ -113,7 +150,7 @@ public class NewOrderActivity extends AppCompatActivity {
         btnSaveNewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveNewOrder();
+                    saveNewOrder();
             }
         });
 
@@ -125,12 +162,63 @@ public class NewOrderActivity extends AppCompatActivity {
         });
     }
 
-    private void saveNewOrder() {
-        if (customer == null) {
-            Util.showSnackBar(rootViewNewOrder, "Something went wrong! Please restart the app!");
+    private void updateOrder() {
+        Log.d(TAG, "updateOrder: HELLO");
+
+        if (order == null){
+            Util.showSnackBar(rootViewNewOrder, "Previous order not found! Please retry!");
             return;
         }
+        Order orderData = getOrderData();
+        if (orderData == null){
+            Util.showSnackBar(rootViewNewOrder, "Some data may be empty! please retry!");
+            return;
+        }
+        orderData.setOrder_id(order.getOrder_id());
+        orderData.setOrder_ref_no(order.getOrder_ref_no());
+
+        saveOrderToDB(orderData);
+
+    }
+
+    private void saveOrderToDB(final Order orderData) {
+
         String customerId = customer.getCustomerID();
+
+        orderRef = rootRef.child("Orders").child(customerId);
+        //                push this order object to DB
+        orderRef.child(orderData.getOrder_id()).setValue(orderData).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                        //                            order details are saved successfully
+//                            now update the ordersCounter value as per the latest order reference number
+                        rootRef.child("Orders").child("ordersCount").setValue(orderData.getOrder_ref_no()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+//                                        open order pdf activity with order and customer object passed and close this one
+                                    Intent intent = new Intent(NewOrderActivity.this, OrderPdfActivity.class);
+                                    intent.putExtra("customer", customer);
+                                    intent.putExtra("order", orderData);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Util.showSnackBar(rootViewNewOrder, "Error updating order reference number,Kindly delete Order and recreate!");
+                                }
+                            }
+                        });
+                } else Util.showSnackBar(rootViewNewOrder, "Error saving order, Something went wrong!");
+            }
+        });
+    }
+
+    private Order getOrderData(){
+        Order orderData = null;
+        if (customer == null) {
+            Util.showSnackBar(rootViewNewOrder, "Something went wrong! Please restart the app!");
+            return null;
+        }
 
         String item_1_name = item1.getText().toString();
         String item_2_name = item2.getText().toString();
@@ -163,23 +251,51 @@ public class NewOrderActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(datePicker.getText())){
             datePicker.setError("Delivery Date must be entered!");
-            return;
+            Util.showSnackBar(rootViewNewOrder, "Delivery Date must be entered!");
+            return null;
         }
         if (TextUtils.isEmpty(finalTotal.getText())){
             finalTotal.setError("Final Total could not be empty!");
+            Util.showSnackBar(rootViewNewOrder, "Final Total could not be empty!");
+            return null;
         }
         if (TextUtils.isEmpty(advanceAmount.getText())){
-            finalTotal.setError("Advance Amount could not be empty!");
+            advanceAmount.setError("Advance Amount could not be empty!");
+            Util.showSnackBar(rootViewNewOrder, "Advance Amount could not be empty!");
+            return null;
         }
         if (TextUtils.isEmpty(pendingAmount.getText())){
-            finalTotal.setError("Pending Amount could not be empty!");
+            pendingAmount.setError("Pending Amount could not be empty!");
+            Util.showSnackBar(rootViewNewOrder, "Pending Amount could not be empty!");
+            return null;
         }
         final String deliveryDate = datePicker.getText().toString();
         final String totalAmount = finalTotal.getText().toString().substring(2);
         final String strAdvanceAmount = advanceAmount.getText().toString();
         final String strPendingAmount = pendingAmount.getText().toString().substring(2);
 
+        String orderCreationDate = Util.getCurrentDate();
+
+        //                creating actual order object having all the details
+        orderData = new Order
+                (orderCreationDate, deliveryDate, totalAmount, strAdvanceAmount, strPendingAmount,
+                        orderItem1, orderItem2, orderItem3, orderItem4);
+
+        return orderData;
+    }
+
+    private void saveNewOrder() {
+
+        final Order orderData = getOrderData();
+
+        String customerId = customer.getCustomerID();
+
         orderRef = rootRef.child("Orders").child(customerId);
+
+        if (orderData == null){
+            Util.showSnackBar(rootViewNewOrder, "Some Data might be empty! Please retry!");
+            return;
+        }
 
         final String[] ordersCount = new String[1];
 
@@ -217,40 +333,13 @@ public class NewOrderActivity extends AppCompatActivity {
                     Util.showSnackBar(rootViewNewOrder, "Something wrong with order! Please re-open the app!");
                     return;
                 }
-
-//                get current date
-                String orderCreationDate = Util.getCurrentDate();
-
 //                creating actual order object having all the details
-                final Order order = new Order
-                        (orderID, orderRefNo, orderCreationDate, deliveryDate, totalAmount, strAdvanceAmount, strPendingAmount,
-                                orderItem1, orderItem2, orderItem3, orderItem4);
+                orderData.setOrder_id(orderID);
+                orderData.setOrder_ref_no(orderRefNo);
 
-//                push this order object to DB
-                orderRef.child(orderID).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-//                            order details are saved successfully
-//                            now update the ordersCounter value as per the latest order reference number
-                            rootRef.child("Orders").child("ordersCount").setValue(orderRefNo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-//                                        open order pdf activity with order and customer object passed and close this one
-                                        Intent intent = new Intent(NewOrderActivity.this, OrderPdfActivity.class);
-                                        intent.putExtra("customer", customer);
-                                        intent.putExtra("order", order);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        Util.showSnackBar(rootViewNewOrder, "Error updating order reference number,Kindly delete Order and recreate!");
-                                    }
-                                }
-                            });
-                        } else Util.showSnackBar(rootViewNewOrder, "Error saving order, Something went wrong!");
-                    }
-                });
+//                push order to DB & proceed to next activity
+                saveOrderToDB(orderData);
+
             }
 
             @Override

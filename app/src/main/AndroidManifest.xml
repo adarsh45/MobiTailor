@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.OrderPdfActivity"></activity>
+        <activity android:name=".activities.ShowOrdersActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
+        <activity android:name=".activities.OrderPdfActivity" />
         <activity android:name=".activities.NewOrderActivity" />
         <activity
             android:name=".activities.SettingsActivity"
@@ -46,17 +48,15 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-
-<!--        file provider config for accessing device files     -->
+            android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- file provider config for accessing device files -->
         <provider
-            android:authorities="com.example.mtailor.provider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.mtailor.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 
