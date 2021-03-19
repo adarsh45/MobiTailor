@@ -270,9 +270,9 @@ public class NewOrderActivity extends AppCompatActivity {
             return null;
         }
         final String deliveryDate = datePicker.getText().toString();
-        final String totalAmount = finalTotal.getText().toString().substring(2);
+        final String totalAmount = finalTotal.getText().toString();
         final String strAdvanceAmount = advanceAmount.getText().toString();
-        final String strPendingAmount = pendingAmount.getText().toString().substring(2);
+        final String strPendingAmount = pendingAmount.getText().toString();
 
         String orderCreationDate = Util.getCurrentDate();
 
@@ -497,8 +497,7 @@ public class NewOrderActivity extends AppCompatActivity {
                         break;
                 }
                 intFinalTotal = intTotal1+intTotal2+intTotal3+intTotal4;
-                String totalText = "₹ "+ intFinalTotal;
-                finalTotal.setText(totalText);
+                finalTotal.setText(String.valueOf(intFinalTotal));
             }
 
             @Override
@@ -518,8 +517,7 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 intPending = intFinalTotal - intAdvance;
-                String pending = "₹ " + intPending;
-                pendingAmount.setText(pending);
+                pendingAmount.setText(String.valueOf(intPending));
             }
 
             @Override
@@ -544,8 +542,7 @@ public class NewOrderActivity extends AppCompatActivity {
                     return;
                 }
                 intPending = intFinalTotal - intAdvance;
-                String pending = "₹ " + intPending;
-                pendingAmount.setText(pending);
+                pendingAmount.setText(String.valueOf(intPending));
             }
 
             @Override

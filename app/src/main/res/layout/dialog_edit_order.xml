@@ -13,7 +13,7 @@
         android:text="Edit Order Details"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:layout_marginVertical="4dp"/>
 
     <LinearLayout
@@ -94,16 +94,30 @@
             android:text="Total"
             android:gravity="center"
             android:layout_gravity="center"/>
-        <TextView
-            android:id="@+id/tv_edit_final_total"
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            android:text="₹ 0"
-            android:gravity="center"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:text="₹ "/>
+
+            <TextView
+                android:id="@+id/tv_edit_final_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:text="0"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -141,7 +155,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_marginVertical="4dp">
+        android:layout_marginVertical="4dp"
+        android:layout_gravity="center">
 
         <TextView
             android:layout_width="0dp"
@@ -153,16 +168,30 @@
             android:gravity="center"
             android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/tv_edit_pending"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="₹ 0"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹ "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_edit_pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -184,7 +213,7 @@
             android:textAllCaps="false"
             android:background="@drawable/custom_button"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/form_text" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btn_cancel_edit_order"
@@ -196,7 +225,7 @@
             android:textAllCaps="false"
             android:background="@drawable/custom_button"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/form_text" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

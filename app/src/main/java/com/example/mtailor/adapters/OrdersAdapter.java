@@ -47,11 +47,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
     @Override
     public void onBindViewHolder(@NonNull final OrderViewHolder holder, int position) {
         final Order order = orders.get(position);
-        holder.tvRvOrderRefNo.setText("Ref.No: "+order.getOrder_ref_no());
+        holder.tvRvOrderRefNo.setText(order.getOrder_ref_no());
         holder.tvRvOrderDate.setText(order.getOrder_creation_date());
         holder.tvRvOrderDelDate.setText(order.getDelivery_date());
-        holder.tvRvTotalBill.setText("Total Bill: ₹ "+ order.getTotal_amount());
-        holder.tvRvPendingBill.setText("Pending: ₹ "+ order.getPending_amount());
+        holder.tvRvTotalBill.setText(order.getTotal_amount());
+        holder.tvRvPendingBill.setText(order.getPending_amount());
 
     }
 

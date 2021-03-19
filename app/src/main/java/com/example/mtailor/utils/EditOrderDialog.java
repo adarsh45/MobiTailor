@@ -3,6 +3,9 @@ package com.example.mtailor.utils;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,12 +76,9 @@ public class EditOrderDialog extends DialogFragment {
 
         setTexts();
 
-        etDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickDateForOrder();
-            }
-        });
+        advanceAmtChangeListener();
+
+        pickDateForOrder();
 
         btnSaveEditOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,15 +98,16 @@ public class EditOrderDialog extends DialogFragment {
     }
 
     private void setTexts() {
-        if (tvOrderRefNo == null){
-            Log.d(TAG, "setTexts: TV is NULL");
+        if (order == null || customerId == null){
+            Log.d(TAG, "setTexts: Order or CustomerID is null");
+            Toast.makeText(context, "Order not found! Please try again!", Toast.LENGTH_SHORT).show();
             return;
         }
         tvOrderRefNo.setText(order.getOrder_ref_no());
         etDatePicker.setText(order.getDelivery_date());
-        tvFinalTotal.setText("₹ " +order.getTotal_amount());
+        tvFinalTotal.setText(order.getTotal_amount());
         etAdvanceAmount.setText(order.getAdvance_amount());
-        tvPendingAmount.setText("₹ " + order.getPending_amount());
+        tvPendingAmount.setText(order.getPending_amount());
     }
 
     private void editOrder() {
@@ -169,6 +170,36 @@ public class EditOrderDialog extends DialogFragment {
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         etDatePicker.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    private void advanceAmtChangeListener(){
+        etAdvanceAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //    values for calculation
+                int  intTotal = 0, intAdvance = 0, intPending = 0;
+                intAdvance = TextUtils.isEmpty(s) ? 0 : Integer.parseInt(s.toString());
+                intTotal = Integer.parseInt(tvFinalTotal.getText().toString());
+                intPending = Integer.parseInt(tvPendingAmount.getText().toString());
+
+                if (intAdvance > intTotal){
+                    etAdvanceAmount.setError("Advance cannot be greater than Total Bill!");
+                    return;
+                }
+                intPending = intTotal - intAdvance;
+                tvPendingAmount.setText(String.valueOf(intPending));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 }
