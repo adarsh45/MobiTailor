@@ -1,36 +1,24 @@
 package com.example.mtailor.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mtailor.R;
-import com.example.mtailor.activities.NewCustomerActivity;
-import com.example.mtailor.activities.NewOrderActivity;
 import com.example.mtailor.activities.OrderPdfActivity;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Order;
 import com.example.mtailor.utils.EditOrderDialog;
-import com.example.mtailor.utils.ResultDialog;
-import com.example.mtailor.utils.Util;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewHolder> {
 
@@ -65,23 +53,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
         holder.tvRvTotalBill.setText("Total Bill: ₹ "+ order.getTotal_amount());
         holder.tvRvPendingBill.setText("Pending: ₹ "+ order.getPending_amount());
 
-//        holder.btnEditOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ctx, OrderPdfActivity.class);
-//                intent.putExtra("customer", customer);
-//                intent.putExtra("order", order);
-//                holder.itemView.getContext().startActivity(intent);
-//            }
-//        });
-
     }
 
     @Override
@@ -107,31 +78,26 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
                     onEditOrderClick();
                 }
             });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openOrderDetails();
+                }
+            });
         }
 
+//        onclick method for edit btn
         public void onEditOrderClick(){
             EditOrderDialog editOrderDialog = new EditOrderDialog(ctx, orders.get(getAdapterPosition()), customer.getCustomerID());
             editOrderDialog.show(fragmentManager, "Edit Order Dialog");
         }
 
-
-//        @Override
-//        public void onClick(View v) {
-//            if (v.getId() == R.id.btn_edit_order){
-//                EditOrderDialog editOrderDialog = new EditOrderDialog(ctx.getApplicationContext(), orders.get(getAdapterPosition()), customer.getCustomerID());
-////                editOrderDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-////                editOrderDialog.setContentView(R.layout.dialog_edit_order);
-//                editOrderDialog.show();
-//            } else {
-//                Intent intent = new Intent(ctx, OrderPdfActivity.class);
-//                intent.putExtra("customer", customer);
-//                intent.putExtra("order", orders.get(getAdapterPosition()));
-//                itemView.getContext().startActivity(intent);
-//            }
-//            Log.d(TAG, "onClick: " + v.getId());
-//        }
+//        onclick for whole itemview order
+        public void openOrderDetails(){
+            Intent intent = new Intent(ctx, OrderPdfActivity.class);
+            intent.putExtra("customer", customer);
+            intent.putExtra("order", orders.get(getAdapterPosition()));
+            itemView.getContext().startActivity(intent);
+        }
     }
-
-
-
 }

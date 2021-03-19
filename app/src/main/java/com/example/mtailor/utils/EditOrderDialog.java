@@ -1,8 +1,6 @@
 package com.example.mtailor.utils;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.mtailor.R;
-import com.example.mtailor.activities.NewOrderActivity;
 import com.example.mtailor.pojo.Order;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +42,6 @@ public class EditOrderDialog extends DialogFragment {
 //    views
     private EditText etDatePicker, etAdvanceAmount;
     private TextView tvOrderRefNo, tvFinalTotal, tvPendingAmount;
-//    private Button btnSaveEditOrder, btnCancelEditOrder;
 
 //    firebase
     private FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
