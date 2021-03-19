@@ -185,10 +185,15 @@ public class OrderPdfActivity extends AppCompatActivity {
             Log.d(TAG, "sendToWhatsApp: preparing to open whatsapp");
             Intent sendIntent = new Intent("android.intent.action.MAIN");
             sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", pdfFile));
-            sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(formattedNumber) + "@s.whatsapp.net");
-            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(formattedNumber) + "@s.whatsapp.net");
+            sendIntent.putExtra("jid",formattedNumber + "@s.whatsapp.net");
+//            Log.d(TAG, "sendBillToWhatsApp: "+ formattedNumber);
+            Toast.makeText(this, formattedNumber, Toast.LENGTH_SHORT).show();
             sendIntent.setPackage("com.whatsapp");
             sendIntent.setType("application/pdf");
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(sendIntent);
             Log.d(TAG, "sendToWhatsApp: Activity started!");
 

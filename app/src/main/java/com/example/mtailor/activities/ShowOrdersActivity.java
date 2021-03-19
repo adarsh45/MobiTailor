@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,7 +87,7 @@ public class ShowOrdersActivity extends AppCompatActivity {
                         Log.d(TAG, "onDataChange: "+ snap.getValue(Order.class).getOrder_ref_no());
                     }
                     rvShowOrders.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    rvShowOrders.setAdapter(new OrdersAdapter(getApplicationContext(), customer, orderArrayList));
+                    rvShowOrders.setAdapter(new OrdersAdapter(getApplicationContext(), getSupportFragmentManager(), customer, orderArrayList));
                 } else {
                     tvNoResults.setVisibility(View.VISIBLE);
                     rvShowOrders.setVisibility(View.GONE);
