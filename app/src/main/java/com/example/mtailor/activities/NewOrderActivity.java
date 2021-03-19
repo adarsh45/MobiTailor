@@ -191,7 +191,7 @@ public class NewOrderActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                        //                            order details are saved successfully
+//                            order details are saved successfully
 //                            now update the ordersCounter value as per the latest order reference number
                         rootRef.child("Orders").child("ordersCount").setValue(orderData.getOrder_ref_no()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -297,7 +297,7 @@ public class NewOrderActivity extends AppCompatActivity {
             return;
         }
 
-        final String[] ordersCount = new String[1];
+        final String[] ordersCount = {"0000"};
 
 //        first fetch ordersCount counter from DB for using as order ref no
         rootRef.child("Orders").child("ordersCount").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -307,7 +307,7 @@ public class NewOrderActivity extends AppCompatActivity {
                 if (snapshot.exists()){
 //                    order ref no is already present just fetch it and save in variable
                     ordersCount[0] = snapshot.getValue(String.class);
-                    Log.d(TAG, "onDataChange: "+ ordersCount[0]);
+                    Log.d(TAG, "onComplete: GOT FROM DB");
                 } else {
 //                    ordersCount counter was not present in DB
 //                    now creating ordersCount field in DB and saving it in local variable also
@@ -325,6 +325,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
                 String orderID = orderRef.push().getKey();
 //                update the ordersCount counter and use it as a order ref no
+                Log.d(TAG, "onDataChange: ordersCount=" + ordersCount[0]);
                 @SuppressLint("DefaultLocale") final String orderRefNo = String.format("%04d", Integer.parseInt(ordersCount[0]) + 1);
 
                 Log.d(TAG, "onDataChange: orderRefNo:"+ orderRefNo);
