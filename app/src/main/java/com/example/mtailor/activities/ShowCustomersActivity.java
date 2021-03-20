@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,9 +22,12 @@ import com.example.mtailor.adapters.CustomerAdapter;
 import com.example.mtailor.adapters.OrgAdapter;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Org;
+import com.example.mtailor.pojo.PaymentDetails;
 import com.example.mtailor.pojo.Profile;
 import com.example.mtailor.utils.ResultDialog;
 import com.example.mtailor.utils.Util;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,13 +43,16 @@ import java.util.Objects;
 
 public class ShowCustomersActivity extends AppCompatActivity {
 
+    private static final String TAG = "ShowCustomersActivity";
+
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef, orgRef, customerRef;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
     String UID;
-    private long amountPaid = 0;
+    private long limit = 25;
+    private boolean isPaidMember = false;
     byte origin;
     private long customerCount;
 
@@ -68,7 +75,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialize();
-        checkIfPaymentDone();
+        checkIsPaidMember();
 
         origin = getIntent().getByteExtra("origin", Util.SHOW_CUSTOMERS);
 
@@ -106,15 +113,34 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
     }
 
-    private void checkIfPaymentDone() {
-        DatabaseReference profileRef = rootRef.child(UID).child("Profile");
-        profileRef.addValueEventListener(new ValueEventListener() {
+    private void checkIsPaidMember() {
+        final DatabaseReference paymentDetailsRef = rootRef.child(UID).child("PaymentDetails");
+        paymentDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild("amountPaid")){
-                    Profile ownerProfile = snapshot.getValue(Profile.class);
-                    assert ownerProfile != null;
-                    amountPaid = ownerProfile.getAmountPaid();
+                if (snapshot.exists() && snapshot.hasChild("paidMember") && snapshot.hasChild("limit")){
+//                    payment details
+                    PaymentDetails paymentDetails = snapshot.getValue(PaymentDetails.class);
+                    assert paymentDetails != null;
+                    limit = paymentDetails.getLimit();
+                    isPaidMember = paymentDetails.isPaidMember();
+
+                } else {
+//                    no data about payment details in DB
+//                    save new data in DB now
+                    PaymentDetails paymentDetails = new PaymentDetails
+                            (UID, Util.getCurrentDate(), null, false, 25);
+                    paymentDetailsRef.setValue(paymentDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+//                                registration date is saved in DB
+                                Log.d(TAG, "onComplete: NEW Payment Details saved in DB");
+                            } else {
+                                Toast.makeText(ShowCustomersActivity.this, "Some data is not stored in Databse! Please Logout & Retry", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
             @Override
@@ -134,8 +160,8 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 Intent fabIntent = new Intent();
 
 //                check if payment done
-                if (customerCount >= 25 && amountPaid <= 0){
-                    ResultDialog dialog = new ResultDialog(ShowCustomersActivity.this, false, "Number of Entries exceeded than 25, Please pay to use the app!");
+                if (!isPaidMember && customerCount >= limit){
+                    ResultDialog dialog = new ResultDialog(ShowCustomersActivity.this, false, "Customers are more than " + limit + ", Please make payment to use the app!");
                     dialog.show(getSupportFragmentManager(),"Result");
                     return;
                 }

@@ -6,18 +6,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Profile {
 
     private String userUID, shopName, ownerName, shopAddress, ownerMobile;
-    private long amountPaid;
 
     public Profile(){}
-
-    public Profile(String userUID, String shopName, String ownerName, String shopAddress, String ownerMobile, long amountPaid) {
-        this.userUID = userUID;
-        this.shopName = shopName;
-        this.ownerName = ownerName;
-        this.shopAddress = shopAddress;
-        this.ownerMobile = ownerMobile;
-        this.amountPaid = amountPaid;
-    }
 
     public Profile(String userUID, String shopName, String ownerName, String shopAddress, String ownerMobile) {
         this.userUID = userUID;
@@ -27,13 +17,7 @@ public class Profile {
         this.ownerMobile = ownerMobile;
     }
 
-    public long getAmountPaid() {
-        return amountPaid;
-    }
 
-    public void setAmountPaid(int amountPaid) {
-        this.amountPaid = amountPaid;
-    }
 
     public String getUserUID() {
         return userUID;

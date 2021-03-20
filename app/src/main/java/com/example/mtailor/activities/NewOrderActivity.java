@@ -67,8 +67,8 @@ public class NewOrderActivity extends AppCompatActivity {
 //    firebase
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef, orderRef;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseUser currentUser = mAuth.getCurrentUser();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
     @Override
@@ -125,8 +125,8 @@ public class NewOrderActivity extends AppCompatActivity {
             total4.setText(order.getItem_4().getTotal());
 
             datePicker.setText(order.getDelivery_date());
-            finalTotal.setText("₹ " + order.getTotal_amount());
-            pendingAmount.setText("₹ " + order.getPending_amount());
+            finalTotal.setText(order.getTotal_amount());
+            pendingAmount.setText(order.getPending_amount());
             advanceAmount.setText(order.getAdvance_amount());
 
         }
@@ -214,7 +214,7 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     private Order getOrderData(){
-        Order orderData = null;
+        Order orderData;
         if (customer == null) {
             Util.showSnackBar(rootViewNewOrder, "Something went wrong! Please restart the app!");
             return null;
