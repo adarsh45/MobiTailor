@@ -3,11 +3,15 @@ package com.example.mtailor.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +28,8 @@ import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Org;
 import com.example.mtailor.pojo.PaymentDetails;
 import com.example.mtailor.pojo.Profile;
+import com.example.mtailor.utils.LanguageHelper;
+import com.example.mtailor.utils.LocaleHelper;
 import com.example.mtailor.utils.ResultDialog;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,6 +66,8 @@ public class ShowCustomersActivity extends AppCompatActivity {
     ArrayList<Org> orgArrayList;
     RecyclerView recyclerView;
 
+    private Resources resources;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -79,39 +87,42 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
         origin = getIntent().getByteExtra("origin", Util.SHOW_CUSTOMERS);
 
+        resources = LanguageHelper.updateLanguage(this);
+
         switch (origin){
             case Util.SHOW_CUSTOMERS:
-                getSupportActionBar().setTitle("View Customers");
+                getSupportActionBar().setTitle(resources.getString(R.string.view_customers));
                 createFAB();
                 getCustomers();
                 break;
             case Util.TAKE_MEASUREMENTS:
-                getSupportActionBar().setTitle("Measurement: Select Customer");
+                getSupportActionBar().setTitle(resources.getString(R.string.measurement_select_customer));
                 findViewById(R.id.fab).setVisibility(View.GONE);
                 getCustomers();
                 break;
             case Util.NEW_ORDER:
-                getSupportActionBar().setTitle("New Order: Select Customer");
+                getSupportActionBar().setTitle(resources.getString(R.string.new_order_select_customer));
                 findViewById(R.id.fab).setVisibility(View.GONE);
                 getCustomers();
                 break;
             case Util.SHOW_ORDERS:
-                getSupportActionBar().setTitle("Show Order: Select Customer");
+                getSupportActionBar().setTitle(resources.getString(R.string.show_orders_select_customer));
                 findViewById(R.id.fab).setVisibility(View.GONE);
                 getCustomers();
                 break;
             case Util.SHOW_ORGANIZATIONS:
                 createFAB();
-                getSupportActionBar().setTitle("Organizations");
+                getSupportActionBar().setTitle(resources.getString(R.string.organizations));
                 getOrganizations();
                 break;
             case Util.SHOW_EMPLOYEES:
-                getSupportActionBar().setTitle("Select Organization");
+                getSupportActionBar().setTitle(resources.getString(R.string.select_org));
                 getOrganizations();
                 break;
         }
 
     }
+
 
     private void checkIsPaidMember() {
         final DatabaseReference paymentDetailsRef = rootRef.child(UID).child("PaymentDetails");

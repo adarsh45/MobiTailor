@@ -1,8 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mobi Tailor</string>
     <string name="name_of_customer">नाव :</string>
     <string name="customer_mobile">मोबाईल :</string>
     <string name="customer_address">पत्ता :</string>
     <string name="shirt_height">उंची</string>
+    <string name="register">सेव्ह करा</string>
+    <string name="cancel">रद्द करा</string>
+    <string name="save" translatable="false">सेव्ह करा</string>
+    <string name="last_update" translatable="false">मागील अपडेट:&#160;</string>
+    <string name="update" translatable="false">अपडेट करा</string>
+    <string name="customer_name" translatable="false">ग्राहकाचे नाव</string>
+    <string name="unknown">सापडले नाही</string>
+    <string name="login_text" translatable="false">लॉगिन</string>
+    <string name="signin_text">" मोबाइल साइन इन"</string>
+    <string name="verify" translatable="false">व्हेरिफाय करा</string>
+    <string name="phone_hint">मोबाइल नंबर प्रविष्ट करा</string>
+    <string name="profile">प्रोफाइल</string>
+    <string name="shop_name" translatable="false">दुकानाचे नाव:</string>
+    <string name="owner_name">मालकाचे नाव:</string>
+    <string name="address">पत्ता:&#160;</string>
+    <string name="call_customer">कॉल करा</string>
+    <string name="delete_customer" translatable="false">&#160;डिलीट करा</string>
+    <string name="shirt_chest" translatable="false">छाती</string>
+    <string name="shirt_stomach" translatable="false">पोट</string>
+    <string name="shirt_seat" translatable="false">सीट</string>
+    <string name="shirt_shoulder">शोल्डर</string>
+    <string name="shirt_sleeves">बाही</string>
+    <string name="shirt_sleeves_full">फुल</string>
+    <string name="shirt_sleeves_half">हाफ</string>
+    <string name="shirt_sleeves_cuff">कफ</string>
+    <string name="shirt_bicep">दंडघेर</string>
+    <string name="shirt_collar">गळा</string>
+    <string name="shirt_front">फ्रंट</string>
+    <string name="shirt_box_patti">बॉक्स पट्टी</string>
+    <string name="shirt_in_patti">आतून पट्टी</string>
+    <string name="shirt_cover_silai">कव्हर शिलाई</string>
+    <string name="shirt_plain_silai">प्लेन शिलाई</string>
+    <string name="type">प्रकार</string>
+    <string name="pant_height">उंची</string>
+    <string name="pant_waist">कंबर</string>
+    <string name="pant_seat">सीट</string>
+    <string name="pant_bottom">बॉटम</string>
+    <string name="pant_knee">गुडघा</string>
+    <string name="pant_thigh">मांडी</string>
+    <string name="pant_seat_round">सीट घेर</string>
+    <string name="pant_seat_utaar">सीट उतार</string>
+    <string name="pant_type">प्रकार</string>
+    <string name="pant_baggy">प्लेट पँट</string>
+    <string name="pant_bootcut">बिगर प्लेट</string>
+    <string name="pant_pocket">पॉकेट</string>
+    <string name="pant_side_pocket">साईड पॉकेट</string>
+    <string name="pant_cross_pocket">क्रॉस पॉकेट</string>
+    <string name="pant_plates">प्लेट्स</string>
+    <string name="yes">होय</string>
+    <string name="no">नाही</string>
+    <string name="pant_side_stitch">साईड शिलाई</string>
+    <string name="pant_side_plane">साईड चिरवा</string>
+    <string name="pant_bottom_stitch">बॉटम टीप</string>
+    <string name="pant_hand_stitch">हात शिलाई</string>
+    <string name="pant_back_pocket">बॅक पॉकेट</string>
+    <string name="pant_patti_pocket">पट्टी पॉकेट</string>
+    <string name="pant_bone_pocket">बोन पॉकेट</string>
+    <string name="notes">इतर</string>
+    <string name="ok">ओके</string>
+    <string name="customers">ग्राहक</string>
+    <string name="measurements">मापे</string>
+    <string name="new_order">नवीन बिल</string>
+    <string name="view_orders" translatable="false">सर्व बिल्स पहा</string>
+    <string name="otp_hint">OTP प्रविष्ट करा</string>
+    <string name="view_customers">ग्राहकाची माहिती</string>
+    <string name="measurement_select_customer">मापे: ग्राहक निवडा</string>
+    <string name="new_order_select_customer">नवीन बिल : ग्राहक निवडा</string>
+    <string name="show_orders_select_customer">बिल पहा : ग्राहक निवडा</string>
+    <string name="organizations">संस्था</string>
+    <string name="select_org">संस्था निवडा</string>
+    <string name="item">तपशील</string>
+    <string name="quantity">नग</string>
+    <string name="rate">दर</string>
+    <string name="total">एकूण</string>
+    <string name="delivery_date">डिलिव्हरी दिनांक</string>
+    <string name="advance">ऍडव्हान्स</string>
+    <string name="pending">येणे बाकी</string>
+    <string name="shirt">शर्ट</string>
+    <string name="pant">पँट</string>
+    <string name="shirt_measurements">शर्ट मापे</string>
+    <string name="pant_measurements">पँट मापे</string>
+    <string name="select_item">प्रकार निवडा</string>
+
+    <string-array name="shirt_type_list">
+        <item>अँपल</item>
+        <item>ओपन</item>
+        <item>मॅनिला</item>
+        <item>३ बटनी शर्ट</item>
+        <item>सफारी</item>
+        <item>नेहरू / कुर्ता</item>
+    </string-array>
+
+    <string-array name="pant_type_list">
+        <item>बुटकट</item>
+        <item>बॅगी पँट</item>
+        <item>बेल्ट बटन पायजमा</item>
+        <item>बेल्ट चेन पायजमा</item>
+        <item>नाडी बटन पायजमा</item>
+        <item>नाडी पायजमा</item>
+        <item>सलवार</item>
+    </string-array>
+    <string name="order_details">बिलाचा तपशील</string>
+    <string name="order_ref_no">रेफ. नं.</string>
+    <string name="view_bill_pdf">PDF बिल पहा</string>
+    <string name="send_bill_whatsapp">व्हाट्सएप बिल पाठवा</string>
+    <string name="edit_order_details">बिलामध्ये बदल करा</string>
+    <string name="order_date">बुकिंग दिनांक</string>
 </resources>

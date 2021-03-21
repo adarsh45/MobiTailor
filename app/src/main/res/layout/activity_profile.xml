@@ -9,7 +9,7 @@
     android:id="@+id/profile_layout">
 
     <TextView
-        android:id="@+id/customer_name_shirt_measurement"
+        android:id="@+id/text_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -31,7 +31,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customer_name_shirt_measurement">
+        app:layout_constraintTop_toBottomOf="@+id/text_profile">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,23 +40,24 @@
             android:weightSum="10">
 
             <TextView
+                android:id="@+id/text_shop_name"
                 android:layout_width="0dp"
-                android:textColor="@color/colorBlack"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:text="@string/shop_name"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/form_text" />
 
             <EditText
                 android:id="@+id/edit_shop_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:hint="e.g. Adarsh Tailors"
+                android:inputType="textCapWords"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorHint"
-                android:layout_width="0dp"
-                android:layout_weight="6"
-                android:textSize="@dimen/form_text"
-                android:layout_height="wrap_content"
-                android:hint="e.g. Adarsh Tailors"
-                android:inputType="textCapWords"/>
+                android:textSize="@dimen/form_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,24 +65,26 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="10">
+
             <TextView
+                android:id="@+id/text_owner_name"
                 android:layout_width="0dp"
-                android:textColor="@color/colorBlack"
                 android:layout_height="wrap_content"
-                android:text="@string/owner_name"
                 android:layout_weight="4"
-                android:textSize="@dimen/form_text"/>
+                android:text="@string/owner_name"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/form_text" />
 
             <EditText
                 android:id="@+id/edit_owner_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:hint="e.g. Mr XYZ"
+                android:inputType="textCapWords"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorHint"
-                android:textSize="@dimen/form_text"
-                android:inputType="textCapWords"
-                android:layout_width="0dp"
-                android:layout_weight="6"
-                android:layout_height="wrap_content"
-                android:hint="e.g. Mr XYZ"/>
+                android:textSize="@dimen/form_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,36 +92,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="10">
+
             <TextView
+                android:id="@+id/text_address"
                 android:layout_width="0dp"
-                android:textColor="@color/colorBlack"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:text="@string/address"
-                android:textSize="@dimen/form_text"/>
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/form_text" />
 
             <EditText
                 android:id="@+id/edit_shop_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:hint="e.g. Sangola"
+                android:inputType="textCapSentences"
                 android:textColor="@color/colorBlack"
                 android:textColorHint="@color/colorHint"
-                android:layout_width="0dp"
-                android:layout_weight="6"
-                android:layout_height="wrap_content"
-                android:hint="e.g. Sangola"
-                android:textSize="@dimen/form_text"
-                android:inputType="textCapSentences"/>
+                android:textSize="@dimen/form_text" />
         </LinearLayout>
 
         <Button
             android:id="@+id/register_btn"
-            android:onClick="onClickProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:background="@drawable/custom_button"
             android:fontFamily="@font/roboto"
-            android:text="Register"
+            android:onClick="onClickProfile"
+            android:text="@string/register"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/login_page_text" />

@@ -1,7 +1,9 @@
 package com.example.mtailor.utils;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -41,6 +43,8 @@ public class EditOrderDialog extends DialogFragment {
     private Order order;
     private String customerId;
     final Calendar myCalendar = Calendar.getInstance();
+
+    private Resources resources;
 
 //    views
     private EditText etDatePicker, etAdvanceAmount;
@@ -94,7 +98,31 @@ public class EditOrderDialog extends DialogFragment {
             }
         });
 
+        resources = LanguageHelper.updateLanguage(this.getActivity());
+        updateLanguage(view);
         return view;
+    }
+
+    private void updateLanguage(View view) {
+        TextView tv;
+        Button btn;
+        tv = view.findViewById(R.id.text_edit_order_details);
+        tv.setText(resources.getString(R.string.edit_order_details));
+        tv = view.findViewById(R.id.text_edit_order_ref_no);
+        tv.setText(resources.getString(R.string.order_ref_no));
+        tv = view.findViewById(R.id.text_edit_order_del_date);
+        tv.setText(resources.getString(R.string.delivery_date));
+        tv = view.findViewById(R.id.text_edit_order_total);
+        tv.setText(resources.getString(R.string.total));
+        tv = view.findViewById(R.id.text_edit_order_advance);
+        tv.setText(resources.getString(R.string.advance));
+        tv = view.findViewById(R.id.text_edit_order_pending);
+        tv.setText(resources.getString(R.string.pending));
+
+        btn = view.findViewById(R.id.btn_save_edit_order);
+        btn.setText(resources.getString(R.string.save));
+        btn = view.findViewById(R.id.btn_cancel_edit_order);
+        btn.setText(resources.getString(R.string.cancel));
     }
 
     private void setTexts() {

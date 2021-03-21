@@ -7,7 +7,6 @@
     tools:context=".activities.HomeActivity"
     android:id="@+id/home_drawer_layout">
 
-
     <LinearLayout
         android:id="@+id/home_main_layout"
         android:layout_width="match_parent"
@@ -48,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginTop="96dp"
             android:layout_marginBottom="30dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,15 +55,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <!-- Customers Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Regular Customers"
-                android:textAlignment="center"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorBlack"
-                android:textSize="26sp"
-                android:layout_marginBottom="10dp"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Regular Customers"-->
+<!--                android:textAlignment="center"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:textColor="@color/colorBlack"-->
+<!--                android:textSize="26sp"-->
+<!--                android:layout_marginBottom="10dp"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +82,7 @@
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_new_customer"
                     android:drawablePadding="@dimen/layout_margin_vertical"
-                    android:text="Customers"
+                    android:text="@string/customers"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
@@ -98,7 +97,7 @@
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_show_customers"
                     android:drawablePadding="@dimen/layout_margin_vertical"
-                    android:text="Measurement"
+                    android:text="@string/measurements"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
@@ -138,7 +137,7 @@
                     android:background="@drawable/custom_button"
                     android:drawableTop="@drawable/ic_update_order"
                     android:drawablePadding="@dimen/layout_margin_vertical"
-                    android:text="View Orders"
+                    android:text="@string/view_orders"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />

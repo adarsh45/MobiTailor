@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.PaymentDetails;
 import com.example.mtailor.pojo.Profile;
+import com.example.mtailor.utils.LanguageHelper;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -105,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         initialize();
-
+        LanguageHelper.updateLanguage(this);
     }
 
     private void initialize() {

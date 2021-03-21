@@ -27,6 +27,7 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/text_order_ref_no"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -42,7 +43,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:gravity="end"
-                android:text="0012"
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
@@ -56,11 +56,12 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/text_order_customer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_weight="2"
-                android:text="Customer:"
+                android:text="@string/customer_name"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
@@ -71,7 +72,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:gravity="end"
-                android:text="Siddharth Chavan"
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
@@ -85,11 +85,12 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/text_order_mobile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_weight="2"
-                android:text="Mobile:"
+                android:text="@string/customer_mobile"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
@@ -100,7 +101,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="3"
                 android:gravity="end"
-                android:text="+917744011789"
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
@@ -115,24 +115,41 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/text_order_total"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_weight="2"
-                android:text="Total Bill:"
+                android:text="@string/total"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_order_total_amount"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="3"
-                android:gravity="end"
-                android:text="₹ 500"
-                android:textColor="@android:color/white"
-                android:textSize="22sp" />
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/rupee_symbol"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_total_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -144,24 +161,42 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/text_order_advance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_weight="2"
-                android:text="Advance:"
+                android:text="@string/advance"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_order_advance_amount"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="3"
-                android:gravity="end"
-                android:text="₹ 100"
-                android:textColor="@android:color/white"
-                android:textSize="22sp" />
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/rupee_symbol"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_advance_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -173,24 +208,41 @@
             android:weightSum="5">
 
             <TextView
+                android:id="@+id/text_order_pending"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_weight="2"
-                android:text="Pending Amount:"
+                android:text="@string/pending"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_order_pending_amount"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_weight="3"
-                android:gravity="end"
-                android:text="₹ 400"
-                android:textColor="@android:color/white"
-                android:textSize="22sp" />
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/rupee_symbol"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_pending_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="end"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -214,7 +266,7 @@
             android:layout_weight="1"
             android:background="@drawable/custom_button"
             android:gravity="center"
-            android:text="View Bill in PDF"
+            android:text="@string/view_bill_pdf"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="22sp" />
@@ -227,7 +279,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_weight="1"
             android:background="@drawable/custom_button"
-            android:text="Send Bill on Whatsapp"
+            android:text="@string/send_bill_whatsapp"
             android:textAllCaps="false"
             android:gravity="center"
             android:textColor="@android:color/white"

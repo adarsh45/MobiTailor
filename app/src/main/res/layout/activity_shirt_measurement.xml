@@ -31,6 +31,7 @@
         android:layout_marginTop="@dimen/layout_margin_vertical">
 
         <TextView
+            android:id="@+id/text_shirt_last_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_update"
@@ -85,6 +86,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_shirt_height"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -116,6 +118,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/text_shirt_chest"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -140,6 +143,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_shirt_stomach"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -164,6 +168,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_shirt_seat"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -197,6 +202,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_shirt_shoulder"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -222,12 +228,14 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/text_shirt_sleeves"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shirt_sleeves"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/form_text"
                         android:layout_gravity="center"
+                        android:textStyle="bold"
                         android:layout_marginVertical="@dimen/layout_margin_vertical"/>
 
                     <LinearLayout
@@ -237,6 +245,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/text_shirt_full"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -261,6 +270,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_shirt_cuff"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -285,6 +295,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_shirt_full_bicep"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -319,6 +330,7 @@
                         android:weightSum="7.5">
 
                         <TextView
+                            android:id="@+id/text_shirt_half"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -344,6 +356,7 @@
 
 
                         <TextView
+                            android:id="@+id/text_shirt_half_bicep"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -377,6 +390,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_shirt_collar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -402,12 +416,14 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/text_shirt_front"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/shirt_front"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/form_text"
                         android:layout_gravity="center"
+                        android:textStyle="bold"
                         android:layout_marginVertical="@dimen/layout_margin_vertical"/>
 
                     <LinearLayout
@@ -417,6 +433,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/text_shirt_front_chest"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -441,6 +458,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_shirt_front_stomach"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -465,6 +483,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_shirt_front_seat"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -499,6 +518,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_shirt_type"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -520,7 +540,7 @@
                             android:textColor="@color/colorBlack"
                             android:textColorHint="@color/colorHint"
                             android:prompt="@string/type"
-                            android:entries="@array/type"
+                            android:entries="@array/shirt_type_list"
                             android:textSize="@dimen/form_text"
                             />
                     </LinearLayout>
@@ -623,6 +643,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_shirt_notes"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -671,7 +692,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:onClick="onClickShirtMeasurement"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
@@ -684,7 +705,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:onClick="onClickShirtMeasurement"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />

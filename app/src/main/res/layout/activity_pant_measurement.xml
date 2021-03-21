@@ -33,6 +33,7 @@
         android:layout_marginTop="@dimen/layout_margin_vertical">
 
         <TextView
+            android:id="@+id/text_pant_last_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/last_update"
@@ -89,6 +90,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_height"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -121,6 +123,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_waist"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -153,6 +156,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_seat"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -184,6 +188,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/text_pant_bottom"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -208,6 +213,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_pant_knee"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -240,6 +246,7 @@
                         android:weightSum="4">
 
                         <TextView
+                            android:id="@+id/text_pant_thigh"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -288,6 +295,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/text_pant_seat_round"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -312,6 +320,7 @@
                             android:textSize="@dimen/form_text" />
 
                         <TextView
+                            android:id="@+id/text_pant_seat_utaar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -345,6 +354,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_type"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -378,6 +388,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_pocket"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -424,6 +435,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_plates"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -560,6 +572,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_back_pocket"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -606,6 +619,7 @@
                         android:weightSum="3">
 
                         <TextView
+                            android:id="@+id/text_pant_notes"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

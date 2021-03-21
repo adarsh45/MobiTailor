@@ -36,6 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/login_text">
 
         <TextView
+            android:id="@+id/text_mobile_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,7 +85,7 @@
             android:background="@drawable/custom_button"
             android:fontFamily="@font/roboto"
             android:onClick="onClickLogin"
-            android:text="Verify"
+            android:text="@string/verify"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/login_page_text" />
@@ -120,7 +121,7 @@
             android:background="@drawable/custom_button"
             android:fontFamily="@font/roboto"
             android:onClick="onClickLogin"
-            android:text="Login"
+            android:text="@string/login_text"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/login_page_text" />

@@ -31,6 +31,7 @@
             android:weightSum="10">
 
             <TextView
+                android:id="@+id/text_customer_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -62,6 +63,7 @@
             android:weightSum="10">
 
             <TextView
+                android:id="@+id/text_customer_mobile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -93,6 +95,7 @@
             android:weightSum="10">
 
             <TextView
+                android:id="@+id/text_customer_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

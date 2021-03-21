@@ -3,10 +3,15 @@ package com.example.mtailor.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +26,8 @@ import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Emp;
 import com.example.mtailor.pojo.Shirt;
+import com.example.mtailor.utils.LanguageHelper;
+import com.example.mtailor.utils.LocaleHelper;
 import com.example.mtailor.utils.ResultDialog;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +43,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 public class ShirtMeasurementActivity extends AppCompatActivity {
+
+    private static final String TAG = "ShirtMeasurement";
 
     private FirebaseDatabase myDB;
     private DatabaseReference myRef;
@@ -58,6 +67,8 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
     byte origin;
     boolean isEmp, isCustomer;
 
+    private Resources resources;
+
 //    String[] type = getResources().getStringArray(R.array.type);
 //    Type: Apple, Open, Manilla, 3 Button Shirt, Safari
 
@@ -66,8 +77,6 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shirt_measurement);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Shirt Measurements");
 
         origin = getIntent().getByteExtra("origin", Util.CUSTOMER_MEASUREMENT);
 
@@ -80,6 +89,8 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         initialize();
         getPreviousShirt();
 
+        resources = LanguageHelper.updateLanguage(this);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.shirt_measurements));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

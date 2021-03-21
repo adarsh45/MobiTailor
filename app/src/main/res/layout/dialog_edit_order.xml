@@ -8,9 +8,10 @@
     android:padding="4dp">
 
     <TextView
+        android:id="@+id/text_edit_order_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Order Details"
+        android:text="@string/edit_order_details"
         android:gravity="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
@@ -24,12 +25,13 @@
         android:layout_marginVertical="4dp">
 
         <TextView
+            android:id="@+id/text_edit_order_ref_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="Order Ref. No:"
+            android:text="@string/order_ref_no"
             android:gravity="center"
             android:layout_gravity="center"/>
         <TextView
@@ -39,7 +41,6 @@
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="#0000"
             android:gravity="center"
             android:layout_gravity="center"/>
 
@@ -53,12 +54,13 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/text_edit_order_del_date"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="Delivery Date"
+            android:text="@string/delivery_date"
             android:gravity="center"/>
 
         <EditText
@@ -86,12 +88,13 @@
         android:layout_marginVertical="4dp">
 
         <TextView
+            android:id="@+id/text_edit_order_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="Total"
+            android:text="@string/total"
             android:gravity="center"
             android:layout_gravity="center"/>
 
@@ -107,15 +110,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
-                android:text="₹ "/>
+                android:text="@string/rupee_symbol"/>
 
             <TextView
                 android:id="@+id/tv_edit_final_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:text="0"/>
+                android:textSize="16sp"/>
         </LinearLayout>
 
 
@@ -129,12 +131,13 @@
         android:layout_marginVertical="4dp">
 
         <TextView
+            android:id="@+id/text_edit_order_advance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="Advance"
+            android:text="@string/advance"
             android:gravity="center"/>
         <EditText
             android:id="@+id/et_edit_advance"
@@ -159,12 +162,13 @@
         android:layout_gravity="center">
 
         <TextView
+            android:id="@+id/text_edit_order_pending"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            android:text="Pending"
+            android:text="@string/pending"
             android:gravity="center"
             android:layout_gravity="center"/>
 
@@ -178,7 +182,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₹ "
+                android:text="@string/rupee_symbol"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp" />
 
@@ -187,7 +191,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="0"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp" />
 

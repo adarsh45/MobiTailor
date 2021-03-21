@@ -55,42 +55,46 @@
                 android:layout_marginVertical="8dp">
 
                 <TextView
+                    android:id="@+id/text_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     android:textColor="@color/colorWhite"
                     android:textSize="26sp"
-                    android:text="Item"
+                    android:text="@string/item"
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/text_quantity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"
-                    android:text="Quant"
+                    android:text="@string/quantity"
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/text_rate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"
-                    android:text="Rate"
+                    android:text="@string/rate"
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/text_total"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"
-                    android:text="Total"
+                    android:text="@string/total"
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center"/>
 
@@ -346,11 +350,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/text_del_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorWhite"
                         android:textSize="24sp"
-                        android:text="Delivery Date"
+                        android:text="@string/delivery_date"
                         android:layout_gravity="center"/>
 
                     <EditText
@@ -384,12 +389,13 @@
                         android:layout_marginVertical="8dp">
 
                         <TextView
+                            android:id="@+id/text_final_total"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/colorWhite"
                             android:textSize="24sp"
-                            android:text="Total"
+                            android:text="@string/total"
                             android:layout_gravity="center"/>
 
                         <LinearLayout
@@ -402,7 +408,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="26sp"
-                                android:text="₹ "
+                                android:text="@string/rupee_symbol"
                                 android:gravity="center"/>
                             <TextView
                                 android:id="@+id/final_total"
@@ -425,12 +431,13 @@
                         android:layout_marginVertical="8dp">
 
                         <TextView
+                            android:id="@+id/text_advance"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/colorWhite"
                             android:textSize="24sp"
-                            android:text="Advance"
+                            android:text="@string/advance"
                             android:layout_gravity="center"/>
                         <EditText
                             android:id="@+id/advance"
@@ -454,12 +461,13 @@
                         android:layout_marginVertical="8dp">
 
                         <TextView
+                            android:id="@+id/text_pending"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/colorWhite"
                             android:textSize="24sp"
-                            android:text="Pending"
+                            android:text="@string/pending"
                             android:layout_gravity="center"/>
 
                         <LinearLayout
@@ -472,7 +480,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/colorWhite"
                                 android:textSize="26sp"
-                                android:text="₹ "
+                                android:text="@string/rupee_symbol"
                                 android:gravity="center"/>
                             <TextView
                                 android:id="@+id/pending"

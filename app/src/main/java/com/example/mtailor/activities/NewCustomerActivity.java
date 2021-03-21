@@ -10,15 +10,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
+import com.example.mtailor.utils.LanguageHelper;
+import com.example.mtailor.utils.LocaleHelper;
 import com.example.mtailor.utils.ResultDialog;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +37,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class NewCustomerActivity extends AppCompatActivity {
+
+    private static final String TAG = "NewCustomerActivity";
 
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef, customerRef;
@@ -54,6 +61,10 @@ public class NewCustomerActivity extends AppCompatActivity {
 
         initialize();
         getOrigin();
+//        update language of texts
+        Resources resources = LanguageHelper.updateLanguage(this);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.view_customers));
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -81,29 +92,9 @@ public class NewCustomerActivity extends AppCompatActivity {
         editCustomerAddress = findViewById(R.id.edit_customer_address);
 
     }
-    public void setLocaleLanguage(String lang){
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration configuration = new Configuration();
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.locale = locale;
-//        } else {
-//            configuration.setLocale(locale);
-//        }
-        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
-//        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
-    }
 
     private void getOrigin() {
         origin = getIntent().getByteExtra("origin",Util.NEW_CUSTOMER);
-
-//        set language according to settings
-//        SharedPreferences sharedPreferences = getSharedPreferences(Util.settingsSPFileName, MODE_PRIVATE);
-//        if (sharedPreferences != null){
-//            String langCode = sharedPreferences.getString(Util.appLanguage, "en");
-//        }
-//        Util.setLocaleLanguage(this, "mr_IN");
-        setLocaleLanguage("mr_rIn");
 
         if (origin == Util.UPDATE_CUSTOMER) {
             bundle = getIntent().getExtras();
@@ -228,5 +219,4 @@ public class NewCustomerActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

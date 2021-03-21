@@ -1,7 +1,10 @@
 package com.example.mtailor.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import com.example.mtailor.activities.OrderPdfActivity;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Order;
 import com.example.mtailor.utils.EditOrderDialog;
+import com.example.mtailor.utils.LanguageHelper;
 
 import java.util.ArrayList;
 
@@ -41,7 +45,24 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
     public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_order, parent, false);
+        Resources resources = LanguageHelper.updateLanguage(ctx);
+        updateLanguage(view, resources);
+//        Log.d(TAG, "onCreateViewHolder: "+ ((Activity)ctx).getClass().getSimpleName());
         return new OrderViewHolder(view);
+    }
+
+    private void updateLanguage(View view, Resources resources) {
+        TextView tv;
+        tv = view.findViewById(R.id.text_show_order_ref_no);
+        tv.setText(resources.getString(R.string.order_ref_no));
+        tv = view.findViewById(R.id.text_show_order_date);
+        tv.setText(resources.getString(R.string.order_date));
+        tv = view.findViewById(R.id.text_show_order_del_date);
+        tv.setText(resources.getString(R.string.delivery_date));
+        tv = view.findViewById(R.id.text_show_order_total);
+        tv.setText(resources.getString(R.string.total));
+        tv = view.findViewById(R.id.text_show_order_pending);
+        tv.setText(resources.getString(R.string.pending));
     }
 
     @Override

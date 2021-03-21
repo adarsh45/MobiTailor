@@ -17,14 +17,7 @@
             android:title="Select Language"
             android:entryValues="@array/language_values"
             android:entries="@array/language_entries"
-            app:defaultValue="2"/>
-    </androidx.preference.PreferenceCategory>
-
-    <androidx.preference.PreferenceCategory
-        android:title="Manage Items">
-
-
-
+            app:defaultValue="en"/>
     </androidx.preference.PreferenceCategory>
 
 

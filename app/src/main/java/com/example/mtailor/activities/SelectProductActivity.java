@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.view.View;
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Emp;
+import com.example.mtailor.utils.LanguageHelper;
 import com.example.mtailor.utils.Util;
 
 import java.util.Objects;
@@ -24,6 +26,8 @@ public class SelectProductActivity extends AppCompatActivity {
     byte origin;
     boolean isEmp, isCustomer;
 
+    private Resources resources;
+
 //    origin = customerMeasurement (from ShowCustomers Activity & CustomerAdapter)
 //    origin = empMeasurement (from ShowCustomers Activity & EmpAdapter )
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -32,7 +36,6 @@ public class SelectProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_product);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Select Item");
 //        adding back button on toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -45,6 +48,8 @@ public class SelectProductActivity extends AppCompatActivity {
         if (isCustomer) { oldCustomer = Objects.requireNonNull(getIntent().getExtras()).getParcelable("oldCustomer"); }
         if (isEmp) { oldEmp = Objects.requireNonNull(getIntent().getExtras()).getParcelable("emp"); }
 
+        resources = LanguageHelper.updateLanguage(this);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.select_item));
     }
 
     public void onClickProduct(View view){

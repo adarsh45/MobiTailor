@@ -1,30 +1,29 @@
 <resources>
-    <string name="app_name">Mobi Tailor</string>
+    <string name="app_name" translatable="false">Mobi Tailor</string>
 
     <string name="open" translatable="false">Open</string>
     <string name="close" translatable="false">Close</string>
-    <string name="ok" translatable="false">OK</string>
-    <string name="register" translatable="false">Register</string>
-    <string name="update" translatable="false">Update</string>
-    <string name="cancel" translatable="false">Cancel</string>
-    <string name="save" translatable="false">Save</string>
+    <string name="ok">OK</string>
+    <string name="register">Register</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
-    <string name="customer_name" translatable="false">Customer Name</string>
-    <string name="last_update" translatable="false">Last Updated on:&#160;</string>
-    <string name="unknown" translatable="false">Unknown</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="last_update">Last Updated on:&#160;</string>
+    <string name="unknown">Unknown</string>
 
-    <string name="login_text" translatable="false">Login</string>
-    <string name="signin_text" translatable="false">Mobile SignIn</string>
+    <string name="login_text">Login</string>
+    <string name="signin_text">Mobile SignIn</string>
     <string name="country_code" translatable="false">+91</string>
-    <string name="phone_hint" translatable="false">Enter phone number</string>
-    <string name="verify" translatable="false">Verify</string>
+    <string name="phone_hint">Enter phone number</string>
+    <string name="verify">Verify</string>
 
-    <string name="profile" translatable="false">Profile</string>
-    <string name="shop_name" translatable="false">Name of Shop:</string>
-    <string name="owner_name" translatable="false">Owner name:</string>
-    <string name="address" translatable="false">Address:</string>
-    <string name="call_customer" translatable="false">&#160;Call Customer</string>
-    <string name="delete_customer" translatable="false">&#160;Delete Customer</string>
+    <string name="profile">Profile</string>
+    <string name="shop_name">Name of Shop:</string>
+    <string name="owner_name">Owner name:</string>
+    <string name="address">Address:&#160;</string>
+    <string name="delete_customer">&#160;Delete Customer</string>
 
     <!--    new customer activity-->
     <string name="name_of_customer">Name:</string>
@@ -33,24 +32,24 @@
 
     <!--Shirt Measurements-->
     <string name="shirt_height">Height</string>
-    <string name="shirt_chest" translatable="false">Chest</string>
-    <string name="shirt_stomach" translatable="false">Stomach</string>
-    <string name="shirt_seat" translatable="false">Seat</string>
-    <string name="shirt_shoulder" translatable="false">Shoulder</string>
-    <string name="shirt_sleeves" translatable="false">Sleeves</string>
-    <string name="shirt_sleeves_full" translatable="false">Full</string>
-    <string name="shirt_sleeves_half" translatable="false">Half</string>
-    <string name="shirt_sleeves_cuff" translatable="false">Cuff</string>
-    <string name="shirt_bicep" translatable="false">Bicep</string>
-    <string name="shirt_collar" translatable="false">Collar</string>
-    <string name="shirt_front" translatable="false">Front</string>
-    <string name="shirt_box_patti" translatable="false">Box Patti</string>
-    <string name="shirt_in_patti" translatable="false">In Patti</string>
-    <string name="shirt_cover_silai" translatable="false">Cover Silai</string>
-    <string name="shirt_plain_silai" translatable="false">Plain Silai</string>
+    <string name="shirt_chest">Chest</string>
+    <string name="shirt_stomach">Stomach</string>
+    <string name="shirt_seat">Seat</string>
+    <string name="shirt_shoulder">Shoulder</string>
+    <string name="shirt_sleeves">Sleeves</string>
+    <string name="shirt_sleeves_full">Full</string>
+    <string name="shirt_sleeves_half">Half</string>
+    <string name="shirt_sleeves_cuff">Cuff</string>
+    <string name="shirt_bicep">Bicep</string>
+    <string name="shirt_collar">Collar</string>
+    <string name="shirt_front">Front</string>
+    <string name="shirt_box_patti">Box Patti</string>
+    <string name="shirt_in_patti">In Patti</string>
+    <string name="shirt_cover_silai">Cover Silai</string>
+    <string name="shirt_plain_silai">Plain Silai</string>
 
-    <string name="type" translatable="false">Type</string>
-    <string-array name="type">
+    <string name="type">Type</string>
+    <string-array name="shirt_type_list">
         <item>Apple</item>
         <item>Open</item>
         <item>Manilla</item>
@@ -60,15 +59,15 @@
     </string-array>
 
     <!--Pant Measurements-->
-    <string name="pant_height" translatable="false">Height</string>
-    <string name="pant_waist" translatable="false">Waist</string>
-    <string name="pant_seat" translatable="false">Seat</string>
-    <string name="pant_bottom" translatable="false">Bottom</string>
-    <string name="pant_knee" translatable="false">Knee</string>
-    <string name="pant_thigh" translatable="false">Thigh</string>
-    <string name="pant_seat_round" translatable="false">Seat Round</string>
-    <string name="pant_seat_utaar" translatable="false">Seat Utaar</string>
-    <string name="pant_type" translatable="false">Type</string>
+    <string name="pant_height">Height</string>
+    <string name="pant_waist">Waist</string>
+    <string name="pant_seat">Seat</string>
+    <string name="pant_bottom">Bottom</string>
+    <string name="pant_knee">Knee</string>
+    <string name="pant_thigh">Thigh</string>
+    <string name="pant_seat_round">Seat Round</string>
+    <string name="pant_seat_utaar">Seat Utaar</string>
+    <string name="pant_type">Type</string>
 
     <string-array name="pant_type_list">
         <item>Bootcut</item>
@@ -80,22 +79,22 @@
         <item>Salwar</item>
     </string-array>
 
-    <string name="pant_baggy" translatable="false">Baggy</string>
-    <string name="pant_bootcut" translatable="false">Bootcut</string>
-    <string name="pant_pocket" translatable="false">Pocket</string>
-    <string name="pant_side_pocket" translatable="false">Side Pocket</string>
-    <string name="pant_cross_pocket" translatable="false">Cross Pocket</string>
-    <string name="pant_plates" translatable="false">Plates</string>
-    <string name="yes" translatable="false">Yes</string>
-    <string name="no" translatable="false">No</string>
-    <string name="pant_side_stitch" translatable="false">Side Stitch</string>
-    <string name="pant_side_plane" translatable="false">Side Plane</string>
-    <string name="pant_bottom_stitch" translatable="false">Bottom Stitch</string>
-    <string name="pant_hand_stitch" translatable="false">Hand Stitch</string>
-    <string name="pant_back_pocket" translatable="false">Back Pocket</string>
-    <string name="pant_patti_pocket" translatable="false">Patti Pocket</string>
-    <string name="pant_bone_pocket" translatable="false">Bone Pocket</string>
-    <string name="notes" translatable="false">Notes</string>
+    <string name="pant_baggy">Baggy</string>
+    <string name="pant_bootcut">Bootcut</string>
+    <string name="pant_pocket">Pocket</string>
+    <string name="pant_side_pocket">Side Pocket</string>
+    <string name="pant_cross_pocket">Cross Pocket</string>
+    <string name="pant_plates">Plates</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="pant_side_stitch">Side Stitch</string>
+    <string name="pant_side_plane">Side Plane</string>
+    <string name="pant_bottom_stitch">Bottom Stitch</string>
+    <string name="pant_hand_stitch">Hand Stitch</string>
+    <string name="pant_back_pocket">Back Pocket</string>
+    <string name="pant_patti_pocket">Patti Pocket</string>
+    <string name="pant_bone_pocket">Bone Pocket</string>
+    <string name="notes">Notes</string>
 
 
     <string name="cloth_color" translatable="false">Color of Cloth:</string>
@@ -125,13 +124,42 @@
 
 
     <string-array name="language_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+        <item>en</item>
+        <item>mr</item>
     </string-array>
     <string-array name="language_entries">
         <item>English</item>
-        <item>Phonetic Marathi</item>
         <item>Marathi</item>
     </string-array>
+    <string name="call_customer">&#160;Call Customer</string>
+    <string name="customers">Customers</string>
+    <string name="measurements">Measurement</string>
+    <string name="new_order">New Order</string>
+    <string name="view_orders">View Orders</string>
+    <string name="otp_hint">Enter OTP here</string>
+    <string name="view_customers">View Customers</string>
+    <string name="measurement_select_customer">Measurement: Select Customer</string>
+    <string name="new_order_select_customer">New Order: Select Customer</string>
+    <string name="show_orders_select_customer">Show Order: Select Customer</string>
+    <string name="organizations">Organizations</string>
+    <string name="select_org">Select Organization</string>
+    <string name="item">Item</string>
+    <string name="quantity">Quant</string>
+    <string name="rate">Rate</string>
+    <string name="total">Total</string>
+    <string name="delivery_date">Delivery Date</string>
+    <string name="rupee_symbol" translatable="false">₹&#160;</string>
+    <string name="advance">Advance</string>
+    <string name="pending">Pending</string>
+    <string name="shirt">Shirt</string>
+    <string name="pant">Pant</string>
+    <string name="shirt_measurements">Shirt Measurements</string>
+    <string name="pant_measurements">Pant Measurements</string>
+    <string name="select_item">Select Item</string>
+    <string name="order_details">Bill Details</string>
+    <string name="order_ref_no">Order Ref No:</string>
+    <string name="view_bill_pdf">View Bill in PDF</string>
+    <string name="send_bill_whatsapp">Send Bill to Whatsapp</string>
+    <string name="edit_order_details">Edit Order Details</string>
+    <string name="order_date">Booking Date</string>
 </resources>

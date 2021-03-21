@@ -1,6 +1,7 @@
 package com.example.mtailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
@@ -8,6 +9,7 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Order;
 import com.example.mtailor.pojo.Profile;
+import com.example.mtailor.utils.LanguageHelper;
 import com.example.mtailor.utils.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +50,7 @@ import com.itextpdf.text.pdf.draw.LineSeparator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Objects;
 
 public class OrderPdfActivity extends AppCompatActivity {
 
@@ -68,6 +72,9 @@ public class OrderPdfActivity extends AppCompatActivity {
 
     private static final String TAG = "OrderPdfActivity";
 
+    private Resources resources;
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +85,9 @@ public class OrderPdfActivity extends AppCompatActivity {
         getCustomer();
         getOrderDetails();
         setValuesInTVs();
+
+        resources = LanguageHelper.updateLanguage(this);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.order_details));
     }
 
     private void getShopProfile() {

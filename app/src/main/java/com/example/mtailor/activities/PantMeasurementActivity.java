@@ -3,9 +3,14 @@ package com.example.mtailor.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +24,8 @@ import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Emp;
 import com.example.mtailor.pojo.Pant;
+import com.example.mtailor.utils.LanguageHelper;
+import com.example.mtailor.utils.LocaleHelper;
 import com.example.mtailor.utils.ResultDialog;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +41,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Objects;
 
 public class PantMeasurementActivity extends AppCompatActivity {
+
+    private static final String TAG = "PantMeasurement";
 
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef;
@@ -54,6 +63,8 @@ public class PantMeasurementActivity extends AppCompatActivity {
     private byte origin;
     boolean isEmp, isCustomer;
 
+    private Resources resources;
+
 //    Pocket: Side, Cross
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -61,8 +72,6 @@ public class PantMeasurementActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pant_measurement);
-
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Pant Measurements");
 
         origin = getIntent().getByteExtra("origin", Util.CUSTOMER_MEASUREMENT);
 
@@ -74,6 +83,23 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
         initialize();
         getPreviousPant();
+
+        resources = LanguageHelper.updateLanguage(this);
+//        updateLanguage();
+        Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.pant_measurements));
+    }
+
+    private void updateLanguage() {
+        //        get language preference from sharedPref
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = sharedPreferences.getString(LocaleHelper.SELECTED_LANGUAGE, "en");
+//        do not change anything if language is English (en)
+        if (lang.equals("en")) return;
+        Log.d(TAG, "updateLanguage: " + lang);
+
+//        set locale and get resources
+        Context updatedContext = LocaleHelper.setLocale(this,lang);
+        resources = updatedContext.getResources();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

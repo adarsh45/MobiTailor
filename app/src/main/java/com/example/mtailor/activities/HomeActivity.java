@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.mtailor.R;
 import com.example.mtailor.pojo.Profile;
+import com.example.mtailor.utils.LanguageHelper;
 import com.example.mtailor.utils.Util;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -63,12 +65,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         initialize();
         setTexts();
+        LanguageHelper.updateLanguage(this);
     }
 
     private void getMySharedPreference() {
-        SharedPreferences sharedPreferences = getSharedPreferences(Util.settingsSPFileName, MODE_PRIVATE);
+//        SharedPreferences sharedPreferences = getSharedPreferences(Util.settingsSPFileName, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences != null){
-            boolean showOrgSection = sharedPreferences.getBoolean(Util.booleanShowOrgSection, false);
+//            boolean showOrgSection = sharedPreferences.getBoolean(Util.booleanShowOrgSection, false);
+            boolean showOrgSection = sharedPreferences.getBoolean("organizations-section", false);
             if (showOrgSection){
                 findViewById(R.id.text_org_section).setVisibility(View.VISIBLE);
                 findViewById(R.id.layout_org_section).setVisibility(View.VISIBLE);

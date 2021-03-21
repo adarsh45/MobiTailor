@@ -23,6 +23,7 @@ import com.example.mtailor.R;
 import com.example.mtailor.pojo.Customer;
 import com.example.mtailor.pojo.Order;
 import com.example.mtailor.pojo.OrderItem;
+import com.example.mtailor.utils.LanguageHelper;
 import com.example.mtailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -97,6 +98,8 @@ public class NewOrderActivity extends AppCompatActivity {
         pickDateForOrder();
 
         onClicks();
+
+        LanguageHelper.updateLanguage(this);
 
     }
 

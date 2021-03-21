@@ -30,10 +30,6 @@ import java.util.Locale;
 public class Util {
     private Util(){}
 
-    public static String settingsSPFileName = "SettingsSP";
-    public static String booleanShowOrgSection = "showOrgSection";
-    public static String appLanguage = "appLanguage";
-
     public static int PHONE_CALL_PERMISSION = 1;
 
     public static final byte UNKNOWN_ORIGIN = -1;
