@@ -157,7 +157,7 @@
     <string name="pant_measurements">Pant Measurements</string>
     <string name="select_item">Select Item</string>
     <string name="order_details">Bill Details</string>
-    <string name="order_ref_no">Order Ref No:</string>
+    <string name="order_ref_no">Order Ref No</string>
     <string name="view_bill_pdf">View Bill in PDF</string>
     <string name="send_bill_whatsapp">Send Bill to Whatsapp</string>
     <string name="edit_order_details">Edit Order Details</string>

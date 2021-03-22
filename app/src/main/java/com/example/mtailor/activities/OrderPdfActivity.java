@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -14,7 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.telephony.PhoneNumberUtils;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -45,7 +47,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -64,11 +65,15 @@ public class OrderPdfActivity extends AppCompatActivity {
     private TextView tvOrderRefNo, tvOrderCustomerName, tvOrderMobileNo,
             tvOrderTotalAmount, tvOrderAdvanceAmount, tvOrderPendingAmount;
 
-    private static final int STORAGE_REQUEST_CODE = 11;
+    private static final int STORAGE_REQUEST_CODE = 111;
+    private static final int READ_CONTACTS_REQUEST_CODE = 112;
 
     private Profile shopProfile;
     private Customer mCustomer = null;
     private Order mOrder = null;
+
+    File pdfFile;
+    String filePath;
 
     private static final String TAG = "OrderPdfActivity";
 
@@ -167,38 +172,50 @@ public class OrderPdfActivity extends AppCompatActivity {
                 break;
             case R.id.btn_send_bill_whatsapp:
 //                get that generated pdf and send it on whatsapp
-                sendBillToWhatsApp();
+                checkForSendingWhatsapp();
                 break;
             default:
 //                do nothing
         }
     }
 
-    private void sendBillToWhatsApp() {
-
-        String formattedNumber = "91" + mCustomer.getCustomerMobile();
-        String filePath = getPdfFilePath();
-
-        File pdfFile = new File(filePath);
-//        check if file exists first
-        if (!pdfFile.exists()){
-            Util.showSnackBar(rootLayout, "File not found! Please generate pdf first!");
-            return;
-        }
+    private void checkForSendingWhatsapp() {
+        filePath = getPdfFilePath();
+        pdfFile = new File(filePath);
+//        generate new invoice in all case (so that updated order can be stored to updated invoice)
+        generateInvoice();
 
         if (! Util.isAppInstalled(this, "com.whatsapp")){
             Util.showSnackBar(rootLayout, "Error: WhatsApp not installed on your device!");
             return;
         }
 
-        try{
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
+//            permission already granted
+            checkOrSaveContact(mCustomer.getCustomerMobile());
+        }else {
+//            write contacts permission not granted already, requesting now
+            ActivityCompat.requestPermissions(OrderPdfActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, READ_CONTACTS_REQUEST_CODE);
+        }
+
+    }
+
+    private void sendBillToWhatsapp(){
+        String formattedNumber = "91"+mCustomer.getCustomerMobile();
+        filePath = getPdfFilePath();
+        pdfFile = new File(filePath);
+//        check if file exists first
+        if (!pdfFile.exists()){
+            Util.showSnackBar(rootLayout, "File not found! Please generate pdf first!");
+            return;
+        }
+                try{
             Log.d(TAG, "sendToWhatsApp: preparing to open whatsapp");
             Intent sendIntent = new Intent("android.intent.action.MAIN");
             sendIntent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", pdfFile));
 //            sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(formattedNumber) + "@s.whatsapp.net");
             sendIntent.putExtra("jid",formattedNumber + "@s.whatsapp.net");
 //            Log.d(TAG, "sendBillToWhatsApp: "+ formattedNumber);
-            Toast.makeText(this, formattedNumber, Toast.LENGTH_SHORT).show();
             sendIntent.setPackage("com.whatsapp");
             sendIntent.setType("application/pdf");
             sendIntent.setAction(Intent.ACTION_SEND);
@@ -376,17 +393,40 @@ public class OrderPdfActivity extends AppCompatActivity {
         Util.showSnackBar(rootLayout, "Invoice created successfully!");
     }
 
+
+    public void checkOrSaveContact(String phoneNumber){
+        boolean isContactExists = Util.contactExists(this, phoneNumber);
+        if (!isContactExists){
+//            contact doesn't exist already , save it now
+            Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
+            intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+            intent.putExtra(ContactsContract.Intents.Insert.NAME, "(Customer) " + mCustomer.getCustomerName());
+            intent.putExtra(ContactsContract.Intents.Insert.PHONE, phoneNumber);
+            startActivity(intent);
+        } else {
+//            contact already exists
+            Util.showSnackBar(rootLayout, "Contact already exists");
+            sendBillToWhatsapp();
+        }
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case STORAGE_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-//                    permission granted, now savePDF()
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    permission granted
+            switch (requestCode){
+                case STORAGE_REQUEST_CODE:
                     savePDF();
-                } else {
+                    break;
+                case READ_CONTACTS_REQUEST_CODE:
+                    checkOrSaveContact(mCustomer.getCustomerMobile());
+                    break;
+            }
+        } else {
 //                    permission denied, show error
-                    Util.showSnackBar(rootLayout, "Error: Permission denied!");
-                }
+            Util.showSnackBar(rootLayout, "Error: Permission denied!");
         }
+
     }
 }

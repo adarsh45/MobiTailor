@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,6 +73,25 @@ public class Util {
 //        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
     }
 
+    public static boolean contactExists(Context context, String number) {
+        /// number is the phone number
+        Uri lookupUri = Uri.withAppendedPath(
+                ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                Uri.encode(number));
+        String[] mPhoneNumberProjection = { ContactsContract.PhoneLookup._ID, ContactsContract.PhoneLookup.NUMBER, ContactsContract.PhoneLookup.DISPLAY_NAME };
+        Cursor cur = context.getContentResolver().query(lookupUri,mPhoneNumberProjection, null, null, null);
+        try {
+            if (cur.moveToFirst()) {
+                cur.close();
+                return true;
+            }
+        } finally {
+            if (cur != null)
+                cur.close();
+        }
+        return false;
+    }
+
     public static void callTheCustomer(final Context context, int editTextMobileID, int callBtnID) {
         EditText editTextMobile = ((Activity) context).findViewById(editTextMobileID);
         final String mobile = editTextMobile.getText().toString().trim();
@@ -83,13 +105,7 @@ public class Util {
                     callIntent.setData(Uri.parse("tel:" + mobile));
                     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                         //    Consider calling
-                        //    ActivityCompat#requestPermissions
                         ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, Util.PHONE_CALL_PERMISSION);
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
                         return;
                     }
                     context.startActivity(callIntent);
