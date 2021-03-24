@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+import com.example.mtailor.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
@@ -55,23 +56,38 @@ public class Util {
     public static final byte CUSTOMER_MEASUREMENT = 31;
     public static final byte EMP_MEASUREMENT = 32;
 
+    public static final String SHIRT_BOX_PATTI = "Box Patti";
+    public static final String SHIRT_IN_PATTI = "In Patti";
+    public static final String SHIRT_COVER_SILAI = "Cover Silai";
+    public static final String SHIRT_PLAIN_SILAI = "Plain Silai";
+
+    public static final String PANT_SIDE_POCKET = "Side Pocket";
+    public static final String PANT_CROSS_POCKET = "Cross Pocket";
+    public static final String PANT_PLATES_YES = "Yes";
+    public static final String PANT_PLATES_NO = "No";
+    public static final String PANT_SIDE_STITCH = "Side Stitch";
+    public static final String PANT_SIDE_PLANE = "Side Plane";
+    public static final String PANT_BOTTOM_STITCH = "Bottom Stitch";
+    public static final String PANT_HAND_STITCH = "Hand Stitch";
+    public static final String PANT_PATTI_POCKET = "Patti Pocket";
+    public static final String PANT_BONE_POCKET = "Bone Pocket";
 
     public static Font getFont(float fontSize, int fontStyle, BaseColor baseColor){
         return new Font(Font.FontFamily.HELVETICA, fontSize, fontStyle, baseColor);
     }
 
-    public static void setLocaleLanguage(Context context,String lang){
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration configuration = new Configuration();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.locale = locale;
-        } else {
-            configuration.setLocale(locale);
-        }
-        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
-//        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
-    }
+//    public static void setLocaleLanguage(Context context,String lang){
+//        Locale locale = new Locale(lang);
+//        Locale.setDefault(locale);
+//        Configuration configuration = new Configuration();
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            configuration.locale = locale;
+//        } else {
+//            configuration.setLocale(locale);
+//        }
+//        context.getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+////        Toast.makeText(context, "language changed", Toast.LENGTH_SHORT).show();
+//    }
 
     public static boolean contactExists(Context context, String number) {
         /// number is the phone number
@@ -127,20 +143,76 @@ public class Util {
         snackbar.show();
     }
 
-    public static void checkRadio(CharSequence capturedText, CharSequence baseText, RadioButton radioButton){
-        if (capturedText.equals(baseText)){
-            radioButton.toggle();
-        }
-    }
+//    public static void checkRadio(CharSequence capturedText, CharSequence baseText, RadioButton radioButton){
+//        if (capturedText.equals(baseText)){
+//            radioButton.toggle();
+//        }
+//    }
 
-    public static void checkRadio(RadioGroup radioGroup, CharSequence baseText){
+//    public static void checkRadio(RadioGroup radioGroup, CharSequence baseText){
+//        int count = radioGroup.getChildCount();
+//        for (int i=0; i<count; i++){
+//            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+//            CharSequence radioText = radioButton.getText();
+//            if (baseText.equals(radioText)){
+//                radioButton.toggle();
+//                break;
+//            }
+//        }
+//    }
+
+    public static void checkRadio(Activity activity, RadioGroup radioGroup, String baseText){
         int count = radioGroup.getChildCount();
+        int selectedId = -1;
         for (int i=0; i<count; i++){
-            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
-            CharSequence radioText = radioButton.getText();
-            if (baseText.equals(radioText)){
+            switch (baseText){
+                case SHIRT_BOX_PATTI:
+                    selectedId = R.id.radio_box_patti;
+                    break;
+                case SHIRT_IN_PATTI:
+                    selectedId = R.id.radio_in_patti;
+                    break;
+                case SHIRT_COVER_SILAI:
+                    selectedId = R.id.radio_cover_silai;
+                    break;
+                case SHIRT_PLAIN_SILAI:
+                    selectedId = R.id.radio_plain_silai;
+                    break;
+                case PANT_SIDE_POCKET:
+                    selectedId = R.id.radiobtn_pant_side_pocket;
+                    break;
+                case PANT_CROSS_POCKET:
+                    selectedId = R.id.radiobtn_pant_cross_pocket;
+                    break;
+                case PANT_PLATES_YES:
+                    selectedId = R.id.radio_plate_yes;
+                    break;
+                case PANT_PLATES_NO:
+                    selectedId = R.id.radio_plate_no;
+                    break;
+                case PANT_SIDE_STITCH:
+                    selectedId = R.id.radiobtn_side_stitch;
+                    break;
+                case PANT_SIDE_PLANE:
+                    selectedId = R.id.radiobtn_side_plane;
+                    break;
+                case PANT_BOTTOM_STITCH:
+                    selectedId = R.id.radiobtn_bottom_stitch;
+                    break;
+                case PANT_HAND_STITCH:
+                    selectedId = R.id.radiobtn_hand_stitch;
+                    break;
+                case PANT_PATTI_POCKET:
+                    selectedId = R.id.radiobtn_patti_pocket;
+                    break;
+                case PANT_BONE_POCKET:
+                    selectedId = R.id.radiobtn_bone_pocket;
+                    break;
+            }
+            if (selectedId != -1){
+                RadioButton radioButton = activity.findViewById(selectedId);
                 radioButton.toggle();
-                break;
+                return;
             }
         }
     }
@@ -151,13 +223,42 @@ public class Util {
     }
 
     public static String getTextFromRadioGroup(Activity activity, RadioGroup radioGroup){
-        String text;
-        if(radioGroup.getCheckedRadioButtonId() == -1){
+        String text = "unknown";
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        if(selectedId == -1){
             text = "";
         } else {
-            text = ((RadioButton) activity.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
-        }
-
+            if (selectedId == R.id.radio_box_patti){
+                text = SHIRT_BOX_PATTI;
+            } else if (selectedId == R.id.radio_in_patti){
+                text = SHIRT_IN_PATTI;
+            } else if (selectedId == R.id.radio_cover_silai){
+                text = SHIRT_COVER_SILAI;
+            } else if (selectedId == R.id.radio_plain_silai){
+                text = SHIRT_PLAIN_SILAI;
+            } else if (selectedId == R.id.radiobtn_pant_side_pocket){
+                text = PANT_SIDE_POCKET;
+            } else if (selectedId == R.id.radiobtn_pant_cross_pocket){
+                text = PANT_CROSS_POCKET;
+            } else if (selectedId == R.id.radio_plate_yes){
+                text = PANT_PLATES_YES;
+            } else if (selectedId == R.id.radio_plate_no){
+                text = PANT_PLATES_NO;
+            } else if (selectedId == R.id.radiobtn_side_stitch){
+                text = PANT_SIDE_STITCH;
+            } else if (selectedId == R.id.radiobtn_side_plane){
+                text = PANT_SIDE_PLANE;
+            } else if (selectedId == R.id.radiobtn_bottom_stitch){
+                text = PANT_BOTTOM_STITCH;
+            } else if (selectedId == R.id.radiobtn_hand_stitch){
+                text = PANT_HAND_STITCH;
+            } else if (selectedId == R.id.radiobtn_patti_pocket){
+                text = PANT_PATTI_POCKET;
+            } else if (selectedId == R.id.radiobtn_bone_pocket){
+                text = PANT_BONE_POCKET;
+            }
+            }
+        Log.d("TAG", "getTextFromRadioGroup: " + text);
         return text;
     }
 

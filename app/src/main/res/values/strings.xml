@@ -162,4 +162,5 @@
     <string name="send_bill_whatsapp">Send Bill to Whatsapp</string>
     <string name="edit_order_details">Edit Order Details</string>
     <string name="order_date">Booking Date</string>
+    <string name="customer_list_empty">Add New Customers by Clicking + button below</string>
 </resources>

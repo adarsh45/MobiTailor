@@ -18,7 +18,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:paddingVertical="20dp"
-        android:text="Sorry, List is Empty"
+        android:text="@string/customer_list_empty"
         android:textSize="@dimen/primary_heading_text"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

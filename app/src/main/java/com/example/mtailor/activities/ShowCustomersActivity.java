@@ -65,6 +65,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
     ArrayList<Customer> customerArrayList;
     ArrayList<Org> orgArrayList;
     RecyclerView recyclerView;
+    TextView emptyTextView;
 
     private Resources resources;
 
@@ -88,6 +89,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
         origin = getIntent().getByteExtra("origin", Util.SHOW_CUSTOMERS);
 
         resources = LanguageHelper.updateLanguage(this);
+        emptyTextView.setText(resources.getString(R.string.customer_list_empty));
 
         switch (origin){
             case Util.SHOW_CUSTOMERS:
@@ -216,6 +218,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
         orgRef = rootRef.child(UID).child("Organizations");
         customerRef = rootRef.child(UID).child("Customers");
 
+        emptyTextView = findViewById(R.id.empty_text);
         recyclerView = findViewById(R.id.recycler_view);
 //        progressBar = findViewById(R.id.customers_progress_bar);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -250,7 +253,6 @@ public class ShowCustomersActivity extends AppCompatActivity {
                             recyclerView.setAdapter(new OrgAdapter(orgArrayList, Util.NEW_EMPLOYEE));
                         }
                     } else {
-                        TextView emptyTextView = findViewById(R.id.empty_text);
                         emptyTextView.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
@@ -283,7 +285,6 @@ public class ShowCustomersActivity extends AppCompatActivity {
                         recyclerView.setAdapter(new CustomerAdapter(customerArrayList, origin));
                     }
                     else {
-                        TextView emptyTextView = findViewById(R.id.empty_text);
                         emptyTextView.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }

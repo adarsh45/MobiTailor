@@ -195,11 +195,11 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
 //                    set radio
 //                    Util.checkRadio(radioGroupPantType, fetchedPant.getPantType());
-                       Util.checkRadio(radioGroupPantPocket, fetchedPant.getPantPocket());
-                       Util.checkRadio(radioGroupPantPlates, fetchedPant.getPantPlates());
-                       Util.checkRadio(radioGroupPantSide, fetchedPant.getPantSide());
-                       Util.checkRadio(radioGroupPantStitch, fetchedPant.getPantStitch());
-                       Util.checkRadio(radioGroupPantBackPocket, fetchedPant.getPantBackPocket());
+                       Util.checkRadio(PantMeasurementActivity.this, radioGroupPantPocket, fetchedPant.getPantPocket());
+                       Util.checkRadio(PantMeasurementActivity.this, radioGroupPantPlates, fetchedPant.getPantPlates());
+                       Util.checkRadio(PantMeasurementActivity.this, radioGroupPantSide, fetchedPant.getPantSide());
+                       Util.checkRadio(PantMeasurementActivity.this, radioGroupPantStitch, fetchedPant.getPantStitch());
+                       Util.checkRadio(PantMeasurementActivity.this, radioGroupPantBackPocket, fetchedPant.getPantBackPocket());
 //                    set spinner
                        pantTypeSpinner.setSelection(Integer.parseInt(fetchedPant.getPantType()));
                    } catch (NumberFormatException e) {

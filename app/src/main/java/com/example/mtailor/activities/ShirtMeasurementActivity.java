@@ -87,10 +87,12 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         if (isCustomer) {oldCustomer = Objects.requireNonNull(getIntent().getExtras()).getParcelable("oldCustomer");}
 
         initialize();
-        getPreviousShirt();
+
 
         resources = LanguageHelper.updateLanguage(this);
         Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.shirt_measurements));
+
+        getPreviousShirt();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -172,8 +174,6 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void getPreviousShirt() {
 //        Fetch data if already exists
         myRef.addValueEventListener(new ValueEventListener() {
@@ -203,10 +203,13 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
                         textLastUpdateDate.setText(fetchedShirt.getLastUpdateDate());
 
 //                    set radio
-                        Util.checkRadio(fetchedShirt.getShirtPatti(), getResources().getString(R.string.shirt_box_patti), radioBtnBoxPatti);
-                        Util.checkRadio(fetchedShirt.getShirtPatti(), getResources().getString(R.string.shirt_in_patti), radioBtnInPatti);
-                        Util.checkRadio(fetchedShirt.getShirtSilai(), getResources().getString(R.string.shirt_plain_silai), radioBtnPlainSilai);
-                        Util.checkRadio(fetchedShirt.getShirtSilai(), getResources().getString(R.string.shirt_cover_silai), radioBtnCoverSilai);
+//                        Util.checkRadio(fetchedShirt.getShirtPatti(), resources.getString(R.string.shirt_box_patti), radioBtnBoxPatti);
+//                        Util.checkRadio(fetchedShirt.getShirtPatti(), resources.getString(R.string.shirt_in_patti), radioBtnInPatti);
+//                        Util.checkRadio(fetchedShirt.getShirtSilai(), resources.getString(R.string.shirt_plain_silai), radioBtnPlainSilai);
+//                        Util.checkRadio(fetchedShirt.getShirtSilai(), resources.getString(R.string.shirt_cover_silai), radioBtnCoverSilai);
+
+                        Util.checkRadio(ShirtMeasurementActivity.this, shirtRadioGroupPatti, fetchedShirt.getShirtPatti());
+                        Util.checkRadio(ShirtMeasurementActivity.this, shirtRadioGroupSilai, fetchedShirt.getShirtSilai());
 
 //                    drop downs
                         typeSpinner.setSelection(Integer.parseInt(fetchedShirt.getShirtType()));

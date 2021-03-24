@@ -111,4 +111,5 @@
     <string name="send_bill_whatsapp">व्हाट्सएप बिल पाठवा</string>
     <string name="edit_order_details">बिलामध्ये बदल करा</string>
     <string name="order_date">बुकिंग दिनांक</string>
+    <string name="customer_list_empty">खालील + बटन दाबून नवीन ग्राहक जोडा</string>
 </resources>
