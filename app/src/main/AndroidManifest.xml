@@ -17,8 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ShowOrdersActivity"
+        <activity android:name=".activities.AboutAppActivity"
             android:parentActivityName=".activities.HomeActivity"/>
+        <activity
+            android:name=".activities.ShowOrdersActivity"
+            android:parentActivityName=".activities.HomeActivity" />
         <activity android:name=".activities.OrderPdfActivity" />
         <activity android:name=".activities.NewOrderActivity" />
         <activity

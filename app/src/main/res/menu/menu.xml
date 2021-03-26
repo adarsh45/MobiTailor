@@ -12,6 +12,11 @@
         android:icon="@drawable/ic_settings" />
 
     <item
+        android:id="@+id/menu_main_about"
+        android:title="About this app"
+        android:icon="@drawable/ic_info_24" />
+
+    <item
         android:id="@+id/menu_logout"
         android:title="Logout"
         android:icon="@drawable/ic_logout"/>

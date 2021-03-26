@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_feedback"
+        android:title="Give Feedback"
+        app:showAsAction="withText"
+        android:icon="@drawable/ic_rate_review_24"/>
+
+<!--    <item-->
+<!--        android:id="@+id/menu_update"-->
+<!--        android:title="Check for Update"-->
+<!--        app:showAsAction="withText"-->
+<!--        android:icon="@drawable/ic_update_24"/>-->
+
+    <item
+        android:id="@+id/menu_about_app"
+        android:title="About this App"
+        app:showAsAction="withText"
+        android:icon="@drawable/ic_info_24"/>
+
+
+</menu>

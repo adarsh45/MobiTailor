@@ -9,10 +9,15 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.preference.PreferenceManager;
 
+import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -205,9 +210,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater homeMenuInflater = getMenuInflater();
+        homeMenuInflater.inflate(R.menu.home_menu, menu);
+        return true;
+    }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_feedback:
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + getPackageName())));
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+                }
+                return true;
+//            case R.id.menu_update:
+//                Toast.makeText(this, "Update the app", Toast.LENGTH_SHORT).show();
+//                return true;
+            case R.id.menu_about_app:
+                startActivity(new Intent(HomeActivity.this, AboutAppActivity.class));
+                return true;
+        }
+
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -215,6 +245,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -225,6 +256,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_settings:
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                break;
+            case R.id.menu_main_about:
+                startActivity(new Intent(HomeActivity.this, AboutAppActivity.class));
                 break;
             case R.id.menu_logout:
                 mAuth.signOut();

@@ -163,4 +163,5 @@
     <string name="edit_order_details">Edit Order Details</string>
     <string name="order_date">Booking Date</string>
     <string name="customer_list_empty">Add New Customers by Clicking + button below</string>
+    <string name="about_instructions">In order to use this app with full features, Kindly contact to below mentioned number</string>
 </resources>

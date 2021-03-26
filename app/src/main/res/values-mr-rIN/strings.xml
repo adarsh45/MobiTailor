@@ -112,4 +112,5 @@
     <string name="edit_order_details">बिलामध्ये बदल करा</string>
     <string name="order_date">बुकिंग दिनांक</string>
     <string name="customer_list_empty">खालील + बटन दाबून नवीन ग्राहक जोडा</string>
+    <string name="about_instructions" translatable="false">"अँप चे संपूर्ण व्हर्जन ऍक्टिव्हेट करण्यासाठी कृपया खाली दिलेल्या नंबर वरती संपर्क साधा "</string>
 </resources>
