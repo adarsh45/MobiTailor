@@ -1,0 +1,67 @@
+package com.adarsh45.mobitailor.adapters;
+
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.adarsh45.mobitailor.R;
+import com.adarsh45.mobitailor.activities.SelectProductActivity;
+import com.adarsh45.mobitailor.pojo.Emp;
+import com.adarsh45.mobitailor.utils.Util;
+
+import java.util.ArrayList;
+
+public class EmpAdapter extends RecyclerView.Adapter<EmpAdapter.EmpViewHolder> {
+
+    private ArrayList<Emp> list;
+
+    public EmpAdapter(ArrayList<Emp> empList){
+        this.list = empList;
+    }
+
+    @NonNull
+    @Override
+    public EmpViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_emp_row,parent,false);
+        return new EmpViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final EmpViewHolder holder, final int position) {
+        holder.rvEmpNameText.setText(list.get(position).getEmpName());
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
+                intent.putExtra("origin", Util.EMP_MEASUREMENT);
+                intent.putExtra("emp",list.get(position));
+                holder.linearLayout.getContext().startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+
+    //    class for viewHolder
+    public static class EmpViewHolder extends RecyclerView.ViewHolder{
+        LinearLayout linearLayout;
+        TextView rvEmpNameText;
+
+        public EmpViewHolder(@NonNull View itemView) {
+            super(itemView);
+            linearLayout = itemView.findViewById(R.id.rv_linear_layout_emp);
+            rvEmpNameText = itemView.findViewById(R.id.rv_emp_name);
+        }
+    }
+}
