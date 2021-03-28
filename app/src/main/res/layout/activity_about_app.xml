@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AboutAppActivity"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    android:id="@+id/about_app_root_layout">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -39,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Version: v1.2"
+                    android:text="Current Version: v1.2.1"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp" />
 
@@ -52,9 +53,39 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:padding="10dp"
+            android:layout_marginVertical="10dp"
                 android:text="@string/about_instructions"
                 android:textColor="@color/colorBlack"
                 android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/layout_paid_member"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginVertical="20dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/success_dialog_btn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="You are a Paid Member of MobiTailor"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
 
         <TextView
                 android:layout_width="wrap_content"

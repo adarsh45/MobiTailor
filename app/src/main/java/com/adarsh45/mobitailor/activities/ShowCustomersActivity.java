@@ -169,7 +169,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
 //                check if payment done
                 if (!isPaidMember && customerCount >= limit){
-                    ResultDialog dialog = new ResultDialog(ShowCustomersActivity.this, false, "Customers are more than " + limit + ", Please make payment to use the app!");
+                    ResultDialog dialog = new ResultDialog(ShowCustomersActivity.this, false, resources.getString(R.string.limit_error));
                     dialog.show(getSupportFragmentManager(),"Result");
                     return;
                 }

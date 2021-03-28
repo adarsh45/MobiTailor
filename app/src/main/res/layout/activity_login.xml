@@ -46,49 +46,58 @@
             android:textSize="@dimen/primary_heading_text" />
 
         <LinearLayout
+            android:id="@+id/layout_phone_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:drawableLeft="@drawable/ic_phone"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/country_code"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/login_page_text" />
+
+                <EditText
+                    android:id="@+id/edit_phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/phone_hint"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorHint"
+                    android:textSize="@dimen/login_page_text" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/verify_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:drawableLeft="@drawable/ic_phone"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button"
                 android:fontFamily="@font/roboto"
-                android:text="@string/country_code"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/login_page_text" />
-
-            <EditText
-                android:id="@+id/edit_phone"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:hint="@string/phone_hint"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorHint"
+                android:onClick="onClickLogin"
+                android:text="@string/verify"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/login_page_text" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/verify_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_button"
-            android:fontFamily="@font/roboto"
-            android:onClick="onClickLogin"
-            android:text="@string/verify"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/login_page_text" />
 
         <ProgressBar
             android:id="@+id/login_progress_bar"
@@ -97,34 +106,43 @@
             android:layout_gravity="center_horizontal"
             android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/edit_otp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_otp"
+            android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/ic_check"
-            android:gravity="center"
-            android:hint="Enter OTP here"
-            android:inputType="number"
-            android:maxLength="6"
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorHint"
-            android:textSize="@dimen/login_page_text" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_button"
-            android:fontFamily="@font/roboto"
-            android:onClick="onClickLogin"
-            android:text="@string/login_text"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/login_page_text" />
+            <EditText
+                android:id="@+id/edit_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:drawableLeft="@drawable/ic_check"
+                android:gravity="center"
+                android:hint="Enter OTP here"
+                android:inputType="number"
+                android:maxLength="6"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/colorHint"
+                android:textSize="@dimen/login_page_text" />
+
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button"
+                android:fontFamily="@font/roboto"
+                android:onClick="onClickLogin"
+                android:text="@string/login_text"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/login_page_text" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

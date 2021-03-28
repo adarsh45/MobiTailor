@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.adarsh45.mobitailor.R;
@@ -16,24 +18,30 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "LoginActivity";
+
     private FirebaseAuth mAuth;
 
     private EditText editPhone, editOTP;
     private Button verifyBtn, loginBtn;
     private ProgressBar loginProgressBar;
+    private LinearLayout layoutOTP;
 
     public String codeSent;
+
 
     @Override
     protected void onStart() {
@@ -83,18 +91,16 @@ public class LoginActivity extends AppCompatActivity {
 
         //progress bar
         loginProgressBar = findViewById(R.id.login_progress_bar);
+        layoutOTP = findViewById(R.id.layout_otp);
     }
 
     public void onClickLogin(@NonNull View view){
-        switch (view.getId()){
-            case R.id.verify_btn:
-                //call verification method
-                verifyPhone();
-                break;
-            case R.id.login_btn:
-                //call login method
-                loginWithCode();
-                break;
+        if (view.getId() == R.id.verify_btn){
+            //call verification method
+            verifyPhone();
+        } else if (view.getId() == R.id.login_btn){
+            //call login method
+            loginWithCode();
         }
     }
 
@@ -111,19 +117,21 @@ public class LoginActivity extends AppCompatActivity {
         }
         String phoneNumber = "+91"+phone;
 
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                phoneNumber,          //phone number
-                60,                 //timeout duration
-                TimeUnit.SECONDS,     //unit of timeout
-                this,           //context
-                mCallback             //callback method
-        );
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallback)          // OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
 
         loginProgressBar.setVisibility(View.VISIBLE);
 
     }
 
     private void loginWithCode() {
+
         loginProgressBar.setVisibility(View.VISIBLE);
         String codeEntered = editOTP.getText().toString();
 
@@ -140,13 +148,24 @@ public class LoginActivity extends AppCompatActivity {
     //CALLBACK METHOD
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallback = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
-        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
             loginProgressBar.setVisibility(View.GONE);
             signInWithPhoneCredential(phoneAuthCredential);
         }
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
+
+            Log.d(TAG, "onVerificationFailed", e);
+
+            if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                // Invalid request
+                showSnackbar("Invalid Request! Please contact Developers!");
+            } else if (e instanceof FirebaseTooManyRequestsException) {
+                // The SMS quota for the project has been exceeded
+                showSnackbar("Developers SMS quota Exceeded! Kindly contact Developers!");
+            }
+
             editPhone.setEnabled(true);
             verifyBtn.setEnabled(true);
             loginProgressBar.setVisibility(View.GONE);
@@ -154,11 +173,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             codeSent = s;
             loginProgressBar.setVisibility(View.GONE);
             showSnackbar("Code sent successfully!");
+            editPhone.setEnabled(false);
+            verifyBtn.setEnabled(false);
+            layoutOTP.setVisibility(View.VISIBLE);
         }
 
     };
@@ -175,10 +197,13 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                             startActivity(intent);
                             finish();
-                        } else
-                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
-                            //Invalid code entered by user
-                            showSnackbar("Invalid code!");
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
+                                //Invalid code entered by user
+                                showSnackbar("Invalid code!");
+                            } else {
+                                showSnackbar(task.getException().getLocalizedMessage());
+                            }
                         }
                     }
                 });

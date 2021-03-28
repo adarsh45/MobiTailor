@@ -1,6 +1,7 @@
 package com.adarsh45.mobitailor.utils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.adarsh45.mobitailor.R;
+import com.adarsh45.mobitailor.activities.AboutAppActivity;
 
 public class ResultDialog extends DialogFragment {
 
@@ -58,6 +60,10 @@ public class ResultDialog extends DialogFragment {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!result){
+                    Intent intent = new Intent(activity, AboutAppActivity.class);
+                    startActivity(intent);
+                }
                 dismiss();
                 activity.finish();
             }
