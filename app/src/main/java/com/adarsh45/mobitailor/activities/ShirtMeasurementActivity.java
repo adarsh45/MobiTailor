@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,8 +25,6 @@ import com.adarsh45.mobitailor.pojo.Shirt;
 import com.adarsh45.mobitailor.utils.LanguageHelper;
 import com.adarsh45.mobitailor.utils.ResultDialog;
 import com.adarsh45.mobitailor.utils.Util;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -63,9 +62,6 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
 
     private Resources resources;
 
-//    String[] type = getResources().getStringArray(R.array.type);
-//    Type: Apple, Open, Manilla, 3 Button Shirt, Safari
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +78,27 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
 
         initialize();
 
-
         resources = LanguageHelper.updateLanguage(this);
         Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.shirt_measurements));
 
         getPreviousShirt();
+
     }
+
+    ValueEventListener offlineEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, snapshot.exists());
+            dialog.show(getSupportFragmentManager(),"Result");
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, "onCancelled: " + error.getMessage());
+            ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, false);
+            dialog.show(getSupportFragmentManager(),"Result");
+        }
+    };
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
@@ -115,6 +126,8 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
 
         myRef = myDB.getReference().child("Users").child(UID).child("Measurements").child(id).child("Shirt");
 
+//        offline sync
+        myRef.keepSynced(true);
 
 //        TextView for name of customer
         TextView cName = findViewById(R.id.customer_name_shirt_measurement);
@@ -266,13 +279,23 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
                 shirtFrontStomachValue, shirtFrontSeatValue);
 
 
-        myRef.setValue(shirt).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+        myRef.setValue(shirt).addOnCompleteListener(task -> {
+//          show these popups only if activity is running
+            if (!isFinishing()) {
                 ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, task.isSuccessful());
-                dialog.show(getSupportFragmentManager(),"Result");
+                dialog.show(getSupportFragmentManager(), "Result");
             }
         });
+//        show success when offline
+        if (!Util.isNetworkAvailable(ShirtMeasurementActivity.this)){
+            if(myRef != null){
+                myRef.addListenerForSingleValueEvent(offlineEventListener);
+            } else {
+//                error msg
+                ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, false);
+                dialog.show(getSupportFragmentManager(),"Result");
+            }
+        }
 
     }
 

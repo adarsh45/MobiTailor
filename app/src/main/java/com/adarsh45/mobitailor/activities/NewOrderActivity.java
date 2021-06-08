@@ -11,7 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -61,7 +60,7 @@ public class NewOrderActivity extends AppCompatActivity {
 
     private Customer customer = null;
     private Order order;
-    private byte origin;
+//    private byte origin;
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -103,43 +102,42 @@ public class NewOrderActivity extends AppCompatActivity {
 
     }
 
-    private void setOrderDataInTexts() {
-        if (origin == Util.UPDATE_ORDER && order != null){
-            item1.setText(order.getItem_1().getItem_name());
-            item2.setText(order.getItem_2().getItem_name());
-            item3.setText(order.getItem_3().getItem_name());
-            item4.setText(order.getItem_4().getItem_name());
-
-//            TextView finalTotal, pendingAmount;
-//            EditText advanceAmount;
-            quant1.setText(order.getItem_1().getItem_quantity());
-            quant2.setText(order.getItem_2().getItem_quantity());
-            quant3.setText(order.getItem_3().getItem_quantity());
-            quant4.setText(order.getItem_4().getItem_quantity());
-
-            rate1.setText(order.getItem_1().getItem_rate());
-            rate2.setText(order.getItem_2().getItem_rate());
-            rate3.setText(order.getItem_3().getItem_rate());
-            rate4.setText(order.getItem_4().getItem_rate());
-
-            total1.setText(order.getItem_1().getTotal());
-            total2.setText(order.getItem_2().getTotal());
-            total3.setText(order.getItem_3().getTotal());
-            total4.setText(order.getItem_4().getTotal());
-
-            datePicker.setText(order.getDelivery_date());
-            finalTotal.setText(order.getTotal_amount());
-            pendingAmount.setText(order.getPending_amount());
-            advanceAmount.setText(order.getAdvance_amount());
-
-        }
-    }
+//    private void setOrderDataInTexts() {
+//        if (origin == Util.UPDATE_ORDER && order != null){
+//            item1.setText(order.getItem_1().getItem_name());
+//            item2.setText(order.getItem_2().getItem_name());
+//            item3.setText(order.getItem_3().getItem_name());
+//            item4.setText(order.getItem_4().getItem_name());
+//
+////            TextView finalTotal, pendingAmount;
+////            EditText advanceAmount;
+//            quant1.setText(order.getItem_1().getItem_quantity());
+//            quant2.setText(order.getItem_2().getItem_quantity());
+//            quant3.setText(order.getItem_3().getItem_quantity());
+//            quant4.setText(order.getItem_4().getItem_quantity());
+//
+//            rate1.setText(order.getItem_1().getItem_rate());
+//            rate2.setText(order.getItem_2().getItem_rate());
+//            rate3.setText(order.getItem_3().getItem_rate());
+//            rate4.setText(order.getItem_4().getItem_rate());
+//
+//            total1.setText(order.getItem_1().getTotal());
+//            total2.setText(order.getItem_2().getTotal());
+//            total3.setText(order.getItem_3().getTotal());
+//            total4.setText(order.getItem_4().getTotal());
+//
+//            datePicker.setText(order.getDelivery_date());
+//            finalTotal.setText(order.getTotal_amount());
+//            pendingAmount.setText(order.getPending_amount());
+//            advanceAmount.setText(order.getAdvance_amount());
+//
+//        }
+//    }
 
     private void getOrigin() {
-//        String origin = getIntent().getStringExtra("origin");
         customer = getIntent().getParcelableExtra("oldCustomer");
         order = getIntent().getParcelableExtra("oldOrder");
-        origin = getIntent().getByteExtra("origin", Util.UNKNOWN_ORIGIN);
+//        origin = getIntent().getByteExtra("origin", Util.UNKNOWN_ORIGIN);
 
         if (customer != null){
             customerNameNewOrder.setText(customer.getCustomerName());
@@ -150,39 +148,35 @@ public class NewOrderActivity extends AppCompatActivity {
     }
 
     private void onClicks() {
-        btnSaveNewOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    saveNewOrder();
+        btnSaveNewOrder.setOnClickListener(v -> {
+            if(Util.isNetworkAvailable(NewOrderActivity.this)){
+                saveNewOrder();
+            } else {
+                Util.showSnackBar(rootViewNewOrder, "Device is offline, Please turn on Internet!");
             }
         });
 
-        btnCancelNewOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btnCancelNewOrder.setOnClickListener(v -> finish());
     }
 
-    private void updateOrder() {
-        Log.d(TAG, "updateOrder: HELLO");
-
-        if (order == null){
-            Util.showSnackBar(rootViewNewOrder, "Previous order not found! Please retry!");
-            return;
-        }
-        Order orderData = getOrderData();
-        if (orderData == null){
-            Util.showSnackBar(rootViewNewOrder, "Some data may be empty! please retry!");
-            return;
-        }
-        orderData.setOrder_id(order.getOrder_id());
-        orderData.setOrder_ref_no(order.getOrder_ref_no());
-
-        saveOrderToDB(orderData);
-
-    }
+//    private void updateOrder() {
+//        Log.d(TAG, "updateOrder: HELLO");
+//
+//        if (order == null){
+//            Util.showSnackBar(rootViewNewOrder, "Previous order not found! Please retry!");
+//            return;
+//        }
+//        Order orderData = getOrderData();
+//        if (orderData == null){
+//            Util.showSnackBar(rootViewNewOrder, "Some data may be empty! please retry!");
+//            return;
+//        }
+//        orderData.setOrder_id(order.getOrder_id());
+//        orderData.setOrder_ref_no(order.getOrder_ref_no());
+//
+//        saveOrderToDB(orderData);
+//
+//    }
 
     private void saveOrderToDB(final Order orderData) {
 
@@ -190,29 +184,23 @@ public class NewOrderActivity extends AppCompatActivity {
 
         orderRef = rootRef.child("Orders").child(customerId);
         //                push this order object to DB
-        orderRef.child(orderData.getOrder_id()).setValue(orderData).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+        orderRef.child(orderData.getOrder_id()).setValue(orderData).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
 //                            order details are saved successfully
 //                            now update the ordersCounter value as per the latest order reference number
-                        rootRef.child("Orders").child("ordersCount").setValue(orderData.getOrder_ref_no()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
+                    rootRef.child("Orders").child("ordersCount").setValue(orderData.getOrder_ref_no()).addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
 //                                        open order pdf activity with order and customer object passed and close this one
-                                    Intent intent = new Intent(NewOrderActivity.this, OrderPdfActivity.class);
-                                    intent.putExtra("customer", customer);
-                                    intent.putExtra("order", orderData);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Util.showSnackBar(rootViewNewOrder, "Error updating order reference number,Kindly delete Order and recreate!");
-                                }
-                            }
-                        });
-                } else Util.showSnackBar(rootViewNewOrder, "Error saving order, Something went wrong!");
-            }
+                            Intent intent = new Intent(NewOrderActivity.this, OrderPdfActivity.class);
+                            intent.putExtra("customer", customer);
+                            intent.putExtra("order", orderData);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Util.showSnackBar(rootViewNewOrder, "Error updating order reference number,Kindly delete Order and recreate!");
+                        }
+                    });
+            } else Util.showSnackBar(rootViewNewOrder, "Error saving order, Something went wrong!");
         });
     }
 
@@ -314,14 +302,11 @@ public class NewOrderActivity extends AppCompatActivity {
                 } else {
 //                    ordersCount counter was not present in DB
 //                    now creating ordersCount field in DB and saving it in local variable also
-                    rootRef.child("Orders").child("ordersCount").setValue("0000").addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()){
-                                ordersCount[0] = "0000";
-                            } else {
-                                Toast.makeText(NewOrderActivity.this, "Problem getting Order Reference No from Database!", Toast.LENGTH_SHORT).show();
-                            }
+                    rootRef.child("Orders").child("ordersCount").setValue("0000").addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            ordersCount[0] = "0000";
+                        } else {
+                            Toast.makeText(NewOrderActivity.this, "Problem getting Order Reference No from Database!", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -351,34 +336,23 @@ public class NewOrderActivity extends AppCompatActivity {
                 Log.d(TAG, "onCancelled: "+error.getMessage());
             }
         });
-
-
-
     }
 
     private void pickDateForOrder() {
-        datePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.MONTH, month);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        updateLabel();
-                    }
-                };
-
-                new DatePickerDialog(
-                        NewOrderActivity.this,
-                        datePickerListener,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH))
-                        .show();
-            }
+        datePicker.setOnClickListener(v -> {
+            DatePickerDialog.OnDateSetListener datePickerListener = (view, year, month, dayOfMonth) -> {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            };
+            new DatePickerDialog(
+                    NewOrderActivity.this,
+                    datePickerListener,
+                    myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH))
+                    .show();
         });
     }
 

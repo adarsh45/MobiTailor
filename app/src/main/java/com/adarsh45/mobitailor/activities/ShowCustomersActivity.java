@@ -123,6 +123,8 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
     private void checkIsPaidMember() {
         final DatabaseReference paymentDetailsRef = rootRef.child(UID).child("PaymentDetails");
+//        offline sync
+        paymentDetailsRef.keepSynced(true);
         paymentDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -212,6 +214,11 @@ public class ShowCustomersActivity extends AppCompatActivity {
         UID = currentUser.getUid();
         orgRef = rootRef.child(UID).child("Organizations");
         customerRef = rootRef.child(UID).child("Customers");
+
+//        enable offline sync for db ref
+        rootRef.keepSynced(true);
+        orgRef.keepSynced(true);
+        customerRef.keepSynced(true);
 
         emptyTextView = findViewById(R.id.empty_text);
         recyclerView = findViewById(R.id.recycler_view);

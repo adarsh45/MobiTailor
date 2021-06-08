@@ -89,18 +89,20 @@ public class PantMeasurementActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(resources.getString(R.string.pant_measurements));
     }
 
-    private void updateLanguage() {
-        //        get language preference from sharedPref
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String lang = sharedPreferences.getString(LocaleHelper.SELECTED_LANGUAGE, "en");
-//        do not change anything if language is English (en)
-        if (lang.equals("en")) return;
-        Log.d(TAG, "updateLanguage: " + lang);
+    ValueEventListener offlineEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, snapshot.exists());
+            dialog.show(getSupportFragmentManager(),"Result");
+        }
 
-//        set locale and get resources
-        Context updatedContext = LocaleHelper.setLocale(this,lang);
-        resources = updatedContext.getResources();
-    }
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, "onCancelled: " + error.getMessage());
+            ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, false);
+            dialog.show(getSupportFragmentManager(),"Result");
+        }
+    };
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
@@ -251,13 +253,24 @@ public class PantMeasurementActivity extends AppCompatActivity {
         pant = new Pant(id,lastUpdateDate,strHeight, strWaist, strSeat, strBottom, strKnee, strThigh1, strThigh2, strSeatRound, strUtaar, strNotes,
                 strPantType, strPantPocket, strPantPlates, strPantSide, strPantStitch, strPantBackPocket);
 
-        rootRef.setValue(pant).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+        rootRef.setValue(pant).addOnCompleteListener(task -> {
+//            show these popups only if activity is running
+            if (!isFinishing()) {
                 ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, task.isSuccessful());
-                dialog.show(getSupportFragmentManager(),"Result");
+                dialog.show(getSupportFragmentManager(), "Result");
             }
         });
+
+        //        show success when offline
+        if (!Util.isNetworkAvailable(PantMeasurementActivity.this)){
+            if(rootRef != null){
+                rootRef.addListenerForSingleValueEvent(offlineEventListener);
+            } else {
+//                error msg
+                ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, false);
+                dialog.show(getSupportFragmentManager(),"Result");
+            }
+        }
     }
 
     //    for getting back to previous activity

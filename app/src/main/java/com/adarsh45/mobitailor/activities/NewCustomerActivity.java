@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,12 +21,13 @@ import com.adarsh45.mobitailor.pojo.Customer;
 import com.adarsh45.mobitailor.utils.LanguageHelper;
 import com.adarsh45.mobitailor.utils.ResultDialog;
 import com.adarsh45.mobitailor.utils.Util;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -60,6 +62,37 @@ public class NewCustomerActivity extends AppCompatActivity {
 
     }
 
+    private ValueEventListener offlineDeleteValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()){
+                finish();
+            } else {
+                Util.showSnackBar(layout, "Something went wrong");
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, "onCancelled: " + error.getMessage());
+            Util.showSnackBar(layout, "Something went wrong");
+        }
+    };
+    private ValueEventListener offlineSaveValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, snapshot.exists());
+            dialog.show(getSupportFragmentManager(),"Result");
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, "onCancelled: " + error.getMessage());
+            ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, false);
+            dialog.show(getSupportFragmentManager(),"Result");
+        }
+    };
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
         layout = findViewById(R.id.new_customer_layout);
@@ -78,6 +111,10 @@ public class NewCustomerActivity extends AppCompatActivity {
         assert currentUser != null;
         UID = currentUser.getUid();
         customerRef = rootRef.child(UID).child("Customers");
+
+//        offline sync
+        rootRef.keepSynced(true);
+        customerRef.keepSynced(true);
 
         //finding views from id
         editCustomerName = findViewById(R.id.edit_customer_name);
@@ -119,13 +156,17 @@ public class NewCustomerActivity extends AppCompatActivity {
                 .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        customerRef.child(customerId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
+                        customerRef.child(customerId).removeValue().addOnCompleteListener(task -> {
+//                            show these popups only if activity is running
+                            if (!isFinishing()) {
                                 if (task.isSuccessful()) finish();
                                 else Util.showSnackBar(layout, "Something went wrong");
                             }
                         });
+//                        finish activity(after delete) when device is offline (irrespective of above onComplete callback)
+                        if (!Util.isNetworkAvailable(NewCustomerActivity.this)){
+                            customerRef.addListenerForSingleValueEvent(offlineDeleteValueEventListener);
+                        }
                     }
                 })
 
@@ -137,18 +178,15 @@ public class NewCustomerActivity extends AppCompatActivity {
     }
 
     public void onClickNewCustomer(View view){
-        switch (view.getId()){
-            case R.id.btn_register_customer:
-                //register new customer method
-                if (origin == Util.UPDATE_CUSTOMER){
-                    updateCustomer(oldCustomer);
-                } else if (origin == Util.NEW_CUSTOMER){
-                    registerNewCustomer();
-                } else Util.showSnackBar(layout,"Origin not defined");
-                break;
-            case R.id.btn_cancel_customer:
-                finish();
-                break;
+        if (view.getId() == R.id.btn_register_customer){
+            //register new customer method
+            if (origin == Util.UPDATE_CUSTOMER){
+                updateCustomer(oldCustomer);
+            } else if (origin == Util.NEW_CUSTOMER){
+                registerNewCustomer();
+            } else Util.showSnackBar(layout,"Origin not defined");
+        } else if (view.getId() == R.id.btn_cancel_customer){
+            finish();
         }
     }
 
@@ -175,17 +213,21 @@ public class NewCustomerActivity extends AppCompatActivity {
         Customer customer = new Customer(customerID, customerName, customerMobile, customerAddress);
 
         assert customerID != null;
-        customerRef.child(customerID).setValue(customer).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+        customerRef.child(customerID).setValue(customer).addOnCompleteListener(task -> {
+//          show these popups only if activity is running
+            if (!isFinishing()) {
                 ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, task.isSuccessful());
-                dialog.show(getSupportFragmentManager(),"Result");
+                dialog.show(getSupportFragmentManager(), "Result");
             }
         });
+
+//        show success msg when device is offline (irrespective of onComplete callback)
+        if (!Util.isNetworkAvailable(NewCustomerActivity.this)) {
+            customerRef.addListenerForSingleValueEvent(offlineSaveValueEventListener);
+        }
     }
 
     private void updateCustomer(Customer currentCustomer){
-
         String customerName = editCustomerName.getText().toString().trim();
         String customerMobile = editCustomerMobile.getText().toString().trim();
         String customerAddress = editCustomerAddress.getText().toString().trim();
@@ -195,13 +237,18 @@ public class NewCustomerActivity extends AppCompatActivity {
         currentCustomer.setCustomerAddress(customerAddress);
 
         String customerID = currentCustomer.getCustomerID();
-        customerRef.child(customerID).setValue(currentCustomer).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+
+        customerRef.child(customerID).setValue(currentCustomer).addOnCompleteListener(task -> {
+//          show these popups only if activity is running
+            if (!isFinishing()) {
                 ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, task.isSuccessful());
-                dialog.show(getSupportFragmentManager(),"Result");
+                dialog.show(getSupportFragmentManager(), "Result");
             }
         });
+
+        if(!Util.isNetworkAvailable(NewCustomerActivity.this)){
+            customerRef.addListenerForSingleValueEvent(offlineSaveValueEventListener);
+        }
     }
 
     //    for getting back to previous activity

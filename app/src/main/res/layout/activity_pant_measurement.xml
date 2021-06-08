@@ -668,7 +668,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
                     android:onClick="onClickPantMeasurement"
-                    android:text="@string/register"
+                    android:text="@string/save"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/form_text" />
