@@ -165,4 +165,5 @@
     <string name="customer_list_empty">Add New Customers by Clicking + button below</string>
     <string name="about_instructions">In order to use this app with full features, Kindly contact to below mentioned number</string>
     <string name="limit_error">Thank you for using trial version! Please press OK to get further  Instructions!</string>
+    <string name="create_new_bill">Create New Bill</string>
 </resources>

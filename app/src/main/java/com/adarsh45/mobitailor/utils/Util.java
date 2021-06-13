@@ -61,6 +61,16 @@ public class Util {
     public static final byte CUSTOMER_MEASUREMENT = 31;
     public static final byte EMP_MEASUREMENT = 32;
 
+    public static final String SETTINGS_PREF_FILE = "settings_pref";
+    public static final String PRODUCT_NAME_1 = "prod_name_1";
+    public static final String PRODUCT_NAME_2 = "prod_name_2";
+    public static final String PRODUCT_NAME_3 = "prod_name_3";
+    public static final String PRODUCT_NAME_4 = "prod_name_4";
+    public static final String PRODUCT_RATE_1 = "prod_rate_1";
+    public static final String PRODUCT_RATE_2 = "prod_rate_2";
+    public static final String PRODUCT_RATE_3 = "prod_rate_3";
+    public static final String PRODUCT_RATE_4 = "prod_rate_4";
+
     public static final String SHIRT_BOX_PATTI = "Box Patti";
     public static final String SHIRT_IN_PATTI = "In Patti";
     public static final String SHIRT_COVER_SILAI = "Cover Silai";

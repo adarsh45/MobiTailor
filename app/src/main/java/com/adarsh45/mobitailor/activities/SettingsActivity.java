@@ -1,16 +1,22 @@
 package com.adarsh45.mobitailor.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.adarsh45.mobitailor.R;
+import com.adarsh45.mobitailor.utils.ProductsDialog;
+import com.adarsh45.mobitailor.utils.ResultDialog;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    private static final String TAG = "SettingsActivity";
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -40,6 +46,15 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
+
+            Preference openProductsPref = getPreferenceScreen().findPreference("product_rates");
+
+            openProductsPref.setOnPreferenceClickListener(preference -> {
+                Log.d(TAG, "onCreatePreferences: i was clicked ");
+                ProductsDialog dialog = new ProductsDialog();
+                dialog.show(getParentFragmentManager(), "Products List");
+                return true;
+            });
 
 //            final SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(Util.settingsSPFileName, MODE_PRIVATE);
 //            final SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -684,6 +684,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
+                <LinearLayout
+                    android:id="@+id/progress_shirt_measurement"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="4dp"
+                    android:gravity="center"
+                    android:background="@drawable/custom_progress_card">
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btn_save_shirt_measurement"
                     android:layout_width="0dp"

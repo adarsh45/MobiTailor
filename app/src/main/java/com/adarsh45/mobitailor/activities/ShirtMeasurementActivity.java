@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -55,6 +57,8 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
     RadioGroup shirtRadioGroupPatti, shirtRadioGroupSilai;
     RadioButton radioBtnBoxPatti, radioBtnInPatti, radioBtnCoverSilai, radioBtnPlainSilai;
     Spinner typeSpinner;
+    private Button btnSave;
+    private LinearLayout progressLayout;
 
     String strShirtType, UID, id, titleText;
     byte origin;
@@ -88,12 +92,16 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
     ValueEventListener offlineEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            btnSave.setVisibility(View.VISIBLE);
+            progressLayout.setVisibility(View.GONE);
             ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, snapshot.exists());
             dialog.show(getSupportFragmentManager(),"Result");
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
+            btnSave.setVisibility(View.VISIBLE);
+            progressLayout.setVisibility(View.GONE);
             Log.d(TAG, "onCancelled: " + error.getMessage());
             ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, false);
             dialog.show(getSupportFragmentManager(),"Result");
@@ -167,6 +175,9 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         radioBtnCoverSilai = findViewById(R.id.radio_cover_silai);
         radioBtnPlainSilai = findViewById(R.id.radio_plain_silai);
 
+        btnSave = findViewById(R.id.btn_save_shirt_measurement);
+//        progress bar layout
+        progressLayout = findViewById(R.id.progress_shirt_measurement);
 
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -236,6 +247,8 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
 
     public void onClickShirtMeasurement(View view){
         if (view.getId() == R.id.btn_save_shirt_measurement){
+            btnSave.setVisibility(View.GONE);
+            progressLayout.setVisibility(View.VISIBLE);
 //            save btn clicked
             createShirt();
 //            cancel btn clicked
@@ -282,19 +295,15 @@ public class ShirtMeasurementActivity extends AppCompatActivity {
         myRef.setValue(shirt).addOnCompleteListener(task -> {
 //          show these popups only if activity is running
             if (!isFinishing()) {
+                btnSave.setVisibility(View.VISIBLE);
+                progressLayout.setVisibility(View.GONE);
                 ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, task.isSuccessful());
                 dialog.show(getSupportFragmentManager(), "Result");
             }
         });
 //        show success when offline
         if (!Util.isNetworkAvailable(ShirtMeasurementActivity.this)){
-            if(myRef != null){
-                myRef.addListenerForSingleValueEvent(offlineEventListener);
-            } else {
-//                error msg
-                ResultDialog dialog = new ResultDialog(ShirtMeasurementActivity.this, false);
-                dialog.show(getSupportFragmentManager(),"Result");
-            }
+            myRef.addListenerForSingleValueEvent(offlineEventListener);
         }
 
     }

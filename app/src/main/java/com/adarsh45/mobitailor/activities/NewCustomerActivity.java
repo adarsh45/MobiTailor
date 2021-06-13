@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.adarsh45.mobitailor.R;
 import com.adarsh45.mobitailor.pojo.Customer;
@@ -46,7 +47,9 @@ public class NewCustomerActivity extends AppCompatActivity {
     private Customer oldCustomer;
 
     private EditText editCustomerName, editCustomerMobile, editCustomerAddress;
+    private Button btnRegister;
     private ConstraintLayout layout;
+    private LinearLayout progressLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -81,6 +84,8 @@ public class NewCustomerActivity extends AppCompatActivity {
     private ValueEventListener offlineSaveValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            btnRegister.setVisibility(View.VISIBLE);
+            progressLayout.setVisibility(View.GONE);
             ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, snapshot.exists());
             dialog.show(getSupportFragmentManager(),"Result");
         }
@@ -88,6 +93,8 @@ public class NewCustomerActivity extends AppCompatActivity {
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
             Log.d(TAG, "onCancelled: " + error.getMessage());
+            btnRegister.setVisibility(View.VISIBLE);
+            progressLayout.setVisibility(View.GONE);
             ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, false);
             dialog.show(getSupportFragmentManager(),"Result");
         }
@@ -96,6 +103,8 @@ public class NewCustomerActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initialize() {
         layout = findViewById(R.id.new_customer_layout);
+        progressLayout = findViewById(R.id.progress_new_customer);
+        btnRegister = findViewById(R.id.btn_register_customer);
 //        adding back button on toolbar
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -143,43 +152,38 @@ public class NewCustomerActivity extends AppCompatActivity {
     }
 
     private void deleteCustomer(final String customerId) {
+//        TODO: delete measurements associated with that customer also
         Button deleteBtn = findViewById(R.id.delete_btn);
         deleteBtn.setVisibility(View.VISIBLE);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(NewCustomerActivity.this)
-                .setTitle("Delete Customer")
-                .setMessage("Are you sure you want to delete this customer ?")
-                .setIcon(R.drawable.ic_delete)
+        deleteBtn.setOnClickListener(v -> new AlertDialog.Builder(NewCustomerActivity.this)
+        .setTitle("Delete Customer")
+        .setMessage("Are you sure you want to delete this customer ?")
+        .setIcon(R.drawable.ic_delete)
 
-                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        customerRef.child(customerId).removeValue().addOnCompleteListener(task -> {
+        .setPositiveButton("DELETE", (dialog, which) -> {
+            customerRef.child(customerId).removeValue().addOnCompleteListener(task -> {
 //                            show these popups only if activity is running
-                            if (!isFinishing()) {
-                                if (task.isSuccessful()) finish();
-                                else Util.showSnackBar(layout, "Something went wrong");
-                            }
-                        });
+                if (!isFinishing()) {
+                    if (task.isSuccessful()) finish();
+                    else Util.showSnackBar(layout, "Something went wrong");
+                }
+            });
 //                        finish activity(after delete) when device is offline (irrespective of above onComplete callback)
-                        if (!Util.isNetworkAvailable(NewCustomerActivity.this)){
-                            customerRef.addListenerForSingleValueEvent(offlineDeleteValueEventListener);
-                        }
-                    }
-                })
-
-                .setNegativeButton("Cancel", null)
-                .show();
+            if (!Util.isNetworkAvailable(NewCustomerActivity.this)){
+                customerRef.addListenerForSingleValueEvent(offlineDeleteValueEventListener);
             }
-        });
+        })
+
+        .setNegativeButton("Cancel", null)
+        .show());
 
     }
 
     public void onClickNewCustomer(View view){
         if (view.getId() == R.id.btn_register_customer){
             //register new customer method
+            btnRegister.setVisibility(View.GONE);
+            progressLayout.setVisibility(View.VISIBLE);
             if (origin == Util.UPDATE_CUSTOMER){
                 updateCustomer(oldCustomer);
             } else if (origin == Util.NEW_CUSTOMER){
@@ -216,6 +220,8 @@ public class NewCustomerActivity extends AppCompatActivity {
         customerRef.child(customerID).setValue(customer).addOnCompleteListener(task -> {
 //          show these popups only if activity is running
             if (!isFinishing()) {
+                btnRegister.setVisibility(View.VISIBLE);
+                progressLayout.setVisibility(View.GONE);
                 ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, task.isSuccessful());
                 dialog.show(getSupportFragmentManager(), "Result");
             }
@@ -241,6 +247,8 @@ public class NewCustomerActivity extends AppCompatActivity {
         customerRef.child(customerID).setValue(currentCustomer).addOnCompleteListener(task -> {
 //          show these popups only if activity is running
             if (!isFinishing()) {
+                btnRegister.setVisibility(View.VISIBLE);
+                progressLayout.setVisibility(View.GONE);
                 ResultDialog dialog = new ResultDialog(NewCustomerActivity.this, task.isSuccessful());
                 dialog.show(getSupportFragmentManager(), "Result");
             }

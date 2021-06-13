@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +60,9 @@ public class PantMeasurementActivity extends AppCompatActivity {
                 radioGroupPantSide, radioGroupPantStitch, radioGroupPantBackPocket;
     Spinner pantTypeSpinner;
 
+    private Button btnSave;
+    private LinearLayout progressLayout;
+
     String strPantType;
     String UID, id, titleText;
     private byte origin;
@@ -92,12 +97,16 @@ public class PantMeasurementActivity extends AppCompatActivity {
     ValueEventListener offlineEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            btnSave.setVisibility(View.VISIBLE);
+            progressLayout.setVisibility(View.GONE);
             ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, snapshot.exists());
             dialog.show(getSupportFragmentManager(),"Result");
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
+            btnSave.setVisibility(View.VISIBLE);
+            progressLayout.setVisibility(View.GONE);
             Log.d(TAG, "onCancelled: " + error.getMessage());
             ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, false);
             dialog.show(getSupportFragmentManager(),"Result");
@@ -157,6 +166,9 @@ public class PantMeasurementActivity extends AppCompatActivity {
         radioGroupPantBackPocket = findViewById(R.id.radiogroup_pant_back_pocket);
 //        spinner
         pantTypeSpinner = findViewById(R.id.pant_type_spinner);
+
+        btnSave = findViewById(R.id.btn_save_pant_measurement);
+        progressLayout = findViewById(R.id.progress_pant_measurement);
 
 //        get text from spinner
         pantTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -221,6 +233,8 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
     public void onClickPantMeasurement(View view){
         if (view.getId() == R.id.btn_save_pant_measurement){
+            btnSave.setVisibility(View.GONE);
+            progressLayout.setVisibility(View.VISIBLE);
             createPant();
         } else finish();
     }
@@ -256,6 +270,8 @@ public class PantMeasurementActivity extends AppCompatActivity {
         rootRef.setValue(pant).addOnCompleteListener(task -> {
 //            show these popups only if activity is running
             if (!isFinishing()) {
+                btnSave.setVisibility(View.VISIBLE);
+                progressLayout.setVisibility(View.GONE);
                 ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, task.isSuccessful());
                 dialog.show(getSupportFragmentManager(), "Result");
             }
@@ -263,13 +279,7 @@ public class PantMeasurementActivity extends AppCompatActivity {
 
         //        show success when offline
         if (!Util.isNetworkAvailable(PantMeasurementActivity.this)){
-            if(rootRef != null){
-                rootRef.addListenerForSingleValueEvent(offlineEventListener);
-            } else {
-//                error msg
-                ResultDialog dialog = new ResultDialog(PantMeasurementActivity.this, false);
-                dialog.show(getSupportFragmentManager(),"Result");
-            }
+            rootRef.addListenerForSingleValueEvent(offlineEventListener);
         }
     }
 

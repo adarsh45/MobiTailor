@@ -27,7 +27,6 @@ public class ResultDialog extends DialogFragment {
         this.result = result;
     }
 
-
     public ResultDialog(Activity activity, boolean result, String failureText){
         this.activity = activity;
         this.result = result;
@@ -57,16 +56,13 @@ public class ResultDialog extends DialogFragment {
         }
 
 //        on click for Ok button
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!result){
-                    Intent intent = new Intent(activity, AboutAppActivity.class);
-                    startActivity(intent);
-                }
-                dismiss();
-                activity.finish();
+        okBtn.setOnClickListener(v -> {
+            if (!result){
+                Intent intent = new Intent(activity, AboutAppActivity.class);
+                startActivity(intent);
             }
+            dismiss();
+            activity.finish();
         });
 
         setCancelable(false);

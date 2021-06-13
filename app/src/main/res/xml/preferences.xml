@@ -20,5 +20,7 @@
             app:defaultValue="en"/>
     </androidx.preference.PreferenceCategory>
 
+    <Preference android:key="product_rates" android:title="Products &amp; Rates"/>
+
 
 </androidx.preference.PreferenceScreen>

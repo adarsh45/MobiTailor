@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Products &amp; Prices"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:layout_marginVertical="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="11"
+            android:layout_marginVertical="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="6"
+                android:layout_height="wrap_content"
+                android:text="Product Name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content"
+                android:text="Rate ( &#8377; )"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp"
+            android:weightSum="11">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/et_product_name_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:hint="e.g. Shirt / Pant"
+                android:layout_marginHorizontal="8dp"
+                android:textColor="@color/colorBlack"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/button_text" />
+
+            <EditText
+                android:id="@+id/et_product_rate_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:hint="e.g. &#8377; 300"
+                android:textColor="@color/colorBlack"
+                android:inputType="number"
+                android:textSize="@dimen/button_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp"
+            android:weightSum="11">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/et_product_name_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:textColor="@color/colorBlack"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/button_text" />
+
+            <EditText
+                android:id="@+id/et_product_rate_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:inputType="number"
+                android:textSize="@dimen/button_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp"
+            android:weightSum="11">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/et_product_name_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:textColor="@color/colorBlack"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/button_text" />
+
+            <EditText
+                android:id="@+id/et_product_rate_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:inputType="number"
+                android:textSize="@dimen/button_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp"
+            android:weightSum="11">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="4"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <EditText
+                android:id="@+id/et_product_name_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="6"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:textColor="@color/colorBlack"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/button_text" />
+
+            <EditText
+                android:id="@+id/et_product_rate_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/custom_edit_text"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:inputType="number"
+                android:textSize="@dimen/button_text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btn_save_products"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="8dp"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/form_text" />
+
+        <Button
+            android:id="@+id/btn_cancel_products"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/form_text" />
+
+    </LinearLayout>
+
+</LinearLayout>
