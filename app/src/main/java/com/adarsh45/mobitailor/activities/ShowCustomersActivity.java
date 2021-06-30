@@ -310,7 +310,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 filterList.add(filterCustomer);
             }
         }
-
+        Log.d(TAG, "searchCustomer: ORIGIN: "+origin);
         recyclerView.setAdapter(new CustomerAdapter(filterList, origin));
     }
 
@@ -321,8 +321,11 @@ public class ShowCustomersActivity extends AppCompatActivity {
                 filterList.add(filterOrg);
             }
         }
-
-        recyclerView.setAdapter(new OrgAdapter(filterList, origin));
+        if (origin == Util.SHOW_ORGANIZATIONS){
+            recyclerView.setAdapter(new OrgAdapter(filterList, Util.UPDATE_ORGANIZATION));
+        } else if (origin == Util.SHOW_EMPLOYEES){
+            recyclerView.setAdapter(new OrgAdapter(filterList, Util.NEW_EMPLOYEE));
+        }
     }
 
     @Override

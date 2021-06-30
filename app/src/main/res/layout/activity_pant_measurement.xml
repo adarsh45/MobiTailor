@@ -102,7 +102,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_height"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -135,7 +135,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_waist"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -168,7 +168,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_seat"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -200,7 +200,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_bottom"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -225,7 +225,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_knee"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -258,7 +258,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_thigh_1"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -273,7 +273,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_thigh_2"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -307,7 +307,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_seat_round"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -333,7 +333,7 @@
 
                         <EditText
                             android:id="@+id/edit_pant_seat_utaar"
-                            android:inputType="phone"
+                            android:inputType="numberDecimal"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

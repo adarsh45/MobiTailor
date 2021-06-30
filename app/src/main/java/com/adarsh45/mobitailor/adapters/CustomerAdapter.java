@@ -45,40 +45,37 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         holder.rvCustomerName.setText(list.get(position).getCustomerName());
         holder.rvCustomerMobile.setText(list.get(position).getCustomerMobile());
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                switch (whatTODOhere){
-                    case Util.SHOW_CUSTOMERS:
-                        intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
-                        intent.putExtra("origin", Util.UPDATE_CUSTOMER);
-                        intent.putExtra("oldCustomer", list.get(position));
-                        holder.linearLayout.getContext().startActivity(intent);
-                        break;
-                    case Util.TAKE_MEASUREMENTS:
-                        intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
-                        intent.putExtra("origin", Util.CUSTOMER_MEASUREMENT);
-                        intent.putExtra("oldCustomer",list.get(position));
-                        holder.linearLayout.getContext().startActivity(intent);
-                        break;
-                    case Util.NEW_ORDER:
-                        intent = new Intent(holder.linearLayout.getContext(), NewOrderActivity.class);
-                        intent.putExtra("origin", Util.NEW_ORDER);
-                        intent.putExtra("oldCustomer",list.get(position));
-                        holder.linearLayout.getContext().startActivity(intent);
+        holder.linearLayout.setOnClickListener(v -> {
+            Intent intent;
+            switch (whatTODOhere){
+                case Util.SHOW_CUSTOMERS:
+                    intent = new Intent(holder.linearLayout.getContext(), NewCustomerActivity.class);
+                    intent.putExtra("origin", Util.UPDATE_CUSTOMER);
+                    intent.putExtra("oldCustomer", list.get(position));
+                    holder.linearLayout.getContext().startActivity(intent);
+                    break;
+                case Util.TAKE_MEASUREMENTS:
+                    intent = new Intent(holder.linearLayout.getContext(), SelectProductActivity.class);
+                    intent.putExtra("origin", Util.CUSTOMER_MEASUREMENT);
+                    intent.putExtra("oldCustomer",list.get(position));
+                    holder.linearLayout.getContext().startActivity(intent);
+                    break;
+                case Util.NEW_ORDER:
+                    intent = new Intent(holder.linearLayout.getContext(), NewOrderActivity.class);
+                    intent.putExtra("origin", Util.NEW_ORDER);
+                    intent.putExtra("oldCustomer",list.get(position));
+                    holder.linearLayout.getContext().startActivity(intent);
 //                        Toast.makeText(holder.linearLayout.getContext(), "Wait i will take order", Toast.LENGTH_SHORT).show();
-                        break;
-                    case Util.SHOW_ORDERS:
-                        intent = new Intent(holder.linearLayout.getContext(), ShowOrdersActivity.class);
-                        intent.putExtra("origin", Util.SHOW_ORDERS);
-                        intent.putExtra("oldCustomer",list.get(position));
-                        holder.linearLayout.getContext().startActivity(intent);
+                    break;
+                case Util.SHOW_ORDERS:
+                    intent = new Intent(holder.linearLayout.getContext(), ShowOrdersActivity.class);
+                    intent.putExtra("origin", Util.SHOW_ORDERS);
+                    intent.putExtra("oldCustomer",list.get(position));
+                    holder.linearLayout.getContext().startActivity(intent);
 //                        Toast.makeText(holder.linearLayout.getContext(), "Wait i will take order", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(holder.linearLayout.getContext(), "Something went wrong! Restart the App!", Toast.LENGTH_SHORT).show();
-                }
+                    break;
+                default:
+                    Toast.makeText(holder.linearLayout.getContext(), "Something went wrong! Restart the App!", Toast.LENGTH_SHORT).show();
             }
         });
     }

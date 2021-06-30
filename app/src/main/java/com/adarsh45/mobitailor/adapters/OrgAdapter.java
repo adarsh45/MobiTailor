@@ -1,6 +1,7 @@
 package com.adarsh45.mobitailor.adapters;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
 
+    private static final String TAG = "OrgAdapter";
     private ArrayList<Org> list;
     private byte whatTODOhere;
 
@@ -38,26 +40,25 @@ public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final OrgAdapter.OrgViewHolder holder, final int position) {
+        holder.rvOrgCount.setText(String.valueOf(position+1));
         holder.rvOrgName.setText(list.get(position).getOrgName());
         holder.rvOrgOwner.setText(list.get(position).getOrgOwner());
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (whatTODOhere == Util.UPDATE_ORGANIZATION){
+        holder.linearLayout.setOnClickListener(v -> {
+            Log.d(TAG, "onBindViewHolder: ORIGIN: "+ whatTODOhere);
+            if (whatTODOhere == Util.UPDATE_ORGANIZATION){
 
-                    Intent intent = new Intent(holder.linearLayout.getContext(), NewOrganizationActivity.class);
-                    intent.putExtra("origin", Util.UPDATE_ORGANIZATION);
-                    intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
-                    holder.linearLayout.getContext().startActivity(intent);
+                Intent intent = new Intent(holder.linearLayout.getContext(), NewOrganizationActivity.class);
+                intent.putExtra("origin", Util.UPDATE_ORGANIZATION);
+                intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
+                holder.linearLayout.getContext().startActivity(intent);
 
-                } else if (whatTODOhere == Util.NEW_EMPLOYEE){
+            } else if (whatTODOhere == Util.NEW_EMPLOYEE){
 
-                    Intent intent = new Intent(holder.linearLayout.getContext(), NewEmployeeActivity.class);
-                    intent.putExtra("origin", Util.NEW_EMPLOYEE);
-                    intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
-                    holder.linearLayout.getContext().startActivity(intent);
-                }
+                Intent intent = new Intent(holder.linearLayout.getContext(), NewEmployeeActivity.class);
+                intent.putExtra("origin", Util.NEW_EMPLOYEE);
+                intent.putExtra("oldOrg", list.get(position)); // parcel whole org object to intent
+                holder.linearLayout.getContext().startActivity(intent);
             }
         });
     }
@@ -72,11 +73,12 @@ public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
     public static class OrgViewHolder extends RecyclerView.ViewHolder{
 
         LinearLayout linearLayout;
-        TextView rvOrgName, rvOrgOwner;
+        TextView rvOrgCount, rvOrgName, rvOrgOwner;
 
         public OrgViewHolder(@NonNull View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.linearLayout);
+            rvOrgCount = itemView.findViewById(R.id.counter_text);
             rvOrgName = itemView.findViewById(R.id.rv_customer_name);
             rvOrgOwner = itemView.findViewById(R.id.rv_customer_mobile);
 

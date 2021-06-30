@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,15 +68,17 @@ public class NewCustomerActivity extends AppCompatActivity {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()){
-                finish();
+                Util.showSnackBar(layout, "Measurement was not deleted");
+                Log.d(TAG, "onDataChange: SNAPSHOT EXISTS");
             } else {
-                Util.showSnackBar(layout, "Something went wrong");
+                finish();
+                Log.d(TAG, "onDataChange: SNAPSHOT DOES NOT EXIST");
             }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-            Log.d(TAG, "onCancelled: " + error.getMessage());
+            Log.d(TAG, "onCancelled: DB ERROR: " + error.getMessage());
             Util.showSnackBar(layout, "Something went wrong");
         }
     };
@@ -153,6 +154,8 @@ public class NewCustomerActivity extends AppCompatActivity {
 
     private void deleteCustomer(final String customerId) {
 //        TODO: delete measurements associated with that customer also
+        DatabaseReference measurementRef = rootRef.child(currentUser.getUid()).child("Measurements").child(customerId);
+
         Button deleteBtn = findViewById(R.id.delete_btn);
         deleteBtn.setVisibility(View.VISIBLE);
         deleteBtn.setOnClickListener(v -> new AlertDialog.Builder(NewCustomerActivity.this)
@@ -164,13 +167,54 @@ public class NewCustomerActivity extends AppCompatActivity {
             customerRef.child(customerId).removeValue().addOnCompleteListener(task -> {
 //                            show these popups only if activity is running
                 if (!isFinishing()) {
-                    if (task.isSuccessful()) finish();
-                    else Util.showSnackBar(layout, "Something went wrong");
+//                    delete measurement associated to this customer
+                    if (task.isSuccessful()){
+                        measurementRef.removeValue().addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()){
+                                Log.d(TAG, "deleteCustomer: ONLINE DELETE COMPLETE FOR MEASUREMENT");
+                                finish();
+                            } else {
+                                Log.d(TAG, "deleteCustomer: ONLINE TASK FAILED FOR MEASUREMENT");
+                                Util.showSnackBar(layout, "Error deleting measurements of this customer");
+                            }
+                        });
+                    }
+                    else {
+                        Log.d(TAG, "deleteCustomer: TASK NOT COMPLETED");
+                        Util.showSnackBar(layout, "Something went wrong");
+                    }
                 }
             });
 //                        finish activity(after delete) when device is offline (irrespective of above onComplete callback)
             if (!Util.isNetworkAvailable(NewCustomerActivity.this)){
-                customerRef.addListenerForSingleValueEvent(offlineDeleteValueEventListener);
+                customerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+//                            customer removed successfully offline
+                            measurementRef.removeValue().addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()){
+                                    finish();
+                                    Log.d(TAG, "onDataChange: OFFLINE DELETE COMPLETE");
+                                } else {
+                                    Log.d(TAG, "onDataChange: OFFLINE MEASUREMENT DELETE NOT COMPLETED");
+                                    Util.showSnackBar(layout, "Error deleting measurements of this customer");
+                                }
+                            });
+
+                            measurementRef.addListenerForSingleValueEvent(offlineDeleteValueEventListener);
+                        } else {
+                            Log.d(TAG, "onDataChange: ");
+                            Util.showSnackBar(layout, "Error deleting customer!");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d(TAG, "onCancelled: " + error.getMessage());
+                        Util.showSnackBar(layout, error.getMessage());
+                    }
+                });
             }
         })
 
