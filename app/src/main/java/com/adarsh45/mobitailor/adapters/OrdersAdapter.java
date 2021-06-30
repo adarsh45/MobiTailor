@@ -91,18 +91,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
             tvRvTotalBill = itemView.findViewById(R.id.tv_rv_order_total_bill);
             tvRvPendingBill = itemView.findViewById(R.id.tv_rv_order_pending_bill);
             btnEditOrder = itemView.findViewById(R.id.btn_edit_order);
-            btnEditOrder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onEditOrderClick();
-                }
-            });
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openOrderDetails();
-                }
-            });
+            btnEditOrder.setOnClickListener(v -> onEditOrderClick());
+            itemView.setOnClickListener(v -> openOrderDetails());
         }
 
 //        onclick method for edit btn

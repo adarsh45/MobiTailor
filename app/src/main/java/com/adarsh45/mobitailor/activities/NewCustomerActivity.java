@@ -161,7 +161,7 @@ public class NewCustomerActivity extends AppCompatActivity {
         deleteBtn.setOnClickListener(v -> new AlertDialog.Builder(NewCustomerActivity.this)
         .setTitle("Delete Customer")
         .setMessage("Are you sure you want to delete this customer ?")
-        .setIcon(R.drawable.ic_delete)
+        .setIcon(R.drawable.ic_delete_black)
 
         .setPositiveButton("DELETE", (dialog, which) -> {
             customerRef.child(customerId).removeValue().addOnCompleteListener(task -> {

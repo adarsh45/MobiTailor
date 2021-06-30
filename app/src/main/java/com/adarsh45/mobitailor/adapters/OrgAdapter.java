@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,7 +82,7 @@ public class OrgAdapter extends RecyclerView.Adapter<OrgAdapter.OrgViewHolder> {
             rvOrgCount = itemView.findViewById(R.id.counter_text);
             rvOrgName = itemView.findViewById(R.id.rv_customer_name);
             rvOrgOwner = itemView.findViewById(R.id.rv_customer_mobile);
-
         }
+
     }
 }

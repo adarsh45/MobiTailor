@@ -1,19 +1,24 @@
 package com.adarsh45.mobitailor.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.adarsh45.mobitailor.R;
@@ -23,7 +28,6 @@ import com.adarsh45.mobitailor.pojo.Org;
 import com.adarsh45.mobitailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +41,8 @@ import java.util.Collections;
 
 public class NewEmployeeActivity extends AppCompatActivity {
 
+    private static final String TAG = "NewEmployeeActivity";
+
     private FirebaseDatabase myDB;
     private DatabaseReference rootRef, empRef;
     private FirebaseAuth mAuth;
@@ -46,6 +52,7 @@ public class NewEmployeeActivity extends AppCompatActivity {
     private byte origin;
     private Org myOrg;
 
+    private LinearLayout rootLayout;
     private TextView orgNameText;
     private EditText editNewEmployee;
     private Button btnAddEmployee;
@@ -87,6 +94,7 @@ public class NewEmployeeActivity extends AppCompatActivity {
         empRef = rootRef.child("Employees").child(myOrg.getOrgID());
 
 //        finding views
+        rootLayout = findViewById(R.id.new_emp_layout);
         orgNameText = findViewById(R.id.text_view_org_name);
         editNewEmployee = findViewById(R.id.edit_employee_name);
         btnAddEmployee = findViewById(R.id.btn_add_employee);
@@ -109,8 +117,8 @@ public class NewEmployeeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             editNewEmployee.setText(null);
-                            showSnackbar("Employee Added Successfully");
-                        } else showSnackbar("Something went wrong!");
+                            Util.showSnackBar(rootLayout, "Employee Added Successfully");
+                        } else Util.showSnackBar(rootLayout,"Something went wrong!");
                     }
                 });
             }
@@ -128,27 +136,99 @@ public class NewEmployeeActivity extends AppCompatActivity {
                     empArrayList.add(myEmp);
                 }
                 Collections.reverse(empArrayList);
-                rvEmployee.setAdapter(new EmpAdapter(empArrayList));
+                rvEmployee.setAdapter(new EmpAdapter(empArrayList, new EmpAdapter.EmployeeClick() {
+                    @Override
+                    public void onEmployeeCardClick(int position) {
+                        openEmployeeMeasures(empArrayList.get(position));
+                    }
+
+                    @Override
+                    public void onEmpDeleteClick(int position) {
+                        deleteEmployee(empArrayList.get(position));
+                    }
+                }));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                showSnackbar(databaseError.getMessage());
+                Util.showSnackBar(rootLayout,databaseError.getMessage());
             }
         });
+    }
 
+    private void deleteEmployee(Emp emp) {
+        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(NewEmployeeActivity.this);
+        deleteDialog.setTitle("Delete Employee")
+                .setMessage("Are you sure you want to delete " + emp.getEmpName() + " ?")
+                .setIcon(R.drawable.ic_delete_black)
+                .setPositiveButton("DELETE", (dialog, which) -> {
+                    deleteEmpFromDB(emp, dialog);
+                })
+                .setNegativeButton("CANCEL", (dialog, which) -> dialog.dismiss())
+                .setCancelable(false);
+
+        deleteDialog.show();
 
     }
 
-    public void showSnackbar(CharSequence text){
-        final Snackbar snackbar = Snackbar.make(findViewById(R.id.new_emp_layout),text,Snackbar.LENGTH_SHORT);
-        snackbar.setAction("Dismiss", new View.OnClickListener() {
+    private void deleteEmpFromDB(Emp emp, DialogInterface dialog) {
+//        actually removing the data from db
+        empRef.child(emp.getEmpID()).removeValue();
+
+//        listening for change in db
+        empRef.child(emp.getEmpID()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+//                    employee not deleted, show error
+                    dialog.dismiss();
+                    Util.showSnackBar(rootLayout, "Record of " + emp.getEmpName() + " could not be deleted!");
+                } else {
+//                    employee record deleted successfully
+//                    now see if that emp had any measurements and delete them too
+                    deleteEmpMeasurement(emp, dialog);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Util.showSnackBar(rootLayout, error.getMessage());
+                Log.d(TAG, "onCancelled: "+ error.getMessage());
+                dialog.dismiss();
             }
         });
-        snackbar.show();
+
+    }
+
+    private void openEmployeeMeasures(Emp emp) {
+        Intent intent = new Intent(NewEmployeeActivity.this, SelectProductActivity.class);
+        intent.putExtra("origin", Util.EMP_MEASUREMENT);
+        intent.putExtra("emp",emp);
+        startActivity(intent);
+    }
+
+    private void deleteEmpMeasurement(Emp emp, DialogInterface dialog) {
+        DatabaseReference empMeasurementRef = rootRef.child("Measurements").child(emp.getEmpID());
+        empMeasurementRef.removeValue();
+
+        empMeasurementRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dialog.dismiss();
+                if (snapshot.exists()){
+                    Util.showSnackBar(rootLayout, emp.getEmpName() + "'s measurements could not be deleted!");
+                } else {
+                    Util.showSnackBar(rootLayout, emp.getEmpName() + "'s record deleted successfully!");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Util.showSnackBar(rootLayout, error.getMessage());
+                dialog.dismiss();
+            }
+        });
+
     }
 
     public void searchEmployee(){
@@ -177,8 +257,17 @@ public class NewEmployeeActivity extends AppCompatActivity {
                 filterList.add(filterEmp);
             }
         }
-        rvEmployee.setAdapter(new EmpAdapter(filterList));
+        rvEmployee.setAdapter(new EmpAdapter(filterList, new EmpAdapter.EmployeeClick() {
+            @Override
+            public void onEmployeeCardClick(int position) {
+                openEmployeeMeasures(filterList.get(position));
+            }
 
+            @Override
+            public void onEmpDeleteClick(int position) {
+                deleteEmployee(filterList.get(position));
+            }
+        }));
     }
 
     @Override

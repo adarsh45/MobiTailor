@@ -3,6 +3,7 @@ package com.adarsh45.mobitailor.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,6 @@ import com.adarsh45.mobitailor.utils.Util;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +57,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
     byte origin;
     private long customerCount;
 
+    private ConstraintLayout rootLayout;
     ArrayList<Customer> customerArrayList;
     ArrayList<Org> orgArrayList;
     RecyclerView recyclerView;
@@ -119,7 +120,6 @@ public class ShowCustomersActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void checkIsPaidMember() {
         final DatabaseReference paymentDetailsRef = rootRef.child(UID).child("PaymentDetails");
@@ -189,17 +189,6 @@ public class ShowCustomersActivity extends AppCompatActivity {
         });
     }
 
-    public void showSnackbar(CharSequence text){
-        final Snackbar snackbar = Snackbar.make(findViewById(R.id.show_customer_layout),text,Snackbar.LENGTH_SHORT);
-        snackbar.setAction("Dismiss", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
-    }
-
     private void initialize() {
 
         //init database and references
@@ -220,6 +209,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
         orgRef.keepSynced(true);
         customerRef.keepSynced(true);
 
+        rootLayout = findViewById(R.id.show_customer_layout);
         emptyTextView = findViewById(R.id.empty_text);
         recyclerView = findViewById(R.id.recycler_view);
 //        progressBar = findViewById(R.id.customers_progress_bar);
@@ -262,7 +252,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showSnackbar(databaseError.getMessage());
+                    Util.showSnackBar(rootLayout, databaseError.getMessage());
                 }
             });
         }
@@ -294,7 +284,7 @@ public class ShowCustomersActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    showSnackbar(databaseError.getMessage());
+                    Util.showSnackBar(rootLayout, databaseError.getMessage());
                 }
             });
         }
@@ -353,4 +343,5 @@ public class ShowCustomersActivity extends AppCompatActivity {
         });
         return super.onCreateOptionsMenu(menu);
     }
+
 }

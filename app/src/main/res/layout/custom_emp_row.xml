@@ -24,12 +24,23 @@
 
         <TextView
             android:id="@+id/rv_emp_name"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:text="Employee Name"
             android:paddingVertical="10dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_delete_emp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_delete"
+            android:background="@null"
+            android:layout_gravity="center"
+            android:paddingHorizontal="16dp"
+            />
 
     </LinearLayout>
 

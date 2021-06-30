@@ -29,6 +29,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:paddingVertical="5dp">
             <TextView
@@ -47,7 +48,6 @@
                 android:text="9623486128"
                 android:textColor="@color/colorAccent"/>
         </LinearLayout>
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
