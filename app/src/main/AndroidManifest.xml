@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.adarsh45.mobitailor">
+    package="com.adarsh45.mobitailorapp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,20 +17,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".utils.OfflineFirebase"
+        android:name="com.adarsh45.mobitailorapp.utils.OfflineFirebase"
         android:theme="@style/AppTheme">
-        <activity android:name="com.adarsh45.mobitailor.activities.AboutAppActivity"
-            android:parentActivityName="com.adarsh45.mobitailor.activities.HomeActivity"/>
+        <activity android:name="com.adarsh45.mobitailorapp.activities.AboutAppActivity"
+            android:parentActivityName="com.adarsh45.mobitailorapp.activities.HomeActivity"/>
         <activity
-            android:name="com.adarsh45.mobitailor.activities.ShowOrdersActivity"
-            android:parentActivityName="com.adarsh45.mobitailor.activities.HomeActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.OrderPdfActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.NewOrderActivity" />
+            android:name="com.adarsh45.mobitailorapp.activities.ShowOrdersActivity"
+            android:parentActivityName="com.adarsh45.mobitailorapp.activities.HomeActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.OrderPdfActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.NewOrderActivity" />
         <activity
-            android:name="com.adarsh45.mobitailor.activities.SettingsActivity"
+            android:name="com.adarsh45.mobitailorapp.activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name="com.adarsh45.mobitailor.activities.SplashActivity"
+            android:name="com.adarsh45.mobitailorapp.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,27 +38,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.adarsh45.mobitailor.activities.NewEmployeeActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.NewOrganizationActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.PantMeasurementActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.ShirtMeasurementActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.SelectProductActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.NewEmployeeActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.NewOrganizationActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.PantMeasurementActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.ShirtMeasurementActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.SelectProductActivity" />
         <activity
-            android:name="com.adarsh45.mobitailor.activities.ShowCustomersActivity"
-            android:parentActivityName="com.adarsh45.mobitailor.activities.HomeActivity" />
-        <activity android:name="com.adarsh45.mobitailor.activities.NewCustomerActivity" />
+            android:name="com.adarsh45.mobitailorapp.activities.ShowCustomersActivity"
+            android:parentActivityName="com.adarsh45.mobitailorapp.activities.HomeActivity" />
+        <activity android:name="com.adarsh45.mobitailorapp.activities.NewCustomerActivity" />
         <activity
-            android:name="com.adarsh45.mobitailor.activities.HomeActivity"
+            android:name="com.adarsh45.mobitailorapp.activities.HomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.adarsh45.mobitailor.activities.ProfileActivity"
+            android:name="com.adarsh45.mobitailorapp.activities.ProfileActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name="com.adarsh45.mobitailor.activities.LoginActivity"
+            android:name="com.adarsh45.mobitailorapp.activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- file provider config for accessing device files -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.adarsh45.mobitailor.provider"
+            android:authorities="com.adarsh45.mobitailorapp.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
